@@ -7,8 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GreenFireBackendApplication {
 
 
-
-
     public static void main(String[] args) {
         SpringApplication.run(GreenFireBackendApplication.class, args);
     }
