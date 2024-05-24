@@ -15,6 +15,6 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int memberCode;
+    private Integer memberCode;
     private String memberName;
 }

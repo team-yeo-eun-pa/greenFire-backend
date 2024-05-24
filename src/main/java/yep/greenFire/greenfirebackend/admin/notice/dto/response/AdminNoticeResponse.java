@@ -9,23 +9,23 @@ import java.time.LocalDate;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class AdminNoticesResponse {
+public class AdminNoticeResponse {
 
-    private final Integer noticeCode;
+    private final String noticeContent;
     private final String noticeTitle;
+    private final Integer noticeViews;
     private final String noticeFixable;
     private final LocalDate noticeDate;
     private final String noticeWriter;
 
-    public static AdminNoticesResponse from(final Notice notice){
-        return new AdminNoticesResponse(
-                notice.getNoticeCode(),
+    public static AdminNoticeResponse from(final Notice notice) {
+        return new AdminNoticeResponse(
+                notice.getNoticeContent(),
                 notice.getNoticeTitle(),
+                notice.getNoticeView(),
                 notice.getNoticeFixable(),
                 notice.getNoticeDate(),
                 notice.getNoticeWriter().getMemberName()
-
         );
     }
-
 }

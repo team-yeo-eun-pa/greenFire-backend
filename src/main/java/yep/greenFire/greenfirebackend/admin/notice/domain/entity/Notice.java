@@ -19,8 +19,10 @@ public class Notice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int noticeCode;
+    private Integer noticeCode;
     private String noticeTitle;
+    private String noticeContent;
+    private Integer noticeView;
     private String noticeFixable;
     @Enumerated(value = EnumType.STRING)
     private NoticeStatusType noticeStatus = NoticeStatusType.ACTIVE;
@@ -29,4 +31,30 @@ public class Notice {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "noticeWriter", referencedColumnName = "memberCode")
     private Member noticeWriter;
+
+
+
+
+    public Notice of(final String noticeTitle,
+                     final String noticeFixable,
+                     final LocalDate noticeDate,
+                     final Member member
+    ) {
+
+        return new Notice(
+                noticeTitle,
+                noticeFixable,
+                noticeDate,
+                member
+        );
+
+    }
+
+    public Notice(String noticeTitle, String noticeFixable, LocalDate noticeDate, Member member) {
+        this.noticeTitle = noticeTitle;
+        this.noticeFixable = noticeFixable;
+        this.noticeDate = noticeDate;
+        this.noticeWriter = member;
+    }
+
 }

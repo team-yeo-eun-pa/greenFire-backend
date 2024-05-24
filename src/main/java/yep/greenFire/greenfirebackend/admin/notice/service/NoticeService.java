@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yep.greenFire.greenfirebackend.admin.notice.domain.entity.Notice;
 import yep.greenFire.greenfirebackend.admin.notice.domain.repository.NoticeRepository;
+import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticeResponse;
 import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticesResponse;
+import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
+import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 
 import static yep.greenFire.greenfirebackend.admin.notice.domain.type.NoticeStatusType.DELETE;
 
@@ -25,10 +28,20 @@ public class NoticeService {
     }
 
     @Transactional(readOnly = true)
-    public Page<AdminNoticesResponse> getAdminNotice(final Integer page) {
+    public Page<AdminNoticesResponse> getAdminNotices(final Integer page) {
 
         Page<Notice> notices = noticeRepository.findByNoticeStatusNot(getPageable(page), DELETE);
 
         return notices.map(AdminNoticesResponse::from);
+    }
+
+
+    @Transactional(readOnly = true)
+    public AdminNoticeResponse getAdminNotice(final Integer noticeCode) {
+
+        Notice notice = noticeRepository.findByNoticeCodeAndStatusNot(noticeCode, DELETE)
+                .orElseThrow( () -> new NotFoundException(ExceptionCode.NOT_FOUND_NOTICE_CODE));
+
+       return AdminNoticeResponse.from(notice);
     }
 }
