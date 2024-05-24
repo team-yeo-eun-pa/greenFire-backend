@@ -1,21 +1,21 @@
 package yep.greenFire.greenfirebackend.common.exception.handler;
 
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import yep.greenFire.greenfirebackend.common.exception.ConflictException;
-import yep.greenFire.greenfirebackend.common.exception.dto.response.ExceptionResponse;
+import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.ServerInternalException;
+import yep.greenFire.greenfirebackend.common.exception.dto.response.ExceptionResponse;
 
 @RestControllerAdvice
 public class ExceptionHandlingController {
 
     /* Not Found Exception */
-    @ExceptionHandler(ChangeSetPersister.NotFoundException.class)
-    public ResponseEntity<ExceptionResponse> notFoundException(ChangeSetPersister.NotFoundException e) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ExceptionResponse> notFoundException(NotFoundException e) {
 
         final ExceptionResponse exceptionResponse = ExceptionResponse.of(e.getCode(), e.getMessage());
 

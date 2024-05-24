@@ -18,7 +18,7 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-    @GetMapping("/notices")
+    @GetMapping("/adminNotices")
     public ResponseEntity<PagingResponse> getAdminNotices(
             @RequestParam(defaultValue = "1") final Integer page
     ){
@@ -29,8 +29,8 @@ public class NoticeController {
         return ResponseEntity.ok(pagingResponse);
     }
 
-    @GetMapping("/notices-management/{noticeCode}")
-    public ResponseEntity<AdminNoticeResponse> getAdminNotice (@PathVariable final Integer noticeCode) {
+    @GetMapping("/notices/{noticeCode}")
+    public ResponseEntity<AdminNoticeResponse> getAdminNotice (@PathVariable final int noticeCode) {
 
         final AdminNoticeResponse adminNoticeResponse = noticeService.getAdminNotice(noticeCode);
 

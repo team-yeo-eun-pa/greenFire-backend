@@ -13,7 +13,6 @@ public class AdminNoticeResponse {
 
     private final String noticeContent;
     private final String noticeTitle;
-    private final Integer noticeViews;
     private final String noticeFixable;
     private final LocalDate noticeDate;
     private final String noticeWriter;
@@ -22,7 +21,6 @@ public class AdminNoticeResponse {
         return new AdminNoticeResponse(
                 notice.getNoticeContent(),
                 notice.getNoticeTitle(),
-                notice.getNoticeView(),
                 notice.getNoticeFixable(),
                 notice.getNoticeDate(),
                 notice.getNoticeWriter().getMemberName()

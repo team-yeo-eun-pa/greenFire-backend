@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class AdminNoticesResponse {
 
-    private final Integer noticeCode;
+    private final int noticeCode;
     private final String noticeTitle;
     private final String noticeFixable;
     private final LocalDate noticeDate;

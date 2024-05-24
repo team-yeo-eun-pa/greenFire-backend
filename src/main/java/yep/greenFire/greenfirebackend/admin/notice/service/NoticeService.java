@@ -37,9 +37,9 @@ public class NoticeService {
 
 
     @Transactional(readOnly = true)
-    public AdminNoticeResponse getAdminNotice(final Integer noticeCode) {
+    public AdminNoticeResponse getAdminNotice(final int noticeCode) {
 
-        Notice notice = noticeRepository.findByNoticeCodeAndStatusNot(noticeCode, DELETE)
+        Notice notice = noticeRepository.findByNoticeCodeAndNoticeStatusNot(noticeCode, DELETE)
                 .orElseThrow( () -> new NotFoundException(ExceptionCode.NOT_FOUND_NOTICE_CODE));
 
        return AdminNoticeResponse.from(notice);

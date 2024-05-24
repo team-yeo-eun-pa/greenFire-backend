@@ -13,6 +13,6 @@ public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
     Page<Notice> findByNoticeStatusNot(Pageable pageable, NoticeStatusType noticeStatusType);
 
-    @EntityGraph(attributePaths = {"member"})
-    Optional<Notice> findByNoticeCodeAndStatusNot (Integer NoticeCode, NoticeStatusType noticeStatusType);
+    @EntityGraph(attributePaths = {"noticeWriter"})
+    Optional<Notice> findByNoticeCodeAndNoticeStatusNot(int noticeCode, NoticeStatusType noticeStatus);
 }
