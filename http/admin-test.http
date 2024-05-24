@@ -1,0 +1,6 @@
+###
+GET http://localhost:8001/admin/adminNotices
+
+
+###
+GET http://localhost:8001/admin/notices/1

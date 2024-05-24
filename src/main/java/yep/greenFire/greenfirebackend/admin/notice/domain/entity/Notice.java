@@ -32,7 +32,7 @@ public class Notice {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "noticeWriter", referencedColumnName = "memberCode")
-    private Member noticeWriter;
+    private AdminMember noticeWriter;
 
 //    public Notice of(final String noticeTitle,
 //                     final String noticeFixable,
