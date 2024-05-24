@@ -1,11 +1,10 @@
 package yep.greenFire.greenfirebackend.user.member.presentation;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import yep.greenFire.greenfirebackend.user.member.dto.response.ProfileResponse;
 import yep.greenFire.greenfirebackend.user.member.service.MemberService;
 
 import java.util.HashMap;
