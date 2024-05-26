@@ -28,5 +28,5 @@ public class Notice {
     private LocalDate noticeDate;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "noticeWriter", referencedColumnName = "memberCode")
-    private Member noticeWriter;
+    private NoticeMember noticeWriter;
 }
