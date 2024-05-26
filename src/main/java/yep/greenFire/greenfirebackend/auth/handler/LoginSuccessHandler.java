@@ -4,20 +4,24 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import yep.greenFire.greenfirebackend.auth.service.AuthService;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
+@RequiredArgsConstructor
 public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
-        //
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        // Filter Chain 없이 Override
         Map<String, Object> memberInfo = getMemberInfo(authentication);
         log.info("로그인 성공 후 인증 객체에서 꺼낸 정보 : {}", memberInfo);
     }

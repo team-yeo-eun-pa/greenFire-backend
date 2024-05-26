@@ -30,8 +30,11 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
 
+        log.info("Attempting authentication for request to: {}", request.getRequestURI());
+
         // request content type check
         if(request.getContentType() == null || !request.getContentType().equals("application/json")) {
+            log.error("Content-Type not supported: {}", request.getContentType());
             throw new AuthenticationServiceException("Content-Type not supported");
         }
 
@@ -39,7 +42,13 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
         String body = StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
 
         // JSON -> Java Map
-        Map<String, String> bodyMap = objectMapper.readValue(body, Map.class);
+        Map<String, String> bodyMap;
+        try {
+            bodyMap = objectMapper.readValue(body, Map.class);
+        } catch (Exception e) {
+            log.error("Failed to parse request body: {}", body, e);
+            throw new AuthenticationServiceException("Invalid request body");
+        }
 
         String memberId = bodyMap.get("memberId");
         String memberPassword = bodyMap.get("memberPassword");
@@ -52,7 +61,12 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
                 = new UsernamePasswordAuthenticationToken(memberId, memberPassword);
 
         // AuthenticationToken 전달
-        return this.getAuthenticationManager().authenticate(authenticationToken);
+        try {
+            return this.getAuthenticationManager().authenticate(authenticationToken);
+        } catch (AuthenticationException e) {
+            log.error("Authentication failed for user: {}", memberId, e);
+            throw e;
+        }
 
     }
 }

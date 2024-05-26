@@ -14,3 +14,12 @@ Content-Type: application/json
   "addressDetail": "어딘가",
   "addressZipcode": "12345"
 }
+
+### 로그인 테스트
+POST http://localhost:8001/members/login
+Content-Type: application/json
+
+{
+  "memberId" : "user02",
+  "memberPassword" : "pass02"
+}

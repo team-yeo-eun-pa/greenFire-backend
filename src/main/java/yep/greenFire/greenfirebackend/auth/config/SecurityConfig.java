@@ -37,7 +37,7 @@ public class SecurityConfig {
 
         return http.
                 /* CSRF 공격 방지는 기본적으로 활성화 되어 있는데 비활성화 처리 */
-                        csrf(AbstractHttpConfigurer::disable)
+                csrf(AbstractHttpConfigurer::disable)
                 /* rest api에서는 세션으로 로그인 상태 관리를 하지 않을 예정이므로 STATELESS 설정 */
                 .sessionManagement(sessionManage -> sessionManage.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 /* formLogin 비활성화 처리 */
@@ -68,7 +68,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:8001"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));
         corsConfiguration.setAllowedHeaders(Arrays.asList(
                 "Access-Control-Allow-Origin", "Access-Control-Allow-Headers",
