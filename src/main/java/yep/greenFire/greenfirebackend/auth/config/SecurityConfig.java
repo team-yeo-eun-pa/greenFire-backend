@@ -14,10 +14,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import yep.greenFire.greenfirebackend.auth.filter.CustomAuthenticationFilter;
 import yep.greenFire.greenfirebackend.auth.handler.LoginFailureHandler;
+import yep.greenFire.greenfirebackend.auth.handler.LoginSuccessHandler;
 import yep.greenFire.greenfirebackend.auth.service.AuthService;
+
+import java.util.Arrays;
 
 @RequiredArgsConstructor
 @EnableMethodSecurity
@@ -46,15 +51,32 @@ public class SecurityConfig {
                     auth.anyRequest().authenticated();
                 })
 //                /* 기본적으로 동작하는 로그인 필터 이전에 커스텀 로그인 필터를 설정한다. */
-//                .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 //                /* 모든 요청에 대해서 토큰을 확인하는 필터 설정 */
 //                .addFilterBefore(jwtAuthenticationFilter(), BasicAuthenticationFilter.class)
 //                .exceptionHandling(exceptionHandling -> {
 //                    exceptionHandling.accessDeniedHandler(jwtAccessDeniedHandler());
 //                    exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint());
 //                })
-//                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .build();
+    }
+
+    /* CORS (Cross Origin Resource Sharing) : 교차 출처 자원 공유
+     * 보안 상 웹 브라우저는 다른 도메인에서 서버의 자원을 요청하는 것을 막아 놓았음.
+     * 기본적으로 서버에서 클라이언트를 대상으로 리소스 허용 여부를 결정함. */
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));
+        corsConfiguration.setAllowedHeaders(Arrays.asList(
+                "Access-Control-Allow-Origin", "Access-Control-Allow-Headers",
+                "Content-Type", "Authorization", "X-Requested-With", "Access-Token", "Refresh-Token"));
+        corsConfiguration.setExposedHeaders(Arrays.asList("Access-Token", "Refresh-Token"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
     }
 
     // AuthenticationManager
@@ -66,11 +88,15 @@ public class SecurityConfig {
         return new ProviderManager(provider);
     }
 
-//    // Login Handler
-//    @Bean
-//    public LoginFailureHandler loginFailureHandler() {
-//        return new LoginFailureHandler();
-//    }
+    // Login Handler
+    @Bean
+    LoginFailureHandler loginFailureHandler() {
+        return new LoginFailureHandler();
+    }
+    @Bean
+    LoginSuccessHandler loginSuccessHandler() {
+        return new LoginSuccessHandler();
+    }
 
     // CustomFilter
     @Bean
@@ -80,7 +106,9 @@ public class SecurityConfig {
         // AuthenticationManager set
         customAuthenticationFilter.setAuthenticationManager(authenticationManager());
         // Login Fail Handler set
-//        customAuthenticationFilter.setAuthenticationFailureHandler(loginFailureHandler());
+        customAuthenticationFilter.setAuthenticationFailureHandler(loginFailureHandler());
+        // Login Success Handler set
+        customAuthenticationFilter.setAuthenticationSuccessHandler(loginSuccessHandler());
 
         return customAuthenticationFilter;
     }

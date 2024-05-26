@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+@Slf4j
 public class CustomAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     @Autowired
@@ -41,6 +43,9 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
 
         String memberId = bodyMap.get("memberId");
         String memberPassword = bodyMap.get("memberPassword");
+
+        log.info("CustomAuthenticationFilter memberId : {}", memberId);
+        log.info("CustomAuthenticationFilter memberPassword : {}", memberPassword);
 
         // AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken
