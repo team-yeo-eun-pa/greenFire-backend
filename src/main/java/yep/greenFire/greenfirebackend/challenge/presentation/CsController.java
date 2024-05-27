@@ -34,15 +34,15 @@ public class CsController {
     *  3. 문의 답변 수정 : 관리자 버전
     *  4. 문의/문의 답변 삭제 : 관리자 버전*/
 
-    @GetMapping("/list/detail")
-    public ResponseEntity<CsResponse> getCsDetail(
-            @RequestParam int csCode
-    )
-    {
-        CsResponse csResponse = csService.getCsDetail(csCode);
-        return ResponseEntity.ok(csResponse);
-
-    }
+//    @GetMapping("/list/detail")
+//    public ResponseEntity<CsResponse> getCsDetail(
+//            @RequestParam int csCode
+//    )
+//    {
+//        CsResponse csResponse = csService.getCsDetail(csCode);
+//        return ResponseEntity.ok(csResponse);
+//
+//    }
 
 
 

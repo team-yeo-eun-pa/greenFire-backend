@@ -1,6 +1,8 @@
 package yep.greenFire.greenfirebackend.challenge.service;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,8 +16,9 @@ import yep.greenFire.greenfirebackend.challenge.dto.response.CsResponse;
 public class CsService {
     private final CsRepository csRepository;
     private final CsResponse csResponse;
-    private CsList csList ;
+    //private CsList csList ;
     //필요한건가..
+
 
     public CsResponse getCsList(String memberId) {
         CsList csList = (CsList) csRepository.findByMemberId(memberId)
@@ -27,10 +30,10 @@ public class CsService {
     }
 
 
-    public CsResponse getCsDetail(int csCode) {
-        CsList detail = (CsList) csRepository.findByCsCode(csCode);
-
-     return csResponse.from(csList);
-
-    }
+//    public CsResponse getCsDetail(int csCode) {
+//        CsList detail = (CsList) csRepository.findByCsCode(csCode);
+//
+//     return csResponse.from(csList);
+//
+//    }
 }
