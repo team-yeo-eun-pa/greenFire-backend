@@ -95,7 +95,7 @@ public class SecurityConfig {
     }
     @Bean
     LoginSuccessHandler loginSuccessHandler() {
-        return new LoginSuccessHandler();
+        return new LoginSuccessHandler(authService);
     }
 
     // CustomFilter

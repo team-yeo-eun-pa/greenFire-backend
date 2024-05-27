@@ -69,4 +69,8 @@ public class Member {
                 addressZipcode
         );
     }
+
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 }
