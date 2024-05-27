@@ -1,0 +1,3 @@
+###멤버 문의글 등록 테스트
+POST : "http://localhost8001/member/cs/list"
+Content-Type: "application/json";

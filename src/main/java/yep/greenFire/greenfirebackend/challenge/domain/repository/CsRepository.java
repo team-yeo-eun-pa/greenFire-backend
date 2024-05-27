@@ -7,4 +7,6 @@ import java.util.Optional;
 @Repository
 public interface CsRepository {
     Optional<Object> findByMemberId(String memberId);
+
+    Object findByCsCode(int csCode);
 }

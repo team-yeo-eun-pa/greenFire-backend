@@ -27,4 +27,12 @@ public class CsService {
     }
 
 
+    public CsResponse getCsDetail(int csCode) {
+        CsList detail = (CsList) csRepository.findByCsCode(csCode);
+
+        if(csCode = null) {
+            System.out.println("조회할 수 있는 문의 목록이 없습니다. ");
+        }
+
+    }
 }

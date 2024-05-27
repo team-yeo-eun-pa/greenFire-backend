@@ -28,6 +28,22 @@ public class CsController {
         return ResponseEntity.ok(csResponse);
     }
 
+    /* 5/27 해야할 것.
+    *  1. 문의 상세보기 : 회원버전 -> 등록 후 등록된 목록 보기까지
+    *  2. 문의 답변 달기 : 관리자 버전
+    *  3. 문의 답변 수정 : 관리자 버전
+    *  4. 문의/문의 답변 삭제 : 관리자 버전*/
+
+    @GetMapping("/list/detail")
+    public ResponseEntity<CsResponse> getCsDetail(
+            @RequestParam int csCode
+    )
+    {
+        CsResponse csResponse = csService.getCsDetail(csCode);
+        return ResponseEntity.ok(csResponse);
+
+    }
+
 
 
 
