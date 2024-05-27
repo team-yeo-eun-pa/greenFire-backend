@@ -38,6 +38,8 @@ public class SecurityConfig {
                      * 이 때 OPTIONS 메소드로 서버에 사전 요청을 보내 확인한다. */
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/members/signup", "/members/login").permitAll();
+                    auth.requestMatchers("/admin/adminNotices").permitAll();
+                    auth.requestMatchers("/admin/notices/1").permitAll();
                     auth.anyRequest().authenticated();
                 })
 //                /* 기본적으로 동작하는 로그인 필터 이전에 커스텀 로그인 필터를 설정한다. */
