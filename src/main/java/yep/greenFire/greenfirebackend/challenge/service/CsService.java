@@ -1,0 +1,29 @@
+package yep.greenFire.greenfirebackend.challenge.service;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import yep.greenFire.greenfirebackend.challenge.domain.entity.CsList;
+import yep.greenFire.greenfirebackend.challenge.domain.repository.CsRepository;
+import yep.greenFire.greenfirebackend.challenge.dto.response.CsResponse;
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class CsService {
+    private final CsRepository csRepository;
+    private final CsResponse csResponse;
+    private CsList csList ;
+    //필요한건가..
+
+    public CsResponse getCsList(String memberId) {
+        CsList csList = (CsList) csRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new UsernameNotFoundException("접근할 수 없습니다."));
+        //형변환 박싱... 이었던가
+        //csList타입으로 작성되어야 하는데, object타입으로 작성되었다고.
+        return csResponse.from(csList);
+    }
+
+
+}
