@@ -6,8 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yep.greenFire.greenfirebackend.challenge.domain.entity.CsContent;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.CsList;
 import yep.greenFire.greenfirebackend.challenge.domain.repository.CsRepository;
+import yep.greenFire.greenfirebackend.challenge.dto.request.CsCreateRequest;
 import yep.greenFire.greenfirebackend.challenge.dto.response.CsResponse;
 
 @Service
@@ -27,6 +29,17 @@ public class CsService {
         //csList타입으로 작성되어야 하는데, object타입으로 작성되었다고.
         //내가 접근할 수 없네. 도대체 어떻게 하는거지?
         return csResponse.from(csList);
+    }
+
+    public Long save(CsCreateRequest csCreateRequest) {
+        CsList csList = csRepository.findByCsCode(csCreateRequest.getMemberCode());
+
+        final CsContent newContent = CsContent.of(
+                csCreateRequest.getMemberCode(),
+                csCreateRequest.getMemberId(),
+                csCreateRequest.getMemberName(),
+                csCreateRequest.getMemberEmail()
+        )
     }
 
 

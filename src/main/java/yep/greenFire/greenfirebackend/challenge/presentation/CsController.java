@@ -1,12 +1,11 @@
 package yep.greenFire.greenfirebackend.challenge.presentation;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import yep.greenFire.greenfirebackend.challenge.dto.request.CsCreateRequest;
 import yep.greenFire.greenfirebackend.challenge.dto.response.CsResponse;
 import yep.greenFire.greenfirebackend.challenge.service.CsService;
 
@@ -32,7 +31,8 @@ public class CsController {
     *  1. 문의 상세보기 : 회원버전 -> 등록 후 등록된 목록 보기까지
     *  2. 문의 답변 달기 : 관리자 버전
     *  3. 문의 답변 수정 : 관리자 버전
-    *  4. 문의/문의 답변 삭제 : 관리자 버전*/
+    *  4. 문의/문의 답변 삭제 : 관리자 버전
+    * => 등록된 답변이 없을 경우 상세 조회할 수 없다.. 등록부터 해야할 듯. */
 
 //    @GetMapping("/list/detail")
 //    public ResponseEntity<CsResponse> getCsDetail(
@@ -43,6 +43,16 @@ public class CsController {
 //        return ResponseEntity.ok(csResponse);
 //
 //    }
+
+    @PostMapping("/list/regist")
+    public ResponseEntity<Void> save (
+           @RequestPart @Valid final CsCreateRequest csCreateRequest
+
+    ) {
+
+        final Long csCode = csService.save(csCreateRequest);
+        return csCode
+    }
 
 
 
