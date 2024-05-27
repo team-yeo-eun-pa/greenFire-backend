@@ -20,6 +20,5 @@ public interface CsRepository extends JpaRepository<Member, Long> {
 
     CsList saveCsList(CsCreateRequest csCreateRequest);
 
-
     // Object findByCsCode(int csCode);
 }
