@@ -31,15 +31,19 @@ public class CsService {
         return csResponse.from(csList);
     }
 
-    public Long save(CsCreateRequest csCreateRequest) {
-        CsList csList = csRepository.findByCsCode(csCreateRequest.getMemberCode());
+    public CsList save(CsCreateRequest csCreateRequest) {
+        CsContent csList = csRepository.findByCsCode(csCreateRequest.getMemberCode());
 
-        final CsContent newContent = CsContent.of(
+        final CsList newList = CsList.of(
                 csCreateRequest.getMemberCode(),
                 csCreateRequest.getMemberId(),
                 csCreateRequest.getMemberName(),
                 csCreateRequest.getMemberEmail()
-        )
+        );
+
+        final CsList csList1 = csRepository.saveCsList(csCreateRequest);
+
+        return newList;
     }
 
 

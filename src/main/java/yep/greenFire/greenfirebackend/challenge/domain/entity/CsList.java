@@ -26,8 +26,11 @@ public class CsList {
     private String csReply;
     private String csReplyStatus;
     private int memberCode;
+    private String memberId;
+    private String memberName;
+    private String memberEmail;
 
-    public CsList(int csCode, Date csWriteDate, String csStatus, Date csModifyDate, Date csDeleteDate, String csReply, String csReplyStatus, int memberCode) {
+    public CsList(int csCode, Date csWriteDate, String csStatus, Date csModifyDate, Date csDeleteDate, String csReply, String csReplyStatus, int memberCode, String memberId, String memberName, String email) {
         this.csCode = csCode;
         this.csWriteDate = csWriteDate;
         this.csStatus = csStatus;
@@ -36,6 +39,26 @@ public class CsList {
         this.csReply = csReply;
         this.csReplyStatus = csReplyStatus;
         this.memberCode = memberCode;
+        this.memberId = memberId;
+        this.memberName = memberName;
+        this.memberEmail = memberEmail;
     }
 
+
+    public CsList(int memberCode, String memberId, String memberName, String memberEmail) {
+        this.memberCode = memberCode;
+        this.memberId = memberId;
+        this.memberName = memberName;
+        this.memberEmail = memberEmail;
+    }
+
+    public static CsList of(final int memberCode, final String memberId, final String memberName, final String memberEmail) {
+
+        return new CsList (
+                memberCode,
+                memberId,
+                memberName,
+                memberEmail
+        );
+    }
 }

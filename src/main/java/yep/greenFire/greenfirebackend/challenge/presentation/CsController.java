@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import yep.greenFire.greenfirebackend.challenge.domain.entity.CsList;
 import yep.greenFire.greenfirebackend.challenge.dto.request.CsCreateRequest;
 import yep.greenFire.greenfirebackend.challenge.dto.response.CsResponse;
 import yep.greenFire.greenfirebackend.challenge.service.CsService;
+
+import java.net.URI;
 
 @RestController
 @AllArgsConstructor
@@ -50,8 +53,8 @@ public class CsController {
 
     ) {
 
-        final Long csCode = csService.save(csCreateRequest);
-        return csCode
+        final CsList csCode = csService.save(csCreateRequest);
+        return ResponseEntity.created(URI.create("/member/cs/list/regist" + csCode)).build();
     }
 
 

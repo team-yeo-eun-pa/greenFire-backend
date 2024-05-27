@@ -16,7 +16,4 @@ public class CsContent {
     private Long csCode;
     private String csContent;
 
-    public static CsContent of(int memberCode, String memberId, String memberName, String memberEmail) {
-     return
-    }
 }
