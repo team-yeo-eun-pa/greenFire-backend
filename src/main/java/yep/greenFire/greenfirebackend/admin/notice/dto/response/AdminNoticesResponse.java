@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import yep.greenFire.greenfirebackend.admin.notice.domain.entity.Notice;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
