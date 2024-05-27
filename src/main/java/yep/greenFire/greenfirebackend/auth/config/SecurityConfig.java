@@ -20,6 +20,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import yep.greenFire.greenfirebackend.auth.filter.CustomAuthenticationFilter;
 import yep.greenFire.greenfirebackend.auth.filter.JwtAuthenticationFilter;
+import yep.greenFire.greenfirebackend.auth.handler.JwtAccessDeniedHandler;
+import yep.greenFire.greenfirebackend.auth.handler.JwtAuthenticationEntryPoint;
 import yep.greenFire.greenfirebackend.auth.handler.LoginFailureHandler;
 import yep.greenFire.greenfirebackend.auth.handler.LoginSuccessHandler;
 import yep.greenFire.greenfirebackend.auth.service.AuthService;
@@ -50,7 +52,7 @@ public class SecurityConfig {
                      * 이 때 OPTIONS 메소드로 서버에 사전 요청을 보내 확인한다. */
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/members/signup", "/members/login").permitAll();
-                    //
+                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
                     auth.anyRequest().authenticated();
                 })
                 /* 기본적으로 동작하는 로그인 필터 이전에 커스텀 로그인 필터를 설정한다. */
@@ -58,8 +60,8 @@ public class SecurityConfig {
                 /* 모든 요청에 대해서 토큰을 확인하는 필터 설정 */
                 .addFilterBefore(jwtAuthenticationFilter(), BasicAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandling -> {
-                    //exceptionHandling.accessDeniedHandler(jwtAccessDeniedHandler());
-                    //exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint());
+                    exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint());
+                    exceptionHandling.accessDeniedHandler(jwtAccessDeniedHandler());
                 })
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .build();
@@ -120,5 +122,17 @@ public class SecurityConfig {
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter(authService);
+    }
+
+    // AuthenticationEntryPoint _ 인증 실패 시 동작 핸들러
+    @Bean
+    JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint() {
+        return new JwtAuthenticationEntryPoint();
+    }
+
+    // AccessDeniedHandler _ 인가 실패 시 동작 핸들러
+    @Bean
+    JwtAccessDeniedHandler jwtAccessDeniedHandler() {
+        return new JwtAccessDeniedHandler();
     }
 }

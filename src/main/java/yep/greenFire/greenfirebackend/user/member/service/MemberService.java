@@ -58,6 +58,8 @@ public class MemberService {
     @Transactional(readOnly = true)
     public LoginDTO findByRefreshToken(String refreshToken) {
 
+        System.out.println("refreshToken : " + refreshToken);
+
         Member member = memberRepository.findByRefreshToken(refreshToken)
                 .orElseThrow(() -> new NotFoundException(NOT_FOUND_REFRESH_TOKEN));
 

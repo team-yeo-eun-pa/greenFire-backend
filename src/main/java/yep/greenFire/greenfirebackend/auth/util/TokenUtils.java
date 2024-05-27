@@ -22,7 +22,7 @@ public class TokenUtils {
     private static Long accessTokenExpiration;
     private static Long refreshTokenExpiration;
 
-    private static String BEARER = "Bearer";
+    private static String BEARER = "Bearer ";
 
     @Value("${jwt.secret}")
     public void setJwtSecretKey(String jwtSecretKey) {
