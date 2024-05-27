@@ -3,4 +3,29 @@ GET http://localhost:8001/admin/adminNotices
 
 
 ###
-GET http://localhost:8001/admin/notices/1
+GET http://localhost:8001/admin/notices/2
+
+###
+POST http://localhost:8001/admin/adminNotices
+Content-Type: application/json
+
+{
+"noticeTitle" : "제목제목제목",
+"noticeContent" : "내용내용",
+  "noticeFixable": "YES"
+}
+
+
+###
+PUT http://localhost:8001/admin/adminNotices/2
+Content-Type: application/json
+
+{
+  "noticeTitle" : "제목제목11111",
+  "noticeContent" : "내용1222"
+}
+
+###
+DELETE http://localhost:8001/admin/adminNotices/2
+
+###

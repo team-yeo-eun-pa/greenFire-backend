@@ -4,8 +4,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import yep.greenFire.greenfirebackend.admin.notice.domain.entity.Notice;
 import yep.greenFire.greenfirebackend.admin.notice.domain.type.NoticeStatusType;
+import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticesResponse;
 
 import java.util.Optional;
 
@@ -14,5 +16,6 @@ public interface NoticeRepository extends JpaRepository<Notice, Long> {
     Page<Notice> findByNoticeStatusNot(Pageable pageable, NoticeStatusType noticeStatusType);
 
     @EntityGraph(attributePaths = {"noticeWriter"})
-    Optional<Notice> findByNoticeCodeAndNoticeStatusNot(int noticeCode, NoticeStatusType noticeStatus);
+    Optional<Notice> findByNoticeCodeAndNoticeStatusNot(Long noticeCode, NoticeStatusType noticeStatus);
+
 }

@@ -12,7 +12,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import yep.greenFire.greenfirebackend.auth.service.AuthService;
+
+import java.util.Arrays;
 
 @RequiredArgsConstructor
 @EnableMethodSecurity
@@ -40,6 +45,9 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.POST, "/members/signup", "/members/login").permitAll();
                     auth.requestMatchers("/admin/adminNotices").permitAll();
                     auth.requestMatchers("/admin/notices/1").permitAll();
+                    auth.requestMatchers("/admin/members").permitAll();
+                    auth.requestMatchers(HttpMethod.DELETE,"/admin/adminNotices/2").permitAll();
+                    auth.requestMatchers(HttpMethod.PUT,"/admin/adminNotices/2").permitAll();
                     auth.anyRequest().authenticated();
                 })
 //                /* 기본적으로 동작하는 로그인 필터 이전에 커스텀 로그인 필터를 설정한다. */
@@ -53,4 +61,5 @@ public class SecurityConfig {
 //                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .build();
     }
+
 }
