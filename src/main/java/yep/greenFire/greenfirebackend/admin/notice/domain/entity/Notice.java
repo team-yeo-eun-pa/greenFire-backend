@@ -48,4 +48,5 @@ public class Notice {
 //        this.noticeDate = noticeDate;
 //        this.noticeWriter = member;
 //    }
+
 }

@@ -51,11 +51,4 @@ public class ExceptionHandlingController {
         return ResponseEntity.badRequest().body(exceptionResponse);
     }
 
-
-
-
-
-
-
-
 }
