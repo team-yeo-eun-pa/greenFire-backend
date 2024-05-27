@@ -1,6 +1,7 @@
 package yep.greenFire.greenfirebackend.admin.notice.domain.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.admin.notice.domain.type.NoticeStatusType;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "tbl_notice")
@@ -28,25 +29,30 @@ public class Notice {
     private NoticeStatusType noticeStatus = NoticeStatusType.ACTIVE;
 
     @CreatedDate
-    private LocalDate noticeDate;
+    private Date noticeDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "noticeWriter", referencedColumnName = "memberCode")
-    private AdminMember noticeWriter;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "noticeWriter", referencedColumnName = "memberCode")
+    private Integer noticeWriter;
 
-//    public Notice of(final String noticeTitle,
-//                     final String noticeFixable,
-//                     final LocalDate noticeDate,
-//                     final Member member) {
-//
-//        return new Notice(noticeTitle, noticeFixable, noticeDate, member);
-//    }
-//
-//    public Notice(String noticeTitle, String noticeFixable, LocalDate noticeDate, Member member) {
-//        this.noticeTitle = noticeTitle;
-//        this.noticeFixable = noticeFixable;
-//        this.noticeDate = noticeDate;
-//        this.noticeWriter = member;
-//    }
+    public Notice(String noticeTitle, String noticeContent,String noticeFixable,Integer noticeWriter) {
+        this.noticeTitle = noticeTitle;
+        this.noticeContent = noticeContent;
+        this.noticeFixable=noticeFixable;
+        this.noticeWriter=noticeWriter;
+    }
 
+    public static Notice of(final String noticeTitle, final String noticeContent, final String noticeFixable, Integer noticeWriter) {
+        return new Notice(
+                noticeTitle,
+                noticeContent,
+                noticeFixable,
+                noticeWriter
+        );
+    }
+
+    public void modify(String noticeTitle, String noticeContent) {
+        this.noticeTitle=noticeTitle;
+        this.noticeContent=noticeContent;
+    }
 }
