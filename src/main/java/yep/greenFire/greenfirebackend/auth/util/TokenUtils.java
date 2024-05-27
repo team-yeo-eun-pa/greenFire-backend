@@ -22,6 +22,8 @@ public class TokenUtils {
     private static Long accessTokenExpiration;
     private static Long refreshTokenExpiration;
 
+    private static String BEARER = "Bearer";
+
     @Value("${jwt.secret}")
     public void setJwtSecretKey(String jwtSecretKey) {
         TokenUtils.jwtSecretKey = jwtSecretKey;
@@ -72,5 +74,31 @@ public class TokenUtils {
         header.put("type", "jwt");
         header.put("date", System.currentTimeMillis());
         return header;
+    }
+
+    public static String getToken(String token) {
+        if (token != null && token.startsWith(BEARER)) {
+            return token.replace(BEARER, "");
+        }
+        return null;
+    }
+
+    public static boolean isValidToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(createSignature()).build().parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            log.error("유효하지 않은 토큰입니다. {}", e.getMessage());
+            return false;
+        }
+    }
+
+    public static String getMemberId(String accessToken) {
+        return Jwts.parserBuilder()
+                .setSigningKey(createSignature())
+                .build()
+                .parseClaimsJws(accessToken)
+                .getBody()
+                .get("memberId").toString();
     }
 }

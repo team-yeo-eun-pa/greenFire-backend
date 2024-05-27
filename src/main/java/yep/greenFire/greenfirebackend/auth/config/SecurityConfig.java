@@ -14,10 +14,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import yep.greenFire.greenfirebackend.auth.filter.CustomAuthenticationFilter;
+import yep.greenFire.greenfirebackend.auth.filter.JwtAuthenticationFilter;
 import yep.greenFire.greenfirebackend.auth.handler.LoginFailureHandler;
 import yep.greenFire.greenfirebackend.auth.handler.LoginSuccessHandler;
 import yep.greenFire.greenfirebackend.auth.service.AuthService;
@@ -48,16 +50,17 @@ public class SecurityConfig {
                      * 이 때 OPTIONS 메소드로 서버에 사전 요청을 보내 확인한다. */
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/members/signup", "/members/login").permitAll();
+                    //
                     auth.anyRequest().authenticated();
                 })
-//                /* 기본적으로 동작하는 로그인 필터 이전에 커스텀 로그인 필터를 설정한다. */
+                /* 기본적으로 동작하는 로그인 필터 이전에 커스텀 로그인 필터를 설정한다. */
                 .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-//                /* 모든 요청에 대해서 토큰을 확인하는 필터 설정 */
-//                .addFilterBefore(jwtAuthenticationFilter(), BasicAuthenticationFilter.class)
-//                .exceptionHandling(exceptionHandling -> {
-//                    exceptionHandling.accessDeniedHandler(jwtAccessDeniedHandler());
-//                    exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint());
-//                })
+                /* 모든 요청에 대해서 토큰을 확인하는 필터 설정 */
+                .addFilterBefore(jwtAuthenticationFilter(), BasicAuthenticationFilter.class)
+                .exceptionHandling(exceptionHandling -> {
+                    //exceptionHandling.accessDeniedHandler(jwtAccessDeniedHandler());
+                    //exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint());
+                })
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .build();
     }
@@ -111,5 +114,11 @@ public class SecurityConfig {
         customAuthenticationFilter.setAuthenticationSuccessHandler(loginSuccessHandler());
 
         return customAuthenticationFilter;
+    }
+
+    // JWT Token 인증 필터
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter(authService);
     }
 }
