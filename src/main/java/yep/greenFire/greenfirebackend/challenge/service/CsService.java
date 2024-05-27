@@ -41,7 +41,7 @@ public class CsService {
                 csCreateRequest.getMemberEmail()
         );
 
-        final CsList csList1 = csRepository.saveCsList(csCreateRequest);
+        final CsList csList1 = csRepository.CsList(csCreateRequest);
 
         return newList;
     }

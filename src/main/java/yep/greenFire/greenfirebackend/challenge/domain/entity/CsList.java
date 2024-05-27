@@ -30,19 +30,8 @@ public class CsList {
     private String memberName;
     private String memberEmail;
 
-    public CsList(int csCode, Date csWriteDate, String csStatus, Date csModifyDate, Date csDeleteDate, String csReply, String csReplyStatus, int memberCode, String memberId, String memberName, String email) {
-        this.csCode = csCode;
-        this.csWriteDate = csWriteDate;
-        this.csStatus = csStatus;
-        this.csModifyDate = csModifyDate;
-        this.csDeleteDate = csDeleteDate;
-        this.csReply = csReply;
-        this.csReplyStatus = csReplyStatus;
-        this.memberCode = memberCode;
-        this.memberId = memberId;
-        this.memberName = memberName;
-        this.memberEmail = memberEmail;
-    }
+
+
 
 
     public CsList(int memberCode, String memberId, String memberName, String memberEmail) {
