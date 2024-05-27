@@ -19,4 +19,5 @@ public class ExceptionResponse {
     public static ExceptionResponse of(int code, String message) {
         return new ExceptionResponse(code, message);
     }
+
 }
