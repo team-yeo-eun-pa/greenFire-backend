@@ -12,6 +12,7 @@ import yep.greenFire.greenfirebackend.admin.notice.dto.request.NoticeCreateReque
 import yep.greenFire.greenfirebackend.admin.notice.dto.request.NoticeUpdateRequest;
 import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticeResponse;
 import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticesResponse;
+import yep.greenFire.greenfirebackend.admin.notice.dto.response.MemberNoticesResponse;
 import yep.greenFire.greenfirebackend.admin.notice.service.NoticeService;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
@@ -28,9 +29,9 @@ public class NoticeController {
 
     @GetMapping("/adminNotices")
     public ResponseEntity<PagingResponse> getAdminNotices(
-            @RequestParam(defaultValue = "1") final Integer page,
-            @AuthenticationPrincipal final AdminMember adminMember
+            @RequestParam(defaultValue = "1") final Integer page
     ){
+
         final Page<AdminNoticesResponse> notices = noticeService.getAdminNotices(page);
         final PagingButtonInfo pagingButtonInfo = Pagination.getPagingButtonInfo(notices);
         final PagingResponse pagingResponse = PagingResponse.of(notices.getContent(), pagingButtonInfo);

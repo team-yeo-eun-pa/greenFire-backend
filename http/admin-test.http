@@ -1,13 +1,13 @@
 ###
 GET http://localhost:8001/admin/adminNotices
-
-
+Access-Token: Bearer eyJkYXRlIjoxNzE2ODgyNjQ0NjI5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9BRE1JTiIsIm1lbWJlcklkIjoidXNlcjAyIiwiZXhwIjoxNzE2ODg2MjQ0fQ.jznUbSGndSq82P_yaJ2_4TJWpjU7V4S294uEWoL89sbHhb6qRIpycUFry3IiI9s_Wq8Db0rhk0JyZ5sS2OmdZA
 ###
 GET http://localhost:8001/admin/notices/2
 
 ###
 POST http://localhost:8001/admin/adminNotices
 Content-Type: application/json
+Access-Token: $2a$10$cDDTmYVIVEiaS5M2qZXhIuwKiNRTtg77Nd4gaybiR40/jIPPtC6ti
 
 {
 "noticeTitle" : "제목제목제목",

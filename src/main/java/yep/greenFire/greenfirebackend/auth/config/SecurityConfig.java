@@ -31,6 +31,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import yep.greenFire.greenfirebackend.auth.service.AuthService;
+import yep.greenFire.greenfirebackend.user.member.domain.type.MemberRole;
 
 import java.util.Arrays;
 
@@ -58,13 +59,14 @@ public class SecurityConfig {
                      * 이 때 OPTIONS 메소드로 서버에 사전 요청을 보내 확인한다. */
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/members/signup", "/members/login").permitAll();
-                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("/admin/adminNotices").permitAll();
+                    auth.requestMatchers("/admin/**").hasRole(MemberRole.ADMIN.toString());
+                    auth.requestMatchers(HttpMethod.GET,"/admin/adminNotices").permitAll();
                     auth.requestMatchers("/admin/notices/1").permitAll();
                     auth.requestMatchers("/admin/members").permitAll();
                     auth.requestMatchers(HttpMethod.DELETE,"/admin/adminNotices/2").permitAll();
                     auth.requestMatchers(HttpMethod.PUT,"/admin/adminNotices/2").permitAll();
                     auth.anyRequest().authenticated();
+
                 })
                 /* 기본적으로 동작하는 로그인 필터 이전에 커스텀 로그인 필터를 설정한다. */
                 .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

@@ -9,10 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yep.greenFire.greenfirebackend.admin.notice.domain.entity.Notice;
 import yep.greenFire.greenfirebackend.admin.notice.domain.repository.NoticeRepository;
+import yep.greenFire.greenfirebackend.admin.notice.domain.type.NoticeStatusType;
 import yep.greenFire.greenfirebackend.admin.notice.dto.request.NoticeCreateRequest;
 import yep.greenFire.greenfirebackend.admin.notice.dto.request.NoticeUpdateRequest;
 import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticeResponse;
 import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticesResponse;
+import yep.greenFire.greenfirebackend.admin.notice.dto.response.MemberNoticeResponse;
+import yep.greenFire.greenfirebackend.admin.notice.dto.response.MemberNoticesResponse;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 
@@ -61,8 +64,6 @@ public class NoticeService {
         return notice.getNoticeCode();
     }
 
-    private void verifyNotice(Long noticeCode, Long memberCode) {
-    }
 
     public void modify(Long noticeCode, NoticeUpdateRequest noticeUpdateRequest){
         Notice notice = noticeRepository.findByNoticeCodeAndNoticeStatusNot(noticeCode, DELETE)
@@ -77,5 +78,25 @@ public class NoticeService {
     public void remove(Long noticeCode) {
 
         noticeRepository.deleteById(noticeCode);
+    }
+
+    public Page<MemberNoticesResponse> getMemberNotices(final Integer page, final Integer noticeCode) {
+
+        Page<Notice> notices = null;
+        if(noticeCode != null) {
+            notices = noticeRepository.findByNoticeTitleAndNoticeStatus(getPageable(page), noticeCode, NoticeStatusType.ACTIVE);
+
+        }
+
+        return notices.map(MemberNoticesResponse::from);
+    }
+
+    @Transactional(readOnly = true)
+    public MemberNoticeResponse getMemberNotice(Long noticeCode) {
+
+        Notice notice = noticeRepository.findByNoticeCodeAndNoticeStatusNot(noticeCode, DELETE)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_NOTICE_CODE));
+
+        return MemberNoticeResponse.from(notice);
     }
 }
