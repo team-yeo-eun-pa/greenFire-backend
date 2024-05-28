@@ -4,7 +4,7 @@ package yep.greenFire.greenfirebackend.challenge.dto.response;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import yep.greenFire.greenfirebackend.challenge.domain.entity.CsList;
+import yep.greenFire.greenfirebackend.challenge.domain.entity.CsContent;
 
 import java.util.Date;
 
@@ -29,14 +29,14 @@ public class CsResponse {
         this.csReplyStatus = csReplyStatus;
     }
 
-    public static CsResponse from(CsList csList) {
+    public static CsResponse from(CsContent csContent) {
         return new CsResponse(
-                csList.getCsCode(),
-                csList.getMemberCode(),
-                csList.getCsStatus(),
-                csList.getCsWriteDate(),
-                csList.getCsReply(),
-                csList.getCsReplyStatus()
+                csContent.getCsCode(),
+                csContent.getMemberCode(),
+                csContent.getCsStatus(),
+                csContent.getCsWriteDate(),
+                csContent.getCsReply(),
+                csContent.getCsReplyStatus()
 
         );
 
