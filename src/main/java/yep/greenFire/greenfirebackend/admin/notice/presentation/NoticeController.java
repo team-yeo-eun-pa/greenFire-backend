@@ -54,7 +54,7 @@ public class NoticeController {
             @RequestBody @Valid final NoticeCreateRequest noticeCreateRequest,
             @AuthenticationPrincipal final AdminMember adminMember
             ){
-       noticeService.save(noticeCreateRequest, 1);
+       noticeService.save(noticeCreateRequest, 2);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

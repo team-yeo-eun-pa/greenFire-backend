@@ -60,8 +60,6 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/members/signup", "/members/login").permitAll();
                     auth.requestMatchers("/admin/**").hasRole(MemberRole.ADMIN.toString());
-//                    auth.requestMatchers("/admin/adminNotices").permitAll();
-//                    auth.requestMatchers("/admin/members").permitAll();
                     auth.anyRequest().authenticated();
 
                 })

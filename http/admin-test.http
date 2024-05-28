@@ -8,18 +8,20 @@ Access-Token: Bearer eyJkYXRlIjoxNzE2ODkzMzg2ODU2LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
 
 ###
 POST http://localhost:8001/admin/adminNotices
-Access-Token: Bearer eyJkYXRlIjoxNzE2ODk5MTAyMTk2LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9BRE1JTiIsIm1lbWJlcklkIjoidXNlcjAyIiwiZXhwIjoxNzE2OTAyNzAyfQ.5FoGEBwYXPqx2EAF2GZLJFz3SdVyJy73eiF_Dttg6qReljViMwf0gOFnEnCXg2Dv1LSI9oj0ICsIKLokwpjR_Q
+Access-Token: Bearer eyJkYXRlIjoxNzE2OTAxMTIyMTQ5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6InVzZXIwMiIsIm1lbWJlclJvbGUiOiJST0xFX0FETUlOIiwiZXhwIjoxNzE2OTA0NzIyfQ.rk5PpQcc2QxIsKbX2Z1-d5e--8NLjJPZ0wP4n4HLvzlYz5IwEePgiXBY_sNVzCahmMOXC_JoGU4ti2_Kv66gqg
+Content-Type: application/json
 
 {
-"noticeTitle" : "공지사항 생성",
-"noticeContent" : "내용 생성",
-"noticeFixable": "YES"
+  "noticeTitle" : "등록2",
+  "noticeContent" : "내용등록2",
+  "noticeFixable" : "YES"
 }
 
 
 ###
 PUT http://localhost:8001/admin/adminNotices/3
-Access-Token: Bearer eyJkYXRlIjoxNzE2ODkzMzg2ODU2LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6InVzZXIwMiIsIm1lbWJlclJvbGUiOiJST0xFX0FETUlOIiwiZXhwIjoxNzE2ODk2OTg2fQ.lpyW2GYxC717tfU_-EsKaXbRiCYHUZDz6nUTa01eA0yZcAK7h0nz71L0_bEEJ_qGs5I7rBnIASat1iwH6chQOw
+Access-Token: Bearer eyJkYXRlIjoxNzE2OTAxMTIyMTQ5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6InVzZXIwMiIsIm1lbWJlclJvbGUiOiJST0xFX0FETUlOIiwiZXhwIjoxNzE2OTA0NzIyfQ.rk5PpQcc2QxIsKbX2Z1-d5e--8NLjJPZ0wP4n4HLvzlYz5IwEePgiXBY_sNVzCahmMOXC_JoGU4ti2_Kv66gqg
+Content-Type: application/json
 
 {
   "noticeTitle" : "제목제목11111",
