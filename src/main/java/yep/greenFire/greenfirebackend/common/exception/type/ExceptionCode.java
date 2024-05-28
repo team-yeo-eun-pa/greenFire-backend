@@ -17,6 +17,7 @@ public enum ExceptionCode {
     NOT_ENOUGH_STOCK(5000, "재고 부족으로 주문 불가합니다."),
     NOT_FOUND_VALID_ORDER(5001, "유효한 주문 건이 아닙니다."),
     ALREADY_EXIST_REVIEW(6000, "해당 주문 건에 이미 작성 된 리뷰가 있습니다.");
+    //NOT_FOUND_CS_CODE(7000, "문의 목록을 불러올 수 없습니다.");
 
     private final int code;
     private final String message;

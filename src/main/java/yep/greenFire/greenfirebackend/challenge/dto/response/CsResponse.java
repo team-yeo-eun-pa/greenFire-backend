@@ -11,30 +11,29 @@ import java.util.Date;
 
 public class CsResponse {
 
+    //전체 조회시 보여줘야 할 값이 뭐가 있을까.
+
     private int csCode;
-    private int memberCode;
     private String csStatus;
-    private Date csWriteDate;
     private String csReply;
     private String csReplyStatus;
+    private int memberCode;
 
-    public CsResponse(int csCode, int memberCode, String csStatus, Date csWriteDate, String csReply, String csReplyStatus) {
+    public CsResponse(int csCode, String csStatus, String csReply, String csReplyStatus, int memberCode) {
         this.csCode = csCode;
-        this.memberCode = memberCode;
         this.csStatus = csStatus;
-        this.csWriteDate = csWriteDate;
         this.csReply = csReply;
         this.csReplyStatus = csReplyStatus;
+        this.memberCode = memberCode;
     }
 
     public static CsResponse from(CsContent csContent) {
         return new CsResponse(
                 csContent.getCsCode(),
-                csContent.getMemberCode(),
                 csContent.getCsStatus(),
-                csContent.getCsWriteDate(),
                 csContent.getCsReply(),
-                csContent.getCsReplyStatus()
+                csContent.getCsReplyStatus(),
+                csContent.getMemberCode()
 
         );
 

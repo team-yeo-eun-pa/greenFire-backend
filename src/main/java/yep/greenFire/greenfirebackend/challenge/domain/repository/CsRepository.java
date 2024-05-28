@@ -11,9 +11,8 @@ public interface CsRepository extends JpaRepository<CsContent, Integer> {
     Optional<Object> findByMemberId(String memberId);
 
     CsContent findByMemberCode(int memberCode);
-    //등록한 사람을 찾는 중
 
-
+    CsContent findAllCsContents(int csCode);
 
 
     // Object findByCsCode(int csCode);
