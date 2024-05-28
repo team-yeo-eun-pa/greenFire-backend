@@ -60,11 +60,8 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/members/signup", "/members/login").permitAll();
                     auth.requestMatchers("/admin/**").hasRole(MemberRole.ADMIN.toString());
-                    auth.requestMatchers(HttpMethod.GET,"/admin/adminNotices").permitAll();
-                    auth.requestMatchers("/admin/notices/1").permitAll();
-                    auth.requestMatchers("/admin/members").permitAll();
-                    auth.requestMatchers(HttpMethod.DELETE,"/admin/adminNotices/2").permitAll();
-                    auth.requestMatchers(HttpMethod.PUT,"/admin/adminNotices/2").permitAll();
+//                    auth.requestMatchers("/admin/adminNotices").permitAll();
+//                    auth.requestMatchers("/admin/members").permitAll();
                     auth.anyRequest().authenticated();
 
                 })
