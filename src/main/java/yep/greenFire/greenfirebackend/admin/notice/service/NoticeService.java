@@ -64,8 +64,6 @@ public class NoticeService {
         return notice.getNoticeCode();
     }
 
-    private void verifyNotice(Long noticeCode, Long memberCode) {
-    }
 
     public void modify(Long noticeCode, NoticeUpdateRequest noticeUpdateRequest){
         Notice notice = noticeRepository.findByNoticeCodeAndNoticeStatusNot(noticeCode, DELETE)
