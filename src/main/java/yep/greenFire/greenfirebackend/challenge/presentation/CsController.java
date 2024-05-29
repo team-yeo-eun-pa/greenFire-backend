@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.CsContent;
 import yep.greenFire.greenfirebackend.challenge.dto.request.CsCreateRequest;
+import yep.greenFire.greenfirebackend.challenge.dto.response.AdminCsResponse;
 import yep.greenFire.greenfirebackend.challenge.dto.response.CsResponse;
 import yep.greenFire.greenfirebackend.challenge.service.CsService;
 
@@ -14,11 +15,11 @@ import java.net.URI;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/member/cs") //경로매핑 잘하기
+@RequestMapping("/cs") //경로매핑 잘하기
 public class CsController {
     private CsService csService;
 
-    @GetMapping("/list")
+    @GetMapping("/member/list")
     @PreAuthorize("#memberId == authentication.principal.username")
     public ResponseEntity<CsResponse> getCsList(
             @RequestParam String memberId
@@ -29,7 +30,7 @@ public class CsController {
         return ResponseEntity.ok(csResponse);
     }
 
-    @PostMapping("/list/regist")
+    @PostMapping("/member/list/regist")
     public ResponseEntity<Void> save (
             @RequestPart @Valid final CsCreateRequest csCreateRequest
 
@@ -47,7 +48,7 @@ public class CsController {
      *  4. 문의/문의 답변 삭제 : 관리자 버전
      * => 등록된 답변이 없을 경우 상세 조회할 수 없다.. 등록부터 해야할 듯. */
 
-        @GetMapping("/list/detail")
+        @GetMapping("/member/list/detail")
     public ResponseEntity<CsResponse> getCsDetail(
             @RequestParam int csCode
     )
@@ -56,6 +57,26 @@ public class CsController {
         return ResponseEntity.ok(csResponse);
 
     }
+
+    /* 5/29 해야할 것
+    * 1. 관리자 : 등록된 문의 조회
+    * 2. 관리자 : 문의 답변 등록
+    * 3. 관리자 : 업데이트된 문의 목록 조회
+    * 관리자 모드에서의 문의 목록 조회는 버튼모양으로 상태값을 보여줘야 한다
+    **/
+
+
+    @GetMapping("/admin/list")
+    @PreAuthorize("#memberRole == authentication.principal.admin")
+    public ResponseEntity<AdminCsResponse> getAdminCsList(
+            @RequestParam int csCode
+
+    ) {
+        AdminCsResponse adminCsResponse = csService.getAdminCsList(csCode);
+
+        return ResponseEntity.ok(adminCsResponse);
+    }
+
 
 
 

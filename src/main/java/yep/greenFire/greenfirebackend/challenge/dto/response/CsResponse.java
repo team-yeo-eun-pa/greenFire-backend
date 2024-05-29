@@ -2,12 +2,14 @@ package yep.greenFire.greenfirebackend.challenge.dto.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.CsContent;
 
 import java.util.Date;
 
 @Getter
 @RequiredArgsConstructor
+@Service
 
 public class CsResponse {
 

@@ -14,6 +14,8 @@ public interface CsRepository extends JpaRepository<CsContent, Integer> {
 
     CsContent findAllCsContents(int csCode);
 
+    Object findByAdminCsCode(int csCode);
+
 
     // Object findByCsCode(int csCode);
 }

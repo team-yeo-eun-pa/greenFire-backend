@@ -1,15 +1,14 @@
 package yep.greenFire.greenfirebackend.challenge.service;
 
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.service.spi.InjectService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.CsContent;
 import yep.greenFire.greenfirebackend.challenge.domain.repository.CsRepository;
 import yep.greenFire.greenfirebackend.challenge.dto.request.CsCreateRequest;
+import yep.greenFire.greenfirebackend.challenge.dto.response.AdminCsResponse;
 import yep.greenFire.greenfirebackend.challenge.dto.response.CsResponse;
 
 @Service
@@ -57,4 +56,11 @@ public class CsService {
     }
 
 
-}
+    public AdminCsResponse getAdminCsList(int csCode) {
+        CsContent adminCsContent = (CsContent) csRepository.findByAdminCsCode(csCode);
+
+        return AdminCsResponse.from(adminCsContent);
+    }
+    }
+
+
