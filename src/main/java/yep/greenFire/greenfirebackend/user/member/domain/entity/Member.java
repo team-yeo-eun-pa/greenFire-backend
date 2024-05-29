@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "tbl_member")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 public class Member {
@@ -41,6 +43,8 @@ public class Member {
     private String addressDongeupmyeon;
     private String addressDetail;
     private String addressZipcode;
+
+
 
     private Member(String memberId, String memberPassword, String memberName, String memberEmail, String memberPhone, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String addressZipcode) {
         this.memberId = memberId;

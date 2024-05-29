@@ -12,9 +12,9 @@ Access-Token: Bearer eyJkYXRlIjoxNzE2OTAxMTIyMTQ5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
 Content-Type: application/json
 
 {
-  "noticeTitle" : "등록2",
-  "noticeContent" : "내용등록2",
-  "noticeFixable" : "YES"
+  "noticeTitle" : "등록3",
+  "noticeContent" : "내용등록3",
+  "noticeFixable" : "NO"
 }
 
 

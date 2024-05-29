@@ -1,10 +1,9 @@
-package yep.greenFire.greenfirebackend.admin.notice.dto.response;
+package yep.greenFire.greenfirebackend.admin.category.dto.response;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import yep.greenFire.greenfirebackend.admin.notice.domain.entity.Category;
-import yep.greenFire.greenfirebackend.admin.notice.domain.repository.CategoryRepository;
+import yep.greenFire.greenfirebackend.admin.category.domain.entity.Category;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)

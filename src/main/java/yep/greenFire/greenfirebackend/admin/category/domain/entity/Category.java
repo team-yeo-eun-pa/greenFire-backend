@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.admin.notice.domain.entity;
+package yep.greenFire.greenfirebackend.admin.category.domain.entity;
 
 
 import jakarta.persistence.*;

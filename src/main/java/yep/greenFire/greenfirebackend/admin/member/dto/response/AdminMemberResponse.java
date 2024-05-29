@@ -1,10 +1,10 @@
-package yep.greenFire.greenfirebackend.admin.notice.dto.response;
+package yep.greenFire.greenfirebackend.admin.member.dto.response;
 
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import yep.greenFire.greenfirebackend.admin.notice.domain.entity.AdminMember;
+import yep.greenFire.greenfirebackend.admin.member.domain.entity.AdminMember;
 import yep.greenFire.greenfirebackend.user.member.domain.type.MemberStatus;
 
 import java.util.Date;
@@ -13,7 +13,7 @@ import java.util.Date;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class AdminMemberResponse {
 
-    private int memberCode;
+    private Long memberCode;
     private String memberId;
     private String memberName;
     private String memberNickname;
@@ -23,7 +23,7 @@ public class AdminMemberResponse {
     private Date registAt;
     private Date quitAt;
 
-    public AdminMemberResponse(int memberCode, String memberId, String memberName, String memberNickname, String memberEmail, String memberPhone, MemberStatus memberStatus, Date registAt, Date quitAt) {
+    public AdminMemberResponse(Long memberCode, String memberId, String memberName, String memberNickname, String memberEmail, String memberPhone, MemberStatus memberStatus, Date registAt, Date quitAt) {
         this.memberCode=memberCode;
         this.memberId=memberId;
         this.memberName=memberName;

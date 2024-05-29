@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.admin.notice.presentation;
+package yep.greenFire.greenfirebackend.admin.member.presentation;
 
 
 import lombok.RequiredArgsConstructor;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminMemberResponse;
-import yep.greenFire.greenfirebackend.admin.notice.service.AdminMemberService;
+import yep.greenFire.greenfirebackend.admin.member.dto.response.AdminMemberResponse;
+import yep.greenFire.greenfirebackend.admin.member.service.AdminMemberService;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
