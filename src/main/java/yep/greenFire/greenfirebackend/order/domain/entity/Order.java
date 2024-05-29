@@ -82,5 +82,18 @@ public class Order {
                 storeOrders
                 );
     }
+
+
+    /* 총 주문금액 */
+    public void totalOrderPrice(Long orderPrice) {
+        this.orderPrice += orderPrice;
+    }
+
+    /* 총 배송비 */
+    public void totalDeliveryAmount(Long deliveryAmount) {
+        this.deliveryAmount += deliveryAmount;
+    }
+
+
 }
 
