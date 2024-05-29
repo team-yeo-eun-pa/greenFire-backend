@@ -11,7 +11,7 @@ import java.util.Date;
 @Getter
 @RequiredArgsConstructor
 @Service
-public class InquiryAllResponse {
+public class InquiryOneResponse {
 
     //문의 등록 후 업데이트 된 문의 리스트 리턴할 때 쓰는 리스퐌스~
     private int inquiryCode;
@@ -23,16 +23,16 @@ public class InquiryAllResponse {
     private String inquiryReplyStatus;
 
 
-    public InquiryAllResponse(int inquiryCode, Date inquiryWriteDate, String inquiryTitle, String inquiryReplyStatus) {
+    public InquiryOneResponse(int inquiryCode, Date inquiryWriteDate, String inquiryTitle, String inquiryReplyStatus) {
         this.inquiryCode = inquiryCode;
         this.inquiryWriteDate = inquiryWriteDate;
         this.inquiryTitle = inquiryTitle;
         this.inquiryReplyStatus = inquiryReplyStatus;
     }
 
-    public static InquiryAllResponse from(InquiryContent newInquiry) {
+    public static InquiryOneResponse from(InquiryContent newInquiry) {
 
-        return new InquiryAllResponse(
+        return new InquiryOneResponse(
                 newInquiry.getInquiryCode(),
                 newInquiry.getInquiryWriteDate(),
                 newInquiry.getInquiryTitle(),

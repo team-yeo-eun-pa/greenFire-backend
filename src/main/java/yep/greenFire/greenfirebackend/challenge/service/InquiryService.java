@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
 import yep.greenFire.greenfirebackend.challenge.domain.repository.InquiryRepository;
 import yep.greenFire.greenfirebackend.challenge.dto.request.InquiryCreateRequest;
+import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryOneResponse;
 import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryResponse;
 
 @Service
@@ -39,8 +40,6 @@ public class InquiryService {
 
     ) {
 
-       // ResponseEntity<InquiryResponse> inquiryResponseEntity = new ResponseEntity<InquiryResponse>();
-
         final InquiryContent newInquiryContent = InquiryContent.of(
                 inquiryCreateRequest.getInquiryCode(),
                 inquiryCreateRequest.getMemberCode(),
@@ -56,15 +55,15 @@ public class InquiryService {
 
        return newContent.getInquiryCode();
     }
-//
-//    public InquiryResponse getCsDetail(int inquiryCode) {
-//        final InquiryContent csList = inquiryRepository.findAllInquiryContents(inquiryCode);
-////                .orElseThrow(()-> new NotFoundException(ExceptionCode.NOT_FOUND_CS_CODE));
-//        //익셉션 코드 문제 해결하기
-//
-//      return InquiryAllResponse.from(csList);
-//
-//    }
+
+    public InquiryOneResponse getInquiryDetail(int inquiryCode) {
+        final InquiryContent newInquiry = inquiryRepository.findByInquiryCode(inquiryCode);
+//                .orElseThrow(()-> new NotFoundException(ExceptionCode.NOT_FOUND_CS_CODE));
+        //익셉션 코드 문제 해결하기
+
+      return InquiryOneResponse.from(newInquiry);
+
+    }
 //
 //
 //    public AdminInquiryResponse getAdminCsList(int inquiryCode) {

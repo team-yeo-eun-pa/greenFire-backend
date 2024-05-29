@@ -17,7 +17,7 @@ public interface InquiryRepository extends JpaRepository<InquiryContent, Integer
 
    // InquiryContent findAllInquiryContents(int inquiryCode);
 
-    Object findByInquiryCode(int inquiryCode);
+    InquiryContent findByInquiryCode(int inquiryCode);
 
 
 

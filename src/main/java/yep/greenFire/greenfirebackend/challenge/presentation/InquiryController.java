@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
 import yep.greenFire.greenfirebackend.challenge.dto.request.InquiryCreateRequest;
+import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryOneResponse;
 import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryResponse;
 import yep.greenFire.greenfirebackend.challenge.service.InquiryService;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
@@ -44,26 +45,21 @@ public class InquiryController {
     ) {
 
         final int inquiryCode = inquiryService.save(inquiryCreateRequest);
-        return ResponseEntity.created(URI.create("/member/cs/list" +inquiryCode)).build();
+        return ResponseEntity.created(URI.create("/me" +inquiryCode)).build();
 
 
     }
-//    /* 5/28 해야할 것.
-//     *  1. 문의 상세보기 : 회원버전
-//     *  2. 문의 답변 달기 : 관리자 버전
-//     *  3. 문의 답변 수정 : 관리자 버전
-//     *  4. 문의/문의 답변 삭제 : 관리자 버전
-//     * => 등록된 답변이 없을 경우 상세 조회할 수 없다.. 등록부터 해야할 듯. */
-//
-//        @GetMapping("/member/list/detail")
-//    public ResponseEntity<InquiryResponse> getCsDetail(
-//            @RequestParam int inquiryCode
-//    )
-//    {
-//        InquiryResponse inquiryResponse = inquiryService.getCsDetail(inquiryCode);
-//        return ResponseEntity.ok(inquiryResponse);
-//
-//    }
+
+
+        @GetMapping("/me/update")
+        public ResponseEntity<InquiryOneResponse> getInquiryDetail(
+            @RequestParam int inquiryCode
+    )
+    {
+        InquiryOneResponse inquiryOneResponse = inquiryService.getInquiryDetail(inquiryCode);
+        return ResponseEntity.ok(inquiryOneResponse);
+
+    }
 //
 //    /* 5/29 해야할 것
 //    * 1. 관리자 : 등록된 문의 조회
