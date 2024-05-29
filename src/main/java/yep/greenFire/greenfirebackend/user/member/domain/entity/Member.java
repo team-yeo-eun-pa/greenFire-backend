@@ -25,6 +25,7 @@ public class Member {
     private String memberId;
     private String memberPassword;
     private String memberName;
+    private String memberNickname;
     private String memberEmail;
     private String memberPhone;
     @Enumerated(value = EnumType.STRING)
@@ -42,10 +43,11 @@ public class Member {
     private String addressDetail;
     private String addressZipcode;
 
-    private Member(String memberId, String memberPassword, String memberName, String memberEmail, String memberPhone, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String addressZipcode) {
+    private Member(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String addressZipcode) {
         this.memberId = memberId;
         this.memberPassword = memberPassword;
         this.memberName = memberName;
+        this.memberNickname = memberNickname;
         this.memberEmail = memberEmail;
         this.memberPhone = memberPhone;
         this.addressSido = addressSido;
@@ -55,11 +57,12 @@ public class Member {
         this.addressZipcode = addressZipcode;
     }
 
-    public static Member of(String memberId, String memberPassword, String memberName, String memberEmail, String memberPhone, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String addressZipcode) {
+    public static Member of(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String addressZipcode) {
         return new Member(
                 memberId,
                 memberPassword,
                 memberName,
+                memberNickname,
                 memberEmail,
                 memberPhone,
                 addressSido,
