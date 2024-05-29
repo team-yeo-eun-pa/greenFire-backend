@@ -1,12 +1,12 @@
-package yep.greenFire.greenfirebackend.admin.notice.service;
+package yep.greenFire.greenfirebackend.admin.category.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yep.greenFire.greenfirebackend.admin.notice.domain.entity.Category;
-import yep.greenFire.greenfirebackend.admin.notice.domain.repository.CategoryRepository;
-import yep.greenFire.greenfirebackend.admin.notice.dto.request.CategoryCreateRequest;
-import yep.greenFire.greenfirebackend.admin.notice.dto.request.CategoryUpdateRequest;
+import yep.greenFire.greenfirebackend.admin.category.domain.entity.Category;
+import yep.greenFire.greenfirebackend.admin.category.domain.repository.CategoryRepository;
+import yep.greenFire.greenfirebackend.admin.category.dto.request.CategoryCreateRequest;
+import yep.greenFire.greenfirebackend.admin.category.dto.request.CategoryUpdateRequest;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 

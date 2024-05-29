@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yep.greenFire.greenfirebackend.admin.member.service.AdminMemberService;
 import yep.greenFire.greenfirebackend.admin.notice.domain.entity.Notice;
 import yep.greenFire.greenfirebackend.admin.notice.domain.repository.NoticeRepository;
 import yep.greenFire.greenfirebackend.admin.notice.domain.type.NoticeStatusType;

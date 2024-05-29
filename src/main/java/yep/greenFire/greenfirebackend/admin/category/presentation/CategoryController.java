@@ -1,16 +1,15 @@
-package yep.greenFire.greenfirebackend.admin.notice.presentation;
+package yep.greenFire.greenfirebackend.admin.category.presentation;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import yep.greenFire.greenfirebackend.admin.notice.domain.entity.Category;
-import yep.greenFire.greenfirebackend.admin.notice.dto.request.CategoryCreateRequest;
-import yep.greenFire.greenfirebackend.admin.notice.dto.request.CategoryUpdateRequest;
-import yep.greenFire.greenfirebackend.admin.notice.service.CategoryService;
+import yep.greenFire.greenfirebackend.admin.category.domain.entity.Category;
+import yep.greenFire.greenfirebackend.admin.category.dto.request.CategoryCreateRequest;
+import yep.greenFire.greenfirebackend.admin.category.dto.request.CategoryUpdateRequest;
+import yep.greenFire.greenfirebackend.admin.category.service.CategoryService;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController

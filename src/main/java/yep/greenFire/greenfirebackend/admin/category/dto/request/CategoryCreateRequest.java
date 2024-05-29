@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.admin.notice.dto.request;
+package yep.greenFire.greenfirebackend.admin.category.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

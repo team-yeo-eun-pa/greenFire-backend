@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.admin.notice.service;
+package yep.greenFire.greenfirebackend.admin.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -7,9 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yep.greenFire.greenfirebackend.admin.notice.domain.entity.AdminMember;
-import yep.greenFire.greenfirebackend.admin.notice.domain.repository.AdminMemberRepository;
-import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminMemberResponse;
+import yep.greenFire.greenfirebackend.admin.member.domain.entity.AdminMember;
+import yep.greenFire.greenfirebackend.admin.member.domain.repository.AdminMemberRepository;
+import yep.greenFire.greenfirebackend.admin.member.dto.response.AdminMemberResponse;
 import yep.greenFire.greenfirebackend.user.member.domain.type.MemberStatus;
 
 
