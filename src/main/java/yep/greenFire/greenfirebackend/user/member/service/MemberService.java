@@ -10,6 +10,7 @@ import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.user.member.domain.entity.Member;
 import yep.greenFire.greenfirebackend.user.member.domain.repository.MemberRepository;
 import yep.greenFire.greenfirebackend.user.member.dto.request.MemberSignupRequest;
+import yep.greenFire.greenfirebackend.user.member.dto.response.ProfileResponse;
 
 import static yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode.NOT_FOUND_REFRESH_TOKEN;
 
@@ -27,6 +28,7 @@ public class MemberService {
                 memberRequest.getMemberId(),
                 passwordEncoder.encode(memberRequest.getMemberPassword()),
                 memberRequest.getMemberName(),
+                memberRequest.getMemberNickname(),
                 memberRequest.getMemberEmail(),
                 memberRequest.getMemberPhone(),
                 memberRequest.getAddressSido(),
@@ -64,5 +66,14 @@ public class MemberService {
                 .orElseThrow(() -> new NotFoundException(NOT_FOUND_REFRESH_TOKEN));
 
         return LoginDTO.from(member);
+    }
+
+    @Transactional(readOnly = true)
+    public ProfileResponse getProfile(String memberId) {
+
+        Member member = memberRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new UsernameNotFoundException("해당 아이디가 존재하지 않습니다."));
+
+        return ProfileResponse.from(member);
     }
 }
