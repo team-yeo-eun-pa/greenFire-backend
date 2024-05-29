@@ -14,6 +14,7 @@ public class MemberSignupRequest {
     private final String memberPassword;
     @NotBlank
     private final String memberName;
+    private final String memberNickname;
     @NotBlank
     private final String memberEmail;
     @NotBlank
