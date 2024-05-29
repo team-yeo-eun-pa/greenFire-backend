@@ -18,6 +18,7 @@ public class MemberNoticesResponse {
     private final Date noticeDate;
     private final Integer noticeWriter;
 
+
     public static MemberNoticesResponse from(final Notice notice){
         return new MemberNoticesResponse(
                 notice.getNoticeCode(),

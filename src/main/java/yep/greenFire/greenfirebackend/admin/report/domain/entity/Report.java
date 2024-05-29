@@ -23,7 +23,7 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportCode;
 
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     private Long reportReason;
 
     private LocalDateTime reportDate;
