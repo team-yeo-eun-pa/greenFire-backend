@@ -31,12 +31,18 @@ public class StoreOrder {
     @JoinColumn(name = "storeOrderCode")
     private List<OrderDetail> orderDetail;
 
-//    public StoreOrder(Long storeCode, List<OrderDetail> orderDetail) {
+    public StoreOrder(
+//            Long storeCode,
+            List<OrderDetail> orderDetail) {
 //        this.storeCode = storeCode;
-//        this.orderDetail = orderDetail;
-//    }
-//
-//    public static StoreOrder of(Long storeCode List<OrderDetail> orderDetail) {
-//        return new StoreOrder(storeCode, orderDetail);
-//    }
+        this.orderDetail = orderDetail;
+    }
+
+    public static StoreOrder of(
+//            Long storeCode,
+            List<OrderDetail> orderDetail) {
+        return new StoreOrder(
+//                storeCode,
+                orderDetail);
+    }
 }

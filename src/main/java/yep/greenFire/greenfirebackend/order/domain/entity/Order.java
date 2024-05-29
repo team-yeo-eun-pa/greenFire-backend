@@ -21,7 +21,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderCode;
-    private Long memberCode;
+    private Integer memberCode;
 
     /* 배송지 - 수령자 연락처 주소 요청사항 //카카오 우편번호 서비스 적용해보기 */
     private String receiver;
@@ -53,4 +53,34 @@ public class Order {
     @JoinColumn(name = "orderCode")
     private List<StoreOrder> storeOrder;
 
+
+    public Order(Integer memberCode, String receiver, String phone, Long addressZipcode, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String request,
+//                 Long orderPrice, Long discountAmount, Long deliveryAmount, Long realPayment,
+                 List<StoreOrder> storeOrder) {
+        this.memberCode = memberCode;
+        this.receiver = receiver;
+        this.phone = phone;
+        this.addressZipcode = addressZipcode;
+        this.addressSido = addressSido;
+        this.addressSigungu = addressSigungu;
+        this.addressDongeupmyeon = addressDongeupmyeon;
+        this.addressDetail = addressDetail;
+        this.request = request;
+//        this.orderPrice = orderPrice;
+//        this.discountAmount = discountAmount;
+//        this.deliveryAmount = deliveryAmount;
+//        this.realPayment = realPayment;
+        this.storeOrder = storeOrder;
+    }
+
+
+    public static Order of(Integer memberCode, String receiver, String phone, Long addressZipcode, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String request, /* Long orderPrice, Long discountAmount, Long deliveryAmount, Long realPayment,*/ List<StoreOrder> storeOrders) {
+        return new Order(memberCode,
+                receiver, phone,
+                addressZipcode,addressSido, addressSigungu, addressDongeupmyeon, addressDetail, request,
+//                orderPrice, discountAmount, deliveryAmount, realPayment,
+                storeOrders
+                );
+    }
 }
+

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ProductOptionRepository extends JpaRepository<ProductOption, Long> {
 
-    /* 5. 상품 상세 조회 : OptionCode로 상품 1개 조회, 주문 불가 상품 제외 (고객) */
-    Optional<ProductOption> findByOptionCodeAndStatus(Long OptionCode, ProductOptionAppearActivate productOptionAppearActivate);
+    /* 5. 상품 상세 조회 : OptionCode로 상품 1개 조회, 옵션 조회 불가 상품 제외 (고객) */
+    Optional<ProductOption> findByOptionCodeAndOptionAppearActivate(Long OptionCode, ProductOptionAppearActivate productOptionAppearActivate);
 
 }

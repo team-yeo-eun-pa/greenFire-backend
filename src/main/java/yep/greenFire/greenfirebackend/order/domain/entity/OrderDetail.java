@@ -26,4 +26,15 @@ public class OrderDetail {
     /* 주문 취소 여부 - 기본값 false */
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean OrderCancel = false;
+
+    /* 일단 할인금액은 나중에 추가 */
+    public OrderDetail(Long optionCode, Long orderQuantity, Long optionPrice) {
+        this.optionCode = optionCode;
+        this.orderQuantity = orderQuantity;
+        this.optionPrice = optionPrice;
+    }
+
+    public static OrderDetail of(Long optionCode, Long orderQuantity, Long optionPrice) {
+        return new OrderDetail(optionCode,orderQuantity, optionPrice);
+    }
 }

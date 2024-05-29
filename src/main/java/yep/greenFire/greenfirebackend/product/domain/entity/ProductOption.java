@@ -17,7 +17,9 @@ public class ProductOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long optionCode;
+    private Long productCode;
     private String optionName;
+    private Long optionPrice;
     private Long optionStock;
 
     /* 상품 옵션 조회 가능 여부 */
