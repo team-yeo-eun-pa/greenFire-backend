@@ -4,14 +4,9 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
-import yep.greenFire.greenfirebackend.challenge.dto.request.AdminCsCreateRequest;
-import yep.greenFire.greenfirebackend.challenge.dto.request.CsCreateRequest;
-import yep.greenFire.greenfirebackend.challenge.dto.response.AdminInquiryResponse;
+import yep.greenFire.greenfirebackend.challenge.dto.request.InquiryCreateRequest;
 import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryResponse;
 import yep.greenFire.greenfirebackend.challenge.service.InquiryService;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
@@ -42,17 +37,17 @@ public class InquiryController {
         return ResponseEntity.ok(pagingResponse);
     }
 
-//    @PostMapping("/member/list/regist")
-//    public ResponseEntity<Void> save (
-//            @RequestPart @Valid final CsCreateRequest csCreateRequest
-//
-//    ) {
-//
-//        final InquiryContent inquiryCode = inquiryService.save(csCreateRequest);
-//        return ResponseEntity.created(URI.create("/member/cs/list" +inquiryCode)).build();
-//
-//
-//    }
+    @PostMapping("/me/regist")
+    public ResponseEntity<InquiryResponse> save (
+            @RequestPart @Valid final InquiryCreateRequest inquiryCreateRequest
+
+    ) {
+
+        final int inquiryCode = inquiryService.save(inquiryCreateRequest);
+        return ResponseEntity.created(URI.create("/member/cs/list" +inquiryCode)).build();
+
+
+    }
 //    /* 5/28 해야할 것.
 //     *  1. 문의 상세보기 : 회원버전
 //     *  2. 문의 답변 달기 : 관리자 버전

@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import yep.greenFire.greenfirebackend.auth.dto.LoginDTO;
 import yep.greenFire.greenfirebackend.auth.dto.TokenDTO;
+import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.auth.util.TokenUtils;
 import yep.greenFire.greenfirebackend.user.member.service.MemberService;
 
@@ -69,13 +70,15 @@ public class AuthService implements UserDetailsService {
         LoginDTO loginDTO = memberService.findByMemberId(memberId);
 
         UserDetails user = User.builder()
-            .username(loginDTO.getMemberId())
-            .password(loginDTO.getMemberPassword())
-            .roles(loginDTO.getMemberRole().name())
-            .build();
+                .username(loginDTO.getMemberId())
+                .password(loginDTO.getMemberPassword())
+                .roles(loginDTO.getMemberRole().name())
+                .build();
+
+        CustomUser customUser = new CustomUser(loginDTO.getMemberCode(), user);
 
         Authentication authentication
-                = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                = new UsernamePasswordAuthenticationToken(customUser, null, customUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }

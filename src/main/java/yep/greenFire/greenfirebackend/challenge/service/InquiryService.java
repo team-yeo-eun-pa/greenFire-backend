@@ -1,20 +1,18 @@
 package yep.greenFire.greenfirebackend.challenge.service;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestPart;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
 import yep.greenFire.greenfirebackend.challenge.domain.repository.InquiryRepository;
-import yep.greenFire.greenfirebackend.challenge.dto.request.AdminCsCreateRequest;
-import yep.greenFire.greenfirebackend.challenge.dto.request.CsCreateRequest;
-import yep.greenFire.greenfirebackend.challenge.dto.response.AdminInquiryResponse;
-import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryAllResponse;
+import yep.greenFire.greenfirebackend.challenge.dto.request.InquiryCreateRequest;
 import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryResponse;
 
 @Service
@@ -35,22 +33,29 @@ public class InquiryService {
         return inquiryContents.map(InquiryResponse::from);
 
     }
-//
-//    public InquiryContent save(CsCreateRequest csCreateRequest) {
-//        InquiryContent newInquiryContent = inquiryRepository.findByMemberCode(csCreateRequest.getMemberCode());
-//
-//        final InquiryContent newList = InquiryContent.of(
-//                csCreateRequest.getMemberCode(),
-//                csCreateRequest.getMemberId(),
-//                csCreateRequest.getMemberName(),
-//                csCreateRequest.getMemberEmail()
-//        );
-//
-//        final InquiryContent newContent = inquiryRepository.save(newList);
-//
-//
-//       return newInquiryContent;
-//    }
+
+    public int save(
+            @RequestPart @Valid final InquiryCreateRequest inquiryCreateRequest
+
+    ) {
+
+       // ResponseEntity<InquiryResponse> inquiryResponseEntity = new ResponseEntity<InquiryResponse>();
+
+        final InquiryContent newInquiryContent = InquiryContent.of(
+                inquiryCreateRequest.getInquiryCode(),
+                inquiryCreateRequest.getMemberCode(),
+                inquiryCreateRequest.getInquiryWriteDate(),
+                inquiryCreateRequest.getInquiryTitle(),
+                inquiryCreateRequest.getInquiryDetail(),
+                inquiryCreateRequest.getInquiryStatus()
+
+        );
+
+        final InquiryContent newContent = inquiryRepository.save(newInquiryContent);
+
+
+       return newContent.getInquiryCode();
+    }
 //
 //    public InquiryResponse getCsDetail(int inquiryCode) {
 //        final InquiryContent csList = inquiryRepository.findAllInquiryContents(inquiryCode);
