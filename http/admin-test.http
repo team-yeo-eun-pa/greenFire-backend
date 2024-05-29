@@ -1,23 +1,26 @@
 ###
 GET http://localhost:8001/admin/adminNotices
-Access-Token: Bearer eyJkYXRlIjoxNzE2ODgyNjQ0NjI5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9BRE1JTiIsIm1lbWJlcklkIjoidXNlcjAyIiwiZXhwIjoxNzE2ODg2MjQ0fQ.jznUbSGndSq82P_yaJ2_4TJWpjU7V4S294uEWoL89sbHhb6qRIpycUFry3IiI9s_Wq8Db0rhk0JyZ5sS2OmdZA
+Access-Token: Bearer eyJkYXRlIjoxNzE2ODk5MTAyMTk2LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9BRE1JTiIsIm1lbWJlcklkIjoidXNlcjAyIiwiZXhwIjoxNzE2OTAyNzAyfQ.5FoGEBwYXPqx2EAF2GZLJFz3SdVyJy73eiF_Dttg6qReljViMwf0gOFnEnCXg2Dv1LSI9oj0ICsIKLokwpjR_Q
 ###
-GET http://localhost:8001/admin/notices/2
+GET http://localhost:8001/admin/notices/3
+Access-Token: Bearer eyJkYXRlIjoxNzE2ODkzMzg2ODU2LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6InVzZXIwMiIsIm1lbWJlclJvbGUiOiJST0xFX0FETUlOIiwiZXhwIjoxNzE2ODk2OTg2fQ.lpyW2GYxC717tfU_-EsKaXbRiCYHUZDz6nUTa01eA0yZcAK7h0nz71L0_bEEJ_qGs5I7rBnIASat1iwH6chQOw
+
 
 ###
 POST http://localhost:8001/admin/adminNotices
+Access-Token: Bearer eyJkYXRlIjoxNzE2OTAxMTIyMTQ5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6InVzZXIwMiIsIm1lbWJlclJvbGUiOiJST0xFX0FETUlOIiwiZXhwIjoxNzE2OTA0NzIyfQ.rk5PpQcc2QxIsKbX2Z1-d5e--8NLjJPZ0wP4n4HLvzlYz5IwEePgiXBY_sNVzCahmMOXC_JoGU4ti2_Kv66gqg
 Content-Type: application/json
-Access-Token: $2a$10$cDDTmYVIVEiaS5M2qZXhIuwKiNRTtg77Nd4gaybiR40/jIPPtC6ti
 
 {
-"noticeTitle" : "제목제목제목",
-"noticeContent" : "내용내용",
-  "noticeFixable": "YES"
+  "noticeTitle" : "등록3",
+  "noticeContent" : "내용등록3",
+  "noticeFixable" : "NO"
 }
 
 
 ###
-PUT http://localhost:8001/admin/adminNotices/2
+PUT http://localhost:8001/admin/adminNotices/3
+Access-Token: Bearer eyJkYXRlIjoxNzE2OTAxMTIyMTQ5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6InVzZXIwMiIsIm1lbWJlclJvbGUiOiJST0xFX0FETUlOIiwiZXhwIjoxNzE2OTA0NzIyfQ.rk5PpQcc2QxIsKbX2Z1-d5e--8NLjJPZ0wP4n4HLvzlYz5IwEePgiXBY_sNVzCahmMOXC_JoGU4ti2_Kv66gqg
 Content-Type: application/json
 
 {
@@ -26,6 +29,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8001/admin/adminNotices/2
+DELETE http://localhost:8001/admin/adminNotices/3
+Access-Token: Bearer eyJkYXRlIjoxNzE2Nzc4NzE4NjI3LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6InVzZXIwMiIsIm1lbWJlclJvbGUiOiJST0xFX01FTUJFUiIsImV4cCI6MTcxNjc4MjMxOH0.CIqqtM8o2E-DRsoSxXKlfrSOlJvlr8PcZBMT6Ju4f1P9Cvip4CxPCZbIQqdYV8TSID0wg8UvOXiBcIYoL7iOsAeyJkYXRlIjoxNzE2ODg2NTI4MzE5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9BRE1JTiIsIm1lbWJlcklkIjoidXNlcjAyIiwiZXhwIjoxNzE2ODkwMTI4fQ.I-KCAjW_aX6u46Qgtwyrv3lmrBIaHC3FJUcIhcPnB7mdnuu1tgOZZivmi6wvga6luTZNK0IeqIUmAkN_whZFDw
 
 ###
