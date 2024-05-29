@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import yep.greenFire.greenfirebackend.admin.member.domain.entity.AdminMember;
+import yep.greenFire.greenfirebackend.admin.member.domain.type.AdminMemberStatus;
 import yep.greenFire.greenfirebackend.user.member.domain.type.MemberStatus;
 
 import java.util.Date;
@@ -19,11 +20,11 @@ public class AdminMemberResponse {
     private String memberNickname;
     private String memberEmail;
     private String memberPhone;
-    private MemberStatus memberStatus;
+    private AdminMemberStatus memberStatus;
     private Date registAt;
     private Date quitAt;
 
-    public AdminMemberResponse(Long memberCode, String memberId, String memberName, String memberNickname, String memberEmail, String memberPhone, MemberStatus memberStatus, Date registAt, Date quitAt) {
+    public AdminMemberResponse(Long memberCode, String memberId, String memberName, String memberNickname, String memberEmail, String memberPhone, AdminMemberStatus memberStatus, Date registAt, Date quitAt) {
         this.memberCode=memberCode;
         this.memberId=memberId;
         this.memberName=memberName;
