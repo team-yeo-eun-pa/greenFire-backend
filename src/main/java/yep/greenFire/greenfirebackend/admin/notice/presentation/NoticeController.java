@@ -7,12 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import yep.greenFire.greenfirebackend.admin.notice.domain.entity.AdminMember;
+import yep.greenFire.greenfirebackend.admin.member.domain.entity.AdminMember;
 import yep.greenFire.greenfirebackend.admin.notice.dto.request.NoticeCreateRequest;
 import yep.greenFire.greenfirebackend.admin.notice.dto.request.NoticeUpdateRequest;
 import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticeResponse;
 import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticesResponse;
-import yep.greenFire.greenfirebackend.admin.notice.dto.response.MemberNoticesResponse;
 import yep.greenFire.greenfirebackend.admin.notice.service.NoticeService;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
@@ -53,7 +52,7 @@ public class NoticeController {
             @RequestBody @Valid final NoticeCreateRequest noticeCreateRequest,
             @AuthenticationPrincipal final AdminMember adminMember
             ){
-       noticeService.save(noticeCreateRequest, 1);
+       noticeService.save(noticeCreateRequest, 2);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

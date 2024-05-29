@@ -3,7 +3,6 @@ package yep.greenFire.greenfirebackend.admin.notice.dto.response;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import yep.greenFire.greenfirebackend.admin.notice.domain.entity.AdminMember;
 import yep.greenFire.greenfirebackend.admin.notice.domain.entity.Notice;
 
 import java.util.Date;

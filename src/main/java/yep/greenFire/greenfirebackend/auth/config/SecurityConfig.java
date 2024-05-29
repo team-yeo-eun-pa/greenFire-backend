@@ -60,11 +60,6 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/members/signup", "/members/login").permitAll();
                     auth.requestMatchers("/admin/**").hasRole(MemberRole.ADMIN.toString());
-                    auth.requestMatchers(HttpMethod.GET,"/admin/adminNotices").permitAll();
-                    auth.requestMatchers("/admin/notices/1").permitAll();
-                    auth.requestMatchers("/admin/members").permitAll();
-                    auth.requestMatchers(HttpMethod.DELETE,"/admin/adminNotices/2").permitAll();
-                    auth.requestMatchers(HttpMethod.PUT,"/admin/adminNotices/2").permitAll();
                     auth.anyRequest().authenticated();
 
                 })
@@ -86,7 +81,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:8001"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));
         corsConfiguration.setAllowedHeaders(Arrays.asList(
                 "Access-Control-Allow-Origin", "Access-Control-Allow-Headers",
