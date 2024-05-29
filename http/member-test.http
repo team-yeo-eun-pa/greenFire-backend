@@ -40,3 +40,7 @@ Refresh-Token: Bearer eyJkYXRlIjoxNzE2NzgwNDc4MzczLCJ0eXBlIjoiand0IiwiYWxnIjoiSF
 ### 4. Access Token은 유효하지만 권한이 없는 경우 -> 허가 되지 않은 요청 오류
 GET http://localhost:8001/admin
 Access-Token: Bearer eyJkYXRlIjoxNzE2Nzc5NTMwNzM2LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6InVzZXIwMiIsIm1lbWJlclJvbGUiOiJST0xFX01FTUJFUiIsImV4cCI6MTcxNjc4MzEzMH0.CO1_5Cy1-ryPLBt1fCBIkp51EwWd4K_sVnl6B6_Fol2IlyjpuYxXExty421_2QwlE6h-bvN-Uh5N9rwhjvRF1A
+
+### 프로필 조회
+GET http://localhost:8001/members/a
+Access-Token: Bearer eyJkYXRlIjoxNzE2OTUxNjg3NjYxLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6ImEiLCJleHAiOjE3MTY5NTUyODd9.ynX1HiyIIy5DHpXgwr2mVL4mLB7qFyF4Rd2q3yjlpIlfRsfvCAOUcRmbowOiW2PVnMmGSknuK7JijXnousC5LQ
