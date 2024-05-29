@@ -55,7 +55,7 @@ public class Order {
 
 
     public Order(Integer memberCode, String receiver, String phone, Long addressZipcode, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String request,
-//                 Long orderPrice, Long discountAmount, Long deliveryAmount, Long realPayment,
+                 Long orderPrice,/* Long discountAmount,*/ Long deliveryAmount,/* Long realPayment,*/
                  List<StoreOrder> storeOrder) {
         this.memberCode = memberCode;
         this.receiver = receiver;
@@ -66,19 +66,19 @@ public class Order {
         this.addressDongeupmyeon = addressDongeupmyeon;
         this.addressDetail = addressDetail;
         this.request = request;
-//        this.orderPrice = orderPrice;
+        this.orderPrice = orderPrice;
 //        this.discountAmount = discountAmount;
-//        this.deliveryAmount = deliveryAmount;
+        this.deliveryAmount = deliveryAmount;
 //        this.realPayment = realPayment;
         this.storeOrder = storeOrder;
     }
 
 
-    public static Order of(Integer memberCode, String receiver, String phone, Long addressZipcode, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String request, /* Long orderPrice, Long discountAmount, Long deliveryAmount, Long realPayment,*/ List<StoreOrder> storeOrders) {
+    public static Order of(Integer memberCode, String receiver, String phone, Long addressZipcode, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String request, Long orderPrice, /* Long discountAmount,*/ Long deliveryAmount,/* Long realPayment,*/ List<StoreOrder> storeOrders) {
         return new Order(memberCode,
                 receiver, phone,
                 addressZipcode,addressSido, addressSigungu, addressDongeupmyeon, addressDetail, request,
-//                orderPrice, discountAmount, deliveryAmount, realPayment,
+                orderPrice,/* discountAmount,*/ deliveryAmount,/* realPayment,*/
                 storeOrders
                 );
     }

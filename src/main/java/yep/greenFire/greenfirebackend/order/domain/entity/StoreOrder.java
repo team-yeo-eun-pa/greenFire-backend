@@ -32,17 +32,13 @@ public class StoreOrder {
     private List<OrderDetail> orderDetail;
 
     public StoreOrder(
-//            Long storeCode,
+            Long storeCode,
             List<OrderDetail> orderDetail) {
-//        this.storeCode = storeCode;
+        this.storeCode = storeCode;
         this.orderDetail = orderDetail;
     }
 
-    public static StoreOrder of(
-//            Long storeCode,
-            List<OrderDetail> orderDetail) {
-        return new StoreOrder(
-//                storeCode,
-                orderDetail);
+    public static StoreOrder of(Long storeCode, List<OrderDetail> orderDetail) {
+        return new StoreOrder(storeCode, orderDetail);
     }
 }
