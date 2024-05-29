@@ -1,0 +1,4 @@
+###member-inquiry-test
+
+GET http://localhost:8001/inquiry/me?page=1
+Access-Token: Bearer eyJkYXRlIjoxNzE2OTYzOTA3MzUyLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6InVzZXIwMiIsIm1lbWJlclJvbGUiOiJST0xFX01FTUJFUiIsImV4cCI6MTcxNjk2NzUwN30.OfUDfItyv6oa4o4lZjXkflFXZDbmFd250jNFFWDsw8pY3iK_ocnXf8EQ7yq4MpbYslHuppWmRWdiv53vKQZ0bA
