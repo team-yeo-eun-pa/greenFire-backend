@@ -77,7 +77,6 @@ public class AuthService implements UserDetailsService {
 
         CustomUser customUser = new CustomUser(loginDTO.getMemberCode(), user);
 
-        CustomUser customUser = new CustomUser(loginDTO.getMemberCode(), user);
 
         Authentication authentication
                 = new UsernamePasswordAuthenticationToken(customUser, null, customUser.getAuthorities());
