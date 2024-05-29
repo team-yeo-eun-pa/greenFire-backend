@@ -20,8 +20,8 @@ POST http://localhost:8001/members/login
 Content-Type: application/json
 
 {
-  "memberId" : "a",
-  "memberPassword" : "a"
+  "memberId" : "user02",
+  "memberPassword" : "pass02"
 }
 
 ### 인증 되어야 하는 기능을 대상으로 테스트
@@ -42,5 +42,9 @@ GET http://localhost:8001/admin
 Access-Token: Bearer eyJkYXRlIjoxNzE2Nzc5NTMwNzM2LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6InVzZXIwMiIsIm1lbWJlclJvbGUiOiJST0xFX01FTUJFUiIsImV4cCI6MTcxNjc4MzEzMH0.CO1_5Cy1-ryPLBt1fCBIkp51EwWd4K_sVnl6B6_Fol2IlyjpuYxXExty421_2QwlE6h-bvN-Uh5N9rwhjvRF1A
 
 ### 프로필 조회
-GET http://localhost:8001/members/a
-Access-Token: Bearer eyJkYXRlIjoxNzE2OTY4MDc0ODMzLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6ImEiLCJleHAiOjE3MTY5NzE2NzR9.chSvXyMWExuoR3YIZxmC-PN06lymYHpXbMCfebenB98s2ZniS0of58tfx0lfscbroG1LHqR0VFhFkI8bna06SQ
+GET http://localhost:8001/members/user02
+Access-Token: Bearer eyJkYXRlIjoxNzE2OTcxNTY3MzU4LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6InVzZXIwMiIsImV4cCI6MTcxNjk3NTE2N30.pOI8vOlRjdZLiSQUQZmxbUB2DXe4tob6tWIvbC1cjrhHXtRGdrRlj2dvMBlN3d7FBWeSmi4ylS9ElXaZEwHlMA
+
+### 로그아웃
+POST http://localhost:8001/members/logout
+Access-Token: Bearer eyJkYXRlIjoxNzE2OTcxNTY3MzU4LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6InVzZXIwMiIsImV4cCI6MTcxNjk3NTE2N30.pOI8vOlRjdZLiSQUQZmxbUB2DXe4tob6tWIvbC1cjrhHXtRGdrRlj2dvMBlN3d7FBWeSmi4ylS9ElXaZEwHlMA
