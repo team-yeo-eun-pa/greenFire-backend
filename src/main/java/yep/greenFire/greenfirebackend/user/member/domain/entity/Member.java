@@ -23,9 +23,10 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer memberCode;
+    private Long memberCode;
     private String memberId;
     private String memberPassword;
+    private String memberNickname;
     private String memberName;
     private String memberEmail;
     private String memberPhone;
@@ -77,4 +78,13 @@ public class Member {
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
+
+    private Long reportCount;
+
+    public void increaseReportCount(Long reportCount) {
+        this.reportCount= reportCount;
+    }
+
+    private LocalDateTime suspendedEndDate;
+
 }

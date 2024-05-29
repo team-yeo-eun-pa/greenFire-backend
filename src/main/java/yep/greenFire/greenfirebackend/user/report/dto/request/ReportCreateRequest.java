@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.admin.report.dto.request;
+package yep.greenFire.greenfirebackend.user.report.dto.request;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +11,7 @@ import java.util.Date;
 @Setter
 public class ReportCreateRequest {
 
-
-    private Long reportReason;
+    private String reportReason;
 
     private Date reportDate;
 

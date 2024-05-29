@@ -21,7 +21,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderCode;
-    private Integer memberCode;
+    private Long memberCode;
 
     /* 배송지 - 수령자 연락처 주소 요청사항 //카카오 우편번호 서비스 적용해보기 */
     private String receiver;
@@ -54,7 +54,7 @@ public class Order {
     private List<StoreOrder> storeOrder;
 
 
-    public Order(Integer memberCode, String receiver, String phone, Long addressZipcode, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String request,
+    public Order(Long memberCode, String receiver, String phone, Long addressZipcode, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String request,
 //                 Long orderPrice, Long discountAmount, Long deliveryAmount, Long realPayment,
                  List<StoreOrder> storeOrder) {
         this.memberCode = memberCode;
@@ -74,7 +74,7 @@ public class Order {
     }
 
 
-    public static Order of(Integer memberCode, String receiver, String phone, Long addressZipcode, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String request, /* Long orderPrice, Long discountAmount, Long deliveryAmount, Long realPayment,*/ List<StoreOrder> storeOrders) {
+    public static Order of(Long memberCode, String receiver, String phone, Long addressZipcode, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String request, /* Long orderPrice, Long discountAmount, Long deliveryAmount, Long realPayment,*/ List<StoreOrder> storeOrders) {
         return new Order(memberCode,
                 receiver, phone,
                 addressZipcode,addressSido, addressSigungu, addressDongeupmyeon, addressDetail, request,

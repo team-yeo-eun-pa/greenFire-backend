@@ -1,15 +1,16 @@
-package yep.greenFire.greenfirebackend.admin.notice.presentation;
+package yep.greenFire.greenfirebackend.user.notice.presentation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import yep.greenFire.greenfirebackend.admin.notice.dto.response.MemberNoticeResponse;
-import yep.greenFire.greenfirebackend.admin.notice.dto.response.MemberNoticesResponse;
+import yep.greenFire.greenfirebackend.user.notice.dto.response.MemberNoticeResponse;
+import yep.greenFire.greenfirebackend.user.notice.dto.response.MemberNoticesResponse;
 import yep.greenFire.greenfirebackend.admin.notice.service.NoticeService;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
+import yep.greenFire.greenfirebackend.user.notice.service.MemberNoticeService;
 
 
 @RestController
@@ -17,16 +18,15 @@ import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
 @RequestMapping("/Member")
 public class MemberNoticeController {
 
-    private final NoticeService noticeService;
+    private final MemberNoticeService memberNoticeService;
 
 
     @GetMapping("/notices")
     public ResponseEntity<PagingResponse> getMemberNotices(
-            @RequestParam(defaultValue = "1") final Integer page,
-            @RequestParam(required = false) final Integer noticeCode
+            @RequestParam(defaultValue = "1") final Integer page
     ) {
 
-        final Page<MemberNoticesResponse> notices = noticeService.getMemberNotices(page, noticeCode);
+        final Page<MemberNoticesResponse> notices = memberNoticeService.getMemberNotices(page);
         final PagingButtonInfo pagingButtonInfo = Pagination.getPagingButtonInfo(notices);
         final PagingResponse pagingResponse = PagingResponse.of(notices.getContent(), pagingButtonInfo);
 
@@ -36,7 +36,7 @@ public class MemberNoticeController {
 
     @GetMapping("/notices/{noticeCode}")
     public ResponseEntity<MemberNoticeResponse> getMemberNotice(@PathVariable final Long noticeCode){
-        final MemberNoticeResponse memberNoticesResponse = noticeService.getMemberNotice(noticeCode);
+        final MemberNoticeResponse memberNoticesResponse = memberNoticeService.getMemberNotice(noticeCode);
 
         return ResponseEntity.ok(memberNoticesResponse);
     }
