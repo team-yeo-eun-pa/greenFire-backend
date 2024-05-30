@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.admin.report.domain.entity;
+package yep.greenFire.greenfirebackend.user.report.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import yep.greenFire.greenfirebackend.admin.member.domain.entity.AdminMember;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -24,7 +23,7 @@ public class Report {
     private Long reportCode;
 
 //    @Enumerated(EnumType.STRING)
-    private Long reportReason;
+    private String reportReason;
 
     private LocalDateTime reportDate;
 

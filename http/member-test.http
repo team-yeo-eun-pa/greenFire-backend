@@ -3,9 +3,9 @@ POST http://localhost:8001/members/signup
 Content-Type: application/json
 
 {
-  "memberId" : "user02",
-  "memberPassword" : "pass02",
-  "memberName": "관리자",
+  "memberId" : "user04",
+  "memberPassword" : "pass4",
+  "memberName": "회원",
   "memberEmail": "user02@greenfire.com",
   "memberPhone": "01012341234",
   "addressSido": "서울시",
@@ -20,8 +20,8 @@ POST http://localhost:8001/members/login
 Content-Type: application/json
 
 {
-  "memberId" : "user02",
-  "memberPassword" : "pass02"
+  "memberId" : "user03",
+  "memberPassword" : "pass03"
 }
 
 ### 인증 되어야 하는 기능을 대상으로 테스트

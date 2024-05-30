@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.admin.member.service;
+package yep.greenFire.greenfirebackend.admin.report.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,11 +12,9 @@ import yep.greenFire.greenfirebackend.user.member.domain.repository.MemberReposi
 import yep.greenFire.greenfirebackend.user.member.dto.response.MemberResponse;
 import yep.greenFire.greenfirebackend.user.member.domain.type.MemberStatus;
 
-
 @Service
 @RequiredArgsConstructor
-@Transactional
-public class AdminMemberService {
+public class ReportMemberService {
 
     private final MemberRepository memberRepository;
 
@@ -25,9 +23,8 @@ public class AdminMemberService {
     }
 
     @Transactional(readOnly = true)
-    public Page<MemberResponse> getAdminMembers(Integer page) {
-
-        Page<Member> members = memberRepository.findByMemberStatusNot(getPageable(page), MemberStatus.STOP);
+    public Page<MemberResponse> getReportedMember(Integer page) {
+        Page<Member> members = memberRepository.findByMemberStatus(getPageable(page), MemberStatus.STOP, MemberStatus.PERMANENTLY_SUSPENDED);
 
         return members.map(MemberResponse::from);
     }

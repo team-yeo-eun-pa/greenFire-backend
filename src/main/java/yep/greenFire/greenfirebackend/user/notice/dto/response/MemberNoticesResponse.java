@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.admin.notice.dto.response;
+package yep.greenFire.greenfirebackend.user.notice.dto.response;
 
 
 import lombok.AccessLevel;
@@ -12,11 +12,11 @@ import java.util.Date;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberNoticesResponse {
 
-    private final int noticeCode;
+    private final Long noticeCode;
     private final String noticeTitle;
     private final String noticeFixable;
     private final Date noticeDate;
-    private final Integer noticeWriter;
+    private final Long noticeWriter;
 
 
     public static MemberNoticesResponse from(final Notice notice){

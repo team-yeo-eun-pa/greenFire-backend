@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.admin.report.presentation;
+package yep.greenFire.greenfirebackend.user.report.presentation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import yep.greenFire.greenfirebackend.admin.report.dto.request.ReportCreateRequest;
-import yep.greenFire.greenfirebackend.admin.report.service.ReportService;
+import yep.greenFire.greenfirebackend.user.report.dto.request.ReportCreateRequest;
+import yep.greenFire.greenfirebackend.user.report.service.ReportService;
 
 @RestController
 @RequiredArgsConstructor
