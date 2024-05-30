@@ -89,6 +89,13 @@ public class InquiryController {
         return ResponseEntity.created(URI.create("/admin/list" + inquiryCode)).build();
     }
 
+    @GetMapping("/admin/inquiry/rm")
+    public ResponseEntity<Void> remove (@RequestParam final Integer inquiryCode) {
+       inquiryService.remove(inquiryCode);
+
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 }

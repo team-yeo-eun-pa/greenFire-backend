@@ -21,6 +21,4 @@ public interface InquiryRepository extends JpaRepository<InquiryContent, Integer
 
 
 
-
-
 }

@@ -91,6 +91,12 @@ public class InquiryService {
         return adminInquiry;
     }
 
+    public void remove(Integer inquiryCode) {
+
+        inquiryRepository.deleteById(inquiryCode);
+        //특정 문의 코드의 글을 삭제하겠다.
+
+    }
 }
 
 
