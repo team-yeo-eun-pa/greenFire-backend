@@ -1,31 +1,34 @@
 package yep.greenFire.greenfirebackend.admin.report.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yep.greenFire.greenfirebackend.user.member.domain.entity.Member;
-import yep.greenFire.greenfirebackend.user.member.domain.repository.MemberRepository;
-import yep.greenFire.greenfirebackend.user.member.dto.response.MemberResponse;
 import yep.greenFire.greenfirebackend.user.member.domain.type.MemberStatus;
+import yep.greenFire.greenfirebackend.user.member.service.MemberService;
+import yep.greenFire.greenfirebackend.user.report.domain.entity.Report;
+import yep.greenFire.greenfirebackend.user.report.domain.repository.ReportRepository;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ReportMemberService {
 
-    private final MemberRepository memberRepository;
+    private final ReportRepository reportRepository;
+    private final MemberService memberService;
 
-    private Pageable getPageable(final Integer page) {
-        return PageRequest.of(page -1, 10, Sort.by("memberCode").descending());
+    @Transactional(readOnly = true)
+    public List<Report> getReportsByMember(Long memberCode) {
+        return reportRepository.findByMemberCode(memberCode);
     }
 
     @Transactional(readOnly = true)
-    public Page<MemberResponse> getReportedMember(Integer page) {
-        Page<Member> members = memberRepository.findByMemberStatus(getPageable(page), MemberStatus.STOP, MemberStatus.PERMANENTLY_SUSPENDED);
+    public Long getReportCountByMember(Long memberCode) {
+        return reportRepository.findByReportCountByMemberCode(memberCode);
 
-        return members.map(MemberResponse::from);
+    }
+
+    public MemberStatus getMemberStatus(Long memberCode) {
+        return memberService.getMemberStatus(memberCode);
     }
 }

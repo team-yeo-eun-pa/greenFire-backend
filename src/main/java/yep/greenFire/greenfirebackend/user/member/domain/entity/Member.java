@@ -89,4 +89,10 @@ public class Member {
 
     private LocalDateTime suspendedEndDate;
 
+    public void suspensionEnd() {
+        if (this.memberStatus == MemberStatus.STOP || this.memberStatus == MemberStatus.PERMANENTLY_SUSPENDED){
+            this.memberStatus = MemberStatus.ACTIVE;
+            this.suspendedEndDate = null;
+        }
+    }
 }
