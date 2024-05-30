@@ -5,7 +5,7 @@ Content-Type: application/json
 {
   "memberId" : "user03",
   "memberPassword" : "pass03",
-  "memberName": "관리자",
+  "memberName": "테스터",
   "memberEmail": "user02@greenfire.com",
   "memberPhone": "01012341234",
   "addressSido": "서울시",

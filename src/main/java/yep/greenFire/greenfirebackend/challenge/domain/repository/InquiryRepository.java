@@ -14,14 +14,13 @@ import java.util.Optional;
 public interface InquiryRepository extends JpaRepository<InquiryContent, Integer> {
    Page<InquiryContent> findByMemberCode(Long memberCode, Pageable pageable);
 
-   // InquiryContent findByMemberCode(int memberCode);
 
-   // InquiryContent findAllInquiryContents(int inquiryCode);
+
 
     Page<AdminInquiryResponse> findByInquiryCode(Pageable page, int inquiryCode);
 
 
 
 
-    // Object findByCsCode(int csCode);
+
 }

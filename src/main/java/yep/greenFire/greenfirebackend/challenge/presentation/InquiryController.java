@@ -3,14 +3,12 @@ package yep.greenFire.greenfirebackend.challenge.presentation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
+import yep.greenFire.greenfirebackend.challenge.dto.request.AdminInquiryCreateRequest;
 import yep.greenFire.greenfirebackend.challenge.dto.request.InquiryCreateRequest;
 import yep.greenFire.greenfirebackend.challenge.dto.response.AdminInquiryResponse;
-import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryOneResponse;
 import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryResponse;
 import yep.greenFire.greenfirebackend.challenge.service.InquiryService;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
@@ -21,12 +19,11 @@ import java.net.URI;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/inquiry") //경로매핑 잘하기
 public class InquiryController {
     private InquiryService inquiryService;
 
 
-    @GetMapping("/me")
+    @GetMapping("/member/inquiry")
    // @PreAuthorize("#memberId == authentication.principal.username")
     public ResponseEntity<PagingResponse> getInquiryContent(
             @RequestParam (defaultValue = "1") final Integer page
@@ -42,7 +39,7 @@ public class InquiryController {
         return ResponseEntity.ok(pagingResponse);
     }
 
-    @PostMapping("/me/regist")
+    @PostMapping("/member/inquiry/regist")
     public ResponseEntity<InquiryResponse> save (
             @RequestPart @Valid final InquiryCreateRequest inquiryCreateRequest
 
@@ -55,21 +52,10 @@ public class InquiryController {
     }
 
 
-//        @GetMapping("/me/update")
-//        public ResponseEntity<InquiryOneResponse> getInquiryDetail(
-//            @RequestParam int inquiryCode
-//    )
-//    {
-//        InquiryOneResponse inquiryOneResponse = inquiryService.getInquiryDetail(inquiryCode);
-//        return ResponseEntity.ok(inquiryOneResponse);
-//
-//    }
-
-
 
     //관리자 - 등록된 문의 조회
 
-    @GetMapping("/admin")
+    @GetMapping("/admin/inquiry")
     //@PreAuthorize("#memberRole == authentication.principal.admin")
     public ResponseEntity<PagingResponse> getAdminInquiryList(
             //반환 받을 타입에 대한 일치가 중요하다
@@ -93,16 +79,15 @@ public class InquiryController {
 
 
     }
-//
-//    //문의 답변 등록
-//    @GetMapping("/admin/list/{inquiryCode}")
-//    @PreAuthorize("#memberRole == authentication.principal.admin")
-//    public ResponseEntity<Void> saveAdmin (
-//            @RequestPart @Valid final AdminCsCreateRequest admincsCreateRequest
-//    ) {
-//        final InquiryContent inquiryCode = inquiryService.saveAdmin(admincsCreateRequest);
-//        return ResponseEntity.created(URI.create("/admin/list" + inquiryCode)).build();
-//    }
+
+    //문의 답변 등록
+    @GetMapping("/admin/inquiry/regist")
+    public ResponseEntity<Void> saveAdmin (
+            @RequestPart @Valid final AdminInquiryCreateRequest admincsCreateRequest
+    ) {
+        final InquiryContent inquiryCode = inquiryService.saveAdmin(admincsCreateRequest);
+        return ResponseEntity.created(URI.create("/admin/list" + inquiryCode)).build();
+    }
 
 
 

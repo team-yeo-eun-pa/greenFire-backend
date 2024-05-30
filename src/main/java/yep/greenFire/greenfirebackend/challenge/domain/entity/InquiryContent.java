@@ -40,6 +40,12 @@ public class InquiryContent {
         return new InquiryContent();
     }
 
+    public static InquiryContent of2(
+            final int inquiryCode, final String inquiryWriteDate,
+            final String inquiryTitle, final String inquiryDetail) {
+        return new InquiryContent();
+    }
+
 
     public void inquiryContent(int inquiryCode, int memberCode, Date inquiryWriteDate, String inquiryStatus, String inquiryDetail, String inquiryTitle, Date inquiryModifyDate, Date inquiryDeleteDate, String inquiryReply, String inquiryReplyStatus, String memberId, String memberName, String memberEmail) {
         this.inquiryCode = inquiryCode;
