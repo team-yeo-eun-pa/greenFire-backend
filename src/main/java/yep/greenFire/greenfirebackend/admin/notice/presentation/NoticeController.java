@@ -25,7 +25,7 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-    @GetMapping("/adminNotices")
+    @GetMapping("/notices")
     public ResponseEntity<PagingResponse> getAdminNotices(
             @RequestParam(defaultValue = "1") final Integer page
     ){
@@ -46,7 +46,7 @@ public class NoticeController {
         return ResponseEntity.ok(adminNoticeResponse);
     }
 
-    @PostMapping("/adminNotices")
+    @PostMapping("/notices")
     public ResponseEntity<Void> save(
             @RequestBody @Valid final NoticeCreateRequest noticeCreateRequest
             ){
@@ -56,7 +56,7 @@ public class NoticeController {
     }
 
 
-    @PutMapping("/adminNotices/{noticeCode}")
+    @PutMapping("/notices/{noticeCode}")
     public ResponseEntity<Void> modify(
             @PathVariable final Long noticeCode,
             @RequestBody @Valid final NoticeUpdateRequest noticeUpdateRequest){
@@ -67,7 +67,7 @@ public class NoticeController {
         return ResponseEntity.created(URI.create("/admin/adminNotices/" + noticeCode)).build();
     }
 
-    @DeleteMapping("/adminNotices/{noticeCode}")
+    @DeleteMapping("/notices/{noticeCode}")
     public ResponseEntity<Void> remove(@PathVariable final Long noticeCode) {
         noticeService.remove(noticeCode);
 

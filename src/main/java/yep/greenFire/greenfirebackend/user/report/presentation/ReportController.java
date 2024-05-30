@@ -11,7 +11,7 @@ import yep.greenFire.greenfirebackend.user.report.service.ReportService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin")
+@RequestMapping("/member")
 public class ReportController {
 
     private final ReportService reportService;

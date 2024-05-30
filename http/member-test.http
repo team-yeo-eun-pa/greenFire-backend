@@ -20,8 +20,8 @@ POST http://localhost:8001/members/login
 Content-Type: application/json
 
 {
-  "memberId" : "user03",
-  "memberPassword" : "pass03"
+  "memberId" : "user02",
+  "memberPassword" : "pass02"
 }
 
 ### 인증 되어야 하는 기능을 대상으로 테스트

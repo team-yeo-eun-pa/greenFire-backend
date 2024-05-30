@@ -1,34 +1,48 @@
 package yep.greenFire.greenfirebackend.admin.report.presentation;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import yep.greenFire.greenfirebackend.user.member.dto.response.MemberResponse;
 import yep.greenFire.greenfirebackend.admin.report.service.ReportMemberService;
-import yep.greenFire.greenfirebackend.common.paging.Pagination;
-import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
-import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
+import yep.greenFire.greenfirebackend.user.member.domain.type.MemberStatus;
+import yep.greenFire.greenfirebackend.user.report.domain.entity.Report;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class ReportMemberController {
 
-
     private final ReportMemberService reportMemberService;
 
-    @GetMapping("/suspend/members")
-    public ResponseEntity<PagingResponse> getReportedMember(
-            @RequestParam(defaultValue = "1") final Integer page
-    ) {
-        final Page<MemberResponse> members = reportMemberService.getReportedMember(page);
-        final PagingButtonInfo pagingButtonInfo = Pagination.getPagingButtonInfo(members);
-        final PagingResponse pagingResponse = PagingResponse.of(members.getContent(), pagingButtonInfo);
+    @GetMapping("/{memberCode}/report-detail")
+    public Map<String, Object> getReportSummaryByMember(@PathVariable("memberCode") Long memberCode) {
+        MemberStatus memberStatus = reportMemberService.getMemberStatus(memberCode);
 
-        return ResponseEntity.ok(pagingResponse);
+        if(memberStatus == MemberStatus.STOP || memberStatus == MemberStatus.PERMANENTLY_SUSPENDED){
+            List<Report> reports = reportMemberService.getReportsByMember(memberCode);
+            Long reportCount = reportMemberService.getReportCountByMember(memberCode);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("memberCode", memberCode);
+            response.put("reportCount", reportCount);
+            response.put("reports",reports);
+
+            return response;
+        } else {
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("message","정지또는 영구정지 회원이 아님");
+            return response;
+        }
+
+
+
     }
+
 }

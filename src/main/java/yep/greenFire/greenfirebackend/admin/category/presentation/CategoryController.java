@@ -19,7 +19,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @GetMapping("/category-management")
+    @GetMapping("/categories")
     public ResponseEntity<List<Category>> getAdminCategories(){
         List<Category> categories = categoryService.getAllCategories();
         return new ResponseEntity<>(categories, HttpStatus.OK);

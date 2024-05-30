@@ -18,6 +18,7 @@ public enum ExceptionCode {
     FAIL_TO_DELETE_FILE(1002, "파일 삭제에 실패하였습니다."),
     NOT_FOUND_CATEGORY_CODE(1003, "카테고리 코드가 존재하지않습니다."),
     NOT_FOUND_ADMIN_CODE(2000, " 관리자 코드에 해당하는 회원코드가 존재하지 않습니다."),
+    NOT_FOUND_MEMBER_CODE(2001, " 회원 코드에 해당하는 회원코드가 존재하지 않습니다."),
     NOT_FOUND_NOTICE_CODE(3000, "공지사항 코드에 해당하는 공지사항이 존재하지 않습니다."),
     FAIL_LOGIN(4000, "로그인에 실패하였습니다."),
     NOT_FOUND_REFRESH_TOKEN(4001, "해당 리프레시 토큰이 유효하지 않습니다."),
