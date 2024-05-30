@@ -3,6 +3,7 @@ package yep.greenFire.greenfirebackend.challenge.service;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.pulsar.PulsarProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestPart;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
 import yep.greenFire.greenfirebackend.challenge.domain.repository.InquiryRepository;
 import yep.greenFire.greenfirebackend.challenge.dto.request.InquiryCreateRequest;
+import yep.greenFire.greenfirebackend.challenge.dto.response.AdminInquiryResponse;
 import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryOneResponse;
 import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryResponse;
+
+
 
 @Service
 @Transactional
@@ -31,7 +35,9 @@ public class InquiryService {
     public Page<InquiryResponse> getInquiryContent(Long memberCode, Integer page) {
 //
         Page<InquiryContent> inquiryContents = inquiryRepository.findByMemberCode(memberCode, getPageable(page));
+        //페이징된 문의컨텐츠를 멤버코드와, 페이지 정보를 통해 조회하겠다.
         return inquiryContents.map(InquiryResponse::from);
+        //문의컨텐츠의 문의 리스폰스타입을 매핑해서 반환하겠다
 
     }
 
@@ -56,18 +62,26 @@ public class InquiryService {
        return newContent.getInquiryCode();
     }
 
-    public InquiryOneResponse getInquiryDetail(int inquiryCode) {
-        final InquiryContent newInquiry = inquiryRepository.findByInquiryCode(inquiryCode);
-//                .orElseThrow(()-> new NotFoundException(ExceptionCode.NOT_FOUND_CS_CODE));
-        //익셉션 코드 문제 해결하기
+//    public InquiryOneResponse getInquiryDetail(int inquiryCode) {
+//        final InquiryContent newInquiry = inquiryRepository.findByInquiryCode(inquiryCode);
+////                .orElseThrow(()-> new NotFoundException(ExceptionCode.NOT_FOUND_CS_CODE));
+//        //익셉션 코드 문제 해결하기
+//
+//      return InquiryOneResponse.from(newInquiry);
+//
+//    }
 
-      return InquiryOneResponse.from(newInquiry);
+    @Transactional(readOnly = true)
+
+    public Page<AdminInquiryResponse> getAdminInquiryList(Integer page, int inquiryCode) {
+        Page<AdminInquiryResponse> adminInquiryResponses = inquiryRepository.findByInquiryCode(getPageable(page), inquiryCode);
+        return adminInquiryResponses.map(InquiryContent::from);
 
     }
-//
-//
-//    public AdminInquiryResponse getAdminCsList(int inquiryCode) {
-//        InquiryContent adminInquiryContent = (InquiryContent) inquiryRepository.findByInquiryCode(inquiryCode);
+
+
+//    public Page<AdminInquiryResponse> getAdminInquiryList(Integer page, int inquiryCode) {
+//        InquiryContent adminInquiryContent =  inquiryRepository.findByInquiryCode(inquiryCode);
 //
 //        return AdminInquiryResponse.from(adminInquiryContent);
 //    }

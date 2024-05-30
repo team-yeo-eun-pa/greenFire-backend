@@ -3,6 +3,7 @@ package yep.greenFire.greenfirebackend.challenge.dto.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
 
@@ -18,29 +19,22 @@ public class AdminInquiryResponse {
     private int inquiryCode;
     private Date inquiryWriteDate;
     private int memberCode;
-    //문의 제목이 여기쯤 들어가야 하지 않을까?
+    private String inquiryTitle;
     private String inquiryDetail;
     private String inquiryStatus;
     private String inquiryReplyStatus;
 
-    public AdminInquiryResponse(int inquiryCode, Date inquiryWriteDate, int memberCode, String inquiryDetail, String inquiryStatus, String inquiryReplyStatus) {
+
+    public AdminInquiryResponse(int inquiryCode, Date inquiryWriteDate, int memberCode, String inquiryTitle, String inquiryDetail, String inquiryStatus, String inquiryReplyStatus) {
         this.inquiryCode = inquiryCode;
         this.inquiryWriteDate = inquiryWriteDate;
         this.memberCode = memberCode;
+        this.inquiryTitle = inquiryTitle;
         this.inquiryDetail = inquiryDetail;
         this.inquiryStatus = inquiryStatus;
         this.inquiryReplyStatus = inquiryReplyStatus;
     }
 
 
-    public static AdminInquiryResponse from(InquiryContent adminInquiryContent) {
-        return new AdminInquiryResponse(
-                adminInquiryContent.getInquiryCode(),
-                adminInquiryContent.getInquiryWriteDate(),
-                adminInquiryContent.getMemberCode(),
-                adminInquiryContent.getInquiryDetail(),
-                adminInquiryContent.getInquiryStatus(),
-                adminInquiryContent.getInquiryReplyStatus()
-        );
-    }
+
 }

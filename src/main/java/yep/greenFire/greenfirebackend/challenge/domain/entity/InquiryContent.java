@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import yep.greenFire.greenfirebackend.challenge.dto.response.AdminInquiryResponse;
 
 import java.util.Date;
 
@@ -53,6 +54,27 @@ public class InquiryContent {
         this.inquiryReplyStatus = inquiryReplyStatus;
 
     }
+
+
+    public static AdminInquiryResponse from(AdminInquiryResponse adminInquiryResponse) {
+        return new AdminInquiryResponse (
+                adminInquiryResponse.getInquiryCode(),
+                adminInquiryResponse.getInquiryWriteDate(),
+                adminInquiryResponse.getMemberCode(),
+                adminInquiryResponse.getInquiryTitle(),
+                adminInquiryResponse.getInquiryDetail(),
+                adminInquiryResponse.getInquiryStatus(),
+                adminInquiryResponse.getInquiryReplyStatus()
+        );
+
+
+
+
+    }
+
+
+
+
 
 
 

@@ -1,0 +1,3 @@
+### admin-inquiry-veiw-test
+GET http://localhost:8001/inquiry/admin
+Access-Token: eyJkYXRlIjoxNzE3MDQwMjE2MjU1LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9BRE1JTiIsIm1lbWJlcklkIjoidXNlcjAyIiwiZXhwIjoxNzE3MDQzODE2fQ._SeNoN9QPJR0PqCRyzV06Rz0jK6Zkr6-JjHMjVZOB1TK0ORccHdbnaT9d4K7JudsWU36nUV7OahGEXUvTS3U-A
