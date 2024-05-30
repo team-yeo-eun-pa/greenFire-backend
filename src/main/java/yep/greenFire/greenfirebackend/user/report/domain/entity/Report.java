@@ -6,11 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import yep.greenFire.greenfirebackend.user.challenge.domain.entity.Comment;
+import yep.greenFire.greenfirebackend.challenge.domain.entity.Comment;
 import yep.greenFire.greenfirebackend.user.review.domain.entity.Review;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "tbl_report")
