@@ -70,10 +70,12 @@ public class AuthService implements UserDetailsService {
         LoginDTO loginDTO = memberService.findByMemberId(memberId);
 
         UserDetails user = User.builder()
-            .username(loginDTO.getMemberId())
-            .password(loginDTO.getMemberPassword())
-            .roles(loginDTO.getMemberRole().name())
-            .build();
+                .username(loginDTO.getMemberId())
+                .password(loginDTO.getMemberPassword())
+                .roles(loginDTO.getMemberRole().name())
+                .build();
+
+        CustomUser customUser = new CustomUser(loginDTO.getMemberCode(), user);
 
         CustomUser customUser = new CustomUser(loginDTO.getMemberCode(), user);
 
