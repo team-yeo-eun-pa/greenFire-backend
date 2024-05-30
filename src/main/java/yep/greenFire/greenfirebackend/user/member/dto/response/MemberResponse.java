@@ -20,10 +20,10 @@ public class MemberResponse {
     private String memberEmail;
     private String memberPhone;
     private MemberStatus memberStatus;
-    private LocalDateTime registAt;
-    private LocalDateTime quitAt;
+    private LocalDateTime registDate;
+    private LocalDateTime quitDate;
 
-    public MemberResponse(Long memberCode, String memberId, String memberName, String memberNickname, String memberEmail, String memberPhone, MemberStatus memberStatus, LocalDateTime registAt, LocalDateTime quitAt) {
+    public MemberResponse(Long memberCode, String memberId, String memberName, String memberNickname, String memberEmail, String memberPhone, MemberStatus memberStatus, LocalDateTime registDate, LocalDateTime quitDate) {
         this.memberCode=memberCode;
         this.memberId=memberId;
         this.memberName=memberName;
@@ -31,8 +31,8 @@ public class MemberResponse {
         this.memberEmail=memberEmail;
         this.memberPhone=memberPhone;
         this.memberStatus=memberStatus;
-        this.registAt=registAt;
-        this.quitAt=quitAt;
+        this.registDate=registDate;
+        this.quitDate=quitDate;
     }
 
     public static MemberResponse from(final Member member) {
@@ -44,8 +44,8 @@ public class MemberResponse {
                 member.getMemberEmail(),
                 member.getMemberPhone(),
                 member.getMemberStatus(),
-                member.getRegistAt(),
-                member.getQuitAt()
+                member.getRegistDate(),
+                member.getQuitDate()
         );
     }
 }
