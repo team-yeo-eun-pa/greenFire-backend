@@ -14,8 +14,8 @@ import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
 import yep.greenFire.greenfirebackend.challenge.domain.repository.InquiryRepository;
 import yep.greenFire.greenfirebackend.challenge.dto.request.AdminInquiryCreateRequest;
 import yep.greenFire.greenfirebackend.challenge.dto.request.InquiryCreateRequest;
-import yep.greenFire.greenfirebackend.challenge.dto.response.AdminInquiryResponse;
-import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryResponse;
+import yep.greenFire.greenfirebackend.challenge.dto.response.inquiry.AdminInquiryResponse;
+import yep.greenFire.greenfirebackend.challenge.dto.response.inquiry.InquiryResponse;
 
 
 

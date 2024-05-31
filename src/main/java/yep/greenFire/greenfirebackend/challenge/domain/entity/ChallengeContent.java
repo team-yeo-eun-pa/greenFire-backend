@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.Date;
 
 @Entity
-@Table(name = "tbl_challenge")
+@Table(name = "tbl_challenge_info")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
@@ -19,7 +19,7 @@ public class ChallengeContent {
     private int challengeCode;
     private String challengeName;
     private String challengeStatus;
-    private String challengeContent;
+    private String challengeDetail;
     private Date challengeStartDate;
     private Date challengeEndDate;
     private int memberCode;
@@ -28,11 +28,11 @@ public class ChallengeContent {
     private Date challengeDeleteDate;
 
 
-    public ChallengeContent(int challengeCode, String challengeName, String challengeStatus, String challengeContent, Date challengeStartDate, Date challengeEndDate, int memberCode, int tagCode, Date challengeModifyDate, Date challengeDeleteDate) {
+    public ChallengeContent(int challengeCode, String challengeName, String challengeStatus, String challengeDetail, Date challengeStartDate, Date challengeEndDate, int memberCode, int tagCode, Date challengeModifyDate, Date challengeDeleteDate) {
         this.challengeCode = challengeCode;
         this.challengeName = challengeName;
         this.challengeStatus = challengeStatus;
-        this.challengeContent = challengeContent;
+        this.challengeDetail = challengeDetail;
         this.challengeStartDate = challengeStartDate;
         this.challengeEndDate = challengeEndDate;
         this.memberCode = memberCode;
@@ -43,7 +43,7 @@ public class ChallengeContent {
 
 
     public static ChallengeContent of(
-            final int challengeCode, final String challengeName, final String challengeContent, final Date challengeStartDate,
+            final int challengeCode, final String challengeName, final String challengeDetail, final Date challengeStartDate,
             final Date challengeEndDate, final int memberCode, final int tagCode) {
         return new ChallengeContent();
     }
