@@ -30,7 +30,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
 
-    public void save(OrderCreateRequest orderCreateRequest, Integer memberCode) {
+    public void save(OrderCreateRequest orderCreateRequest, Long memberCode) {
 
         /* 주문 등록 */
 

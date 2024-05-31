@@ -20,7 +20,7 @@ public class Notice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int noticeCode;
+    private Long noticeCode;
     private String noticeTitle;
     private String noticeContent;
     private String noticeFixable;
@@ -33,16 +33,16 @@ public class Notice {
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "noticeWriter", referencedColumnName = "memberCode")
-    private Integer noticeWriter;
+    private Long noticeWriter;
 
-    public Notice(String noticeTitle, String noticeContent,String noticeFixable,Integer noticeWriter) {
+    public Notice(String noticeTitle, String noticeContent,String noticeFixable,Long noticeWriter) {
         this.noticeTitle = noticeTitle;
         this.noticeContent = noticeContent;
         this.noticeFixable=noticeFixable;
         this.noticeWriter=noticeWriter;
     }
 
-    public static Notice of(final String noticeTitle, final String noticeContent, final String noticeFixable, Integer noticeWriter) {
+    public static Notice of(final String noticeTitle, final String noticeContent, final String noticeFixable, Long noticeWriter) {
         return new Notice(
                 noticeTitle,
                 noticeContent,

@@ -13,11 +13,11 @@ import java.util.Date;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class AdminNoticesResponse {
 
-    private final int noticeCode;
+    private final Long noticeCode;
     private final String noticeTitle;
     private final String noticeFixable;
     private final Date noticeDate;
-    private final Integer noticeWriter;
+    private final Long noticeWriter;
 
     public static AdminNoticesResponse from(final Notice notice){
         return new AdminNoticesResponse(

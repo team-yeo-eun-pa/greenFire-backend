@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.admin.member.service;
+package yep.greenFire.greenfirebackend.admin.report.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -9,26 +9,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yep.greenFire.greenfirebackend.user.member.domain.entity.Member;
 import yep.greenFire.greenfirebackend.user.member.domain.repository.MemberRepository;
-import yep.greenFire.greenfirebackend.user.member.dto.response.MemberResponse;
 import yep.greenFire.greenfirebackend.user.member.domain.type.MemberStatus;
 
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
-public class AdminMemberService {
+public class ReportMembersService {
 
     private final MemberRepository memberRepository;
 
     private Pageable getPageable(final Integer page) {
-        return PageRequest.of(page -1, 10, Sort.by("memberCode").descending());
+        return PageRequest.of(page - 1, 10, Sort.by("memberCode").descending());
     }
 
     @Transactional(readOnly = true)
-    public Page<MemberResponse> getAdminMembers(Integer page) {
-
-        Page<Member> members = memberRepository.findByMemberStatusNot(getPageable(page), MemberStatus.STOP);
-
-        return members.map(MemberResponse::from);
+    public Page<Member> getMembersByStatus(Integer page) {
+        Pageable pageable = getPageable(page);
+        List<MemberStatus> statuses = Arrays.asList(MemberStatus.STOP, MemberStatus.PERMANENTLY_SUSPENDED);
+        return memberRepository.findByMemberStatusIn(statuses, pageable);
     }
 }
+

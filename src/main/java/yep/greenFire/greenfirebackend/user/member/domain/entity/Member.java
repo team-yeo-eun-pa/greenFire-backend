@@ -23,11 +23,11 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer memberCode;
+    private Long memberCode;
     private String memberId;
     private String memberPassword;
-    private String memberName;
     private String memberNickname;
+    private String memberName;
     private String memberEmail;
     private String memberPhone;
     @Enumerated(value = EnumType.STRING)
@@ -79,5 +79,20 @@ public class Member {
 
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    private Long reportCount;
+
+    public void increaseReportCount(Long reportCount) {
+        this.reportCount= reportCount;
+    }
+
+    private LocalDateTime suspendedEndDate;
+
+    public void suspensionEnd() {
+        if (this.memberStatus == MemberStatus.STOP || this.memberStatus == MemberStatus.PERMANENTLY_SUSPENDED){
+            this.memberStatus = MemberStatus.ACTIVE;
+            this.suspendedEndDate = null;
+        }
     }
 }
