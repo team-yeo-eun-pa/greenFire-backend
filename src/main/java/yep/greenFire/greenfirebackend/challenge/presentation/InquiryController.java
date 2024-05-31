@@ -23,6 +23,7 @@ public class InquiryController {
     private InquiryService inquiryService;
 
 
+
     @GetMapping("/member/inquiry")
    // @PreAuthorize("#memberId == authentication.principal.username")
     public ResponseEntity<PagingResponse> getInquiryContent(
@@ -83,18 +84,19 @@ public class InquiryController {
     //문의 답변 등록
     @GetMapping("/admin/inquiry/regist")
     public ResponseEntity<Void> saveAdmin (
-            @RequestPart @Valid final AdminInquiryCreateRequest admincsCreateRequest
+            @RequestPart @Valid final AdminInquiryCreateRequest adminInquiryCreateRequest
     ) {
-        final InquiryContent inquiryCode = inquiryService.saveAdmin(admincsCreateRequest);
+        final InquiryContent inquiryCode = inquiryService.saveAdmin(adminInquiryCreateRequest);
         return ResponseEntity.created(URI.create("/admin/list" + inquiryCode)).build();
     }
 
     @GetMapping("/admin/inquiry/rm")
-    public ResponseEntity<Void> remove (@RequestParam final Integer inquiryCode) {
+    public ResponseEntity<Void> remove (@RequestParam final int inquiryCode) {
        inquiryService.remove(inquiryCode);
 
         return ResponseEntity.noContent().build();
     }
+
 
 
 
