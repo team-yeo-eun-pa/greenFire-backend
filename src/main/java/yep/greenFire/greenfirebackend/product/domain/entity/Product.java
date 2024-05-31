@@ -13,8 +13,9 @@ import yep.greenFire.greenfirebackend.user.seller.domain.entity.Store;
 
 import java.util.Date;
 
+
 @Entity
-@Table(name = "tbl_product")
+@Table(name = "tbl_prouct")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
