@@ -1,0 +1,30 @@
+### 주문 등록
+POST http://localhost:8001/orders/orders
+Content-Type: application/json
+Access-Token: Bearer
+
+{
+    "deliveryAddressCode": 1,
+    "storeOrders": [
+        {
+            "orderDetails": [
+                {
+                    "optionCode": 1,
+                    "orderQuantity": 10
+                },
+                {
+                    "optionCode": 2,
+                    "orderQuantity": 5
+                }
+            ]
+        },
+        {
+            "orderDetails": [
+                {
+                    "optionCode": 3,
+                    "orderQuantity": 2
+                }
+            ]
+        }
+    ]
+}
