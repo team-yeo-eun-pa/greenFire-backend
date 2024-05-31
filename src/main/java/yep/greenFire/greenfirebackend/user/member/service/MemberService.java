@@ -82,9 +82,9 @@ public class MemberService {
         return member.getMemberStatus();
     }
 
-//    public void suspensionEnd(Long memberCode) {
-//        Member member = memberRepository.findByMemberCode(memberCode)
-//                .orElseThrow(() -> new NotFoundException(NOT_FOUND_MEMBER_CODE));
-//        member.suspensionEnd();
-//    }
+    public void suspensionEnd(Long memberCode) {
+        Member member = memberRepository.findByMemberCode(memberCode)
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_MEMBER_CODE));
+        member.suspensionEnd();
+    }
 }

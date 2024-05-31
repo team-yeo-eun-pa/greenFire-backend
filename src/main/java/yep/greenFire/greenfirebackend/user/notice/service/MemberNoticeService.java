@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import yep.greenFire.greenfirebackend.admin.notice.domain.entity.Notice;
 import yep.greenFire.greenfirebackend.admin.notice.domain.repository.NoticeRepository;
 import yep.greenFire.greenfirebackend.admin.notice.domain.type.NoticeStatusType;
+import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticesResponse;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 import yep.greenFire.greenfirebackend.user.notice.dto.response.MemberNoticeResponse;

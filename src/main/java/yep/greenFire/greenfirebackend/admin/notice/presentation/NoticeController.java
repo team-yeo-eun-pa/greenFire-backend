@@ -26,7 +26,7 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @GetMapping("/notices")
-    @CrossOrigin(origins = "http://localhost:3000")
+//    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<PagingResponse> getAdminNotices(
             @RequestParam(defaultValue = "1") final Integer page
     ){
@@ -51,7 +51,7 @@ public class NoticeController {
     public ResponseEntity<Void> save(
             @RequestBody @Valid final NoticeCreateRequest noticeCreateRequest
             ){
-       noticeService.save(noticeCreateRequest, 2L);
+       noticeService.save(noticeCreateRequest, 1L);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
