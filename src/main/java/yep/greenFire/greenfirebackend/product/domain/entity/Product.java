@@ -24,12 +24,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productCode;
     private String productName;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "categoryCode")
-//    private Category category;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "storeCode")
-//    private Store store;
     private Long categoryCode;
     private Long storeCode;
     @CreatedDate
