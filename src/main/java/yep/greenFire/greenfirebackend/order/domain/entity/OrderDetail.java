@@ -15,26 +15,31 @@ public class OrderDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderCode;
+    private Long orderDetailCode;
+
     private Long optionCode;
-    private Long storeOrderCode;
+    @ManyToOne
+    @JoinColumn
+    private StoreOrder storeOrder;
 
     private Long optionPrice;
     private Long orderQuantity;
-    private Long orderDisCount;
 
+    /* 쿠폰 사용 여부 - 기본값 false */
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    private Boolean isCouponUsed = false;
     /* 주문 취소 여부 - 기본값 false */
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
-    private Boolean OrderCancel = false;
+    private Boolean isOrderCancel = false;
 
-    /* 일단 할인금액은 나중에 추가 */
-    public OrderDetail(Long optionCode, Long orderQuantity, Long optionPrice) {
+    public OrderDetail(Long optionCode, Long optionPrice, Long orderQuantity) {
         this.optionCode = optionCode;
-        this.orderQuantity = orderQuantity;
         this.optionPrice = optionPrice;
+        this.orderQuantity = orderQuantity;
     }
 
-    public static OrderDetail of(Long optionCode, Long orderQuantity, Long optionPrice) {
-        return new OrderDetail(optionCode,orderQuantity, optionPrice);
+    public static OrderDetail of(Long optionCode, Long optionPrice, Long orderQuantity) {
+        return new OrderDetail(optionCode, optionPrice, orderQuantity);
     }
+
 }

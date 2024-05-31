@@ -36,14 +36,15 @@ public class OrderService {
 
     public void save(OrderCreateRequest orderCreateRequest, Long memberCode) {
 
-        Long totalOrderPrice = 0l;
-        Long totalDeliveryPrice = 0L;
+        Long totalOrderAmount = 0l;
+        Long totalDeliveryAmount = 0L;
 
         // 여러 스토어별 주문을 리스트 처리
         List<StoreOrder> storeOrders = new ArrayList<>();
         for (OrderCreateRequest.StoreOrderRequest storeOrderRequest : orderCreateRequest.getStoreOrders()) {
 
             long storeCode = 0L;
+            long orderAmount = 0L;
             long deliveryAmount = 0;
 
             // 주문 상세를 리스트 처리(해당 스토어의 주문 상품 옵션 목록)
@@ -60,8 +61,8 @@ public class OrderService {
                 ProductOption productOption = productOptionService.findProductOption(orderDetailRequest.getOptionCode());
 
                 /* 상품 판매가 x 수량 = 주문 상세 테이블마다 총 주문금액 컬럼이 없으므로 변수로 따로 저장 */
-                Long orderPrice = productOption.getOptionPrice() * orderDetailRequest.getOrderQuantity();
-                totalOrderPrice += orderPrice;
+                Long optionPrice = productOption.getOptionPrice() * orderDetailRequest.getOrderQuantity();
+                orderAmount += optionPrice;
 
                 /* !쿠폰 사용시 쿠폰 발행 테이블 -> 쿠폰 정보 테이블 -> 쿠폰 적용상품 테이블
                  * 2. 할인률 * 상품 판매가 < 최대할인액 확인
@@ -71,9 +72,8 @@ public class OrderService {
                 /* orderDetail 주문 상세 객체 생성 후 데이터 저장. */
                 final OrderDetail newOrderDetail = OrderDetail.of(
                         orderDetailRequest.getOptionCode(),
-                        orderDetailRequest.getOrderQuantity(),
-                        productOption.getOptionPrice()
-                        //할인금액
+                        productOption.getOptionPrice(),
+                        orderDetailRequest.getOrderQuantity()
                 );
                 orderDetails.add(newOrderDetail);
 
@@ -86,17 +86,22 @@ public class OrderService {
             if (optionalStore.isPresent()) {
                 Store store = optionalStore.get();
                 deliveryAmount = store.getDeliveryAmount();
-                if (totalOrderPrice >= store.getFreeShippingLimit()) {
+                if (totalOrderAmount >= store.getFreeShippingLimit()) {
                     deliveryAmount = 0L;
                 }
             }
 
             /* 주문 테이블의 총 배송비에 각 판매자의 배송비를 합산해야 한다. */
-            totalDeliveryPrice += deliveryAmount;
+            totalOrderAmount += orderAmount;
+            totalDeliveryAmount += deliveryAmount;
 
             /*storeOrder 스토어별 주문 객체 생성 후 데이터 저장.*/
             final StoreOrder newStoreOrder = StoreOrder.of(
                     storeCode,
+                    orderAmount,
+                    // 할인금액,
+                    deliveryAmount,
+                    //실결제금액,
                     orderDetails
             );
 
@@ -114,20 +119,19 @@ public class OrderService {
         final Order newOrder = Order.of(
                 memberCode,
 
-                address.getReceiver(),
-                address.getPhone(),
+                address.getReceiverName(),
+                address.getContactNumber(),
 
-                address.getAddressZipcode(),
-                address.getAddressSido(),
-                address.getAddressSigungu(),
-                address.getAddressDongeupmyeon(),
+                address.getAddressZonecode(),
+                address.getAddressType(),
+                address.getAddress(),
                 address.getAddressDetail(),
-                address.getRequest(),
+                address.getDeliveryRequest(),
 
                 /* 주문금액, 총할인, 배송비, 실결제금액 */
-                totalOrderPrice,
+                totalOrderAmount,
 //                orderCreateRequest.getDiscountAmount(),
-                totalDeliveryPrice,
+                totalDeliveryAmount,
 //                orderCreateRequest.getRealPayment(),
 
                 storeOrders
@@ -141,4 +145,3 @@ public class OrderService {
     }
     /* 장바구니 제거 */
 }
-
