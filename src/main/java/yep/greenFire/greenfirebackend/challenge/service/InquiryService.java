@@ -12,9 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestPart;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
 import yep.greenFire.greenfirebackend.challenge.domain.repository.InquiryRepository;
+import yep.greenFire.greenfirebackend.challenge.dto.request.AdminInquiryCreateRequest;
 import yep.greenFire.greenfirebackend.challenge.dto.request.InquiryCreateRequest;
-import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryOneResponse;
+import yep.greenFire.greenfirebackend.challenge.dto.response.AdminInquiryResponse;
 import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryResponse;
+
+
 
 @Service
 @Transactional
@@ -31,7 +34,9 @@ public class InquiryService {
     public Page<InquiryResponse> getInquiryContent(Long memberCode, Integer page) {
 //
         Page<InquiryContent> inquiryContents = inquiryRepository.findByMemberCode(memberCode, getPageable(page));
+        //페이징된 문의컨텐츠를 멤버코드와, 페이지 정보를 통해 조회하겠다.
         return inquiryContents.map(InquiryResponse::from);
+        //문의컨텐츠의 문의 리스폰스타입을 매핑해서 반환하겠다
 
     }
 
@@ -56,38 +61,42 @@ public class InquiryService {
        return newContent.getInquiryCode();
     }
 
-    public InquiryOneResponse getInquiryDetail(int inquiryCode) {
-        final InquiryContent newInquiry = inquiryRepository.findByInquiryCode(inquiryCode);
-//                .orElseThrow(()-> new NotFoundException(ExceptionCode.NOT_FOUND_CS_CODE));
-        //익셉션 코드 문제 해결하기
 
-      return InquiryOneResponse.from(newInquiry);
+
+    @Transactional(readOnly = true)
+
+    public Page<AdminInquiryResponse> getAdminInquiryList(Integer page, int inquiryCode) {
+        Page<AdminInquiryResponse> adminInquiryResponses = inquiryRepository.findByInquiryCode(getPageable(page), inquiryCode);
+        return adminInquiryResponses.map(InquiryContent::from);
 
     }
-//
-//
-//    public AdminInquiryResponse getAdminCsList(int inquiryCode) {
-//        InquiryContent adminInquiryContent = (InquiryContent) inquiryRepository.findByInquiryCode(inquiryCode);
-//
-//        return AdminInquiryResponse.from(adminInquiryContent);
-//    }
-//
-//    public InquiryContent saveAdmin(AdminCsCreateRequest admincsCreateRequest) {
-//        InquiryContent newReply = (InquiryContent) inquiryRepository.findByInquiryCode(admincsCreateRequest.getInquiryCode());
-//
-//        final InquiryContent newAdminList = InquiryContent.of(
-//                admincsCreateRequest.getInquiryCode(),
-//                admincsCreateRequest.getInquiryWriteDate(),
-//                admincsCreateRequest.getInquiryTitle(),
-//                admincsCreateRequest.getInquiryDetail()
-//        );
-//
-//        final InquiryContent adminCs = inquiryRepository.save(newAdminList);
-//
-//
-//        return newReply;
-//    }
 
+
+    public InquiryContent saveAdmin(AdminInquiryCreateRequest adminInquiryCreateRequest) {
+//        InquiryContent newReply = (InquiryContent) inquiryRepository.findByInquiryCode(admincsCreateRequest.getInquiryCode());
+//        //문의 답변을 뉴리플라이에 담아서 반환하는 동작
+
+        final InquiryContent newAdminList = InquiryContent.of2(
+                adminInquiryCreateRequest.getInquiryCode(),
+                adminInquiryCreateRequest.getInquiryWriteDate(),
+                adminInquiryCreateRequest.getInquiryTitle(),
+                adminInquiryCreateRequest.getInquiryDetail()
+        );
+        //이런 내용을 토대로 뉴리플라이를 구성한다
+
+        final InquiryContent adminInquiry = inquiryRepository.save(newAdminList);
+        //새로운 내용을 adminCs 라는 변수에 담아 전달하겠다.
+
+
+        return adminInquiry;
+    }
+
+    public void remove(int inquiryCode) {
+
+        inquiryRepository.deleteById(inquiryCode);
+        //특정 문의 코드의 글을 삭제하겠다.
+
+    }
 }
 
 

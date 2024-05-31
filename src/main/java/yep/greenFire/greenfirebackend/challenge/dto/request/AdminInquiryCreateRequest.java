@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class AdminCsCreateRequest {
+public class AdminInquiryCreateRequest {
 
 
     private int inquiryCode;
