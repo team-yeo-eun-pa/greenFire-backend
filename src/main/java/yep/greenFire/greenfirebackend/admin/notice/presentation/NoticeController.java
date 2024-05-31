@@ -26,6 +26,7 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @GetMapping("/notices")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<PagingResponse> getAdminNotices(
             @RequestParam(defaultValue = "1") final Integer page
     ){
