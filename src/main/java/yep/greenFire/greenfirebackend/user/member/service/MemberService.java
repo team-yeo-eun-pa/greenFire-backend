@@ -32,12 +32,7 @@ public class MemberService {
                 memberRequest.getMemberName(),
                 memberRequest.getMemberNickname(),
                 memberRequest.getMemberEmail(),
-                memberRequest.getMemberPhone(),
-                memberRequest.getAddressSido(),
-                memberRequest.getAddressSigungu(),
-                memberRequest.getAddressDongeupmyeon(),
-                memberRequest.getAddressDetail(),
-                memberRequest.getAddressZipcode()
+                memberRequest.getMemberPhone()
         );
 
         memberRepository.save(newMember);

@@ -3,6 +3,7 @@ POST http://localhost:8001/members/signup
 Content-Type: application/json
 
 {
+
   "memberId" : "user03",
   "memberPassword" : "pass03",
   "memberName": "회원",
@@ -15,8 +16,8 @@ POST http://localhost:8001/members/login
 Content-Type: application/json
 
 {
-  "memberId" : "21sol",
-  "memberPassword" : "1234"
+  "memberId" : "user01",
+  "memberPassword" : "pass01"
 }
 
 ### 인증 되어야 하는 기능을 대상으로 테스트

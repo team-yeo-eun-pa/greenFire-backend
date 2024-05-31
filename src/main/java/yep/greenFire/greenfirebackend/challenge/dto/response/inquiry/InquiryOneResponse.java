@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.challenge.dto.response;
+package yep.greenFire.greenfirebackend.challenge.dto.response.inquiry;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

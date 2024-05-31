@@ -5,10 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
-import yep.greenFire.greenfirebackend.challenge.dto.response.AdminInquiryResponse;
-
-import java.util.List;
-import java.util.Optional;
+import yep.greenFire.greenfirebackend.challenge.dto.response.inquiry.AdminInquiryResponse;
 
 @Repository
 public interface InquiryRepository extends JpaRepository<InquiryContent, Integer> {
