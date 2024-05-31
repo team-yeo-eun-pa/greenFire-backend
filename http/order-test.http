@@ -1,7 +1,7 @@
 ### 주문 등록
 POST http://localhost:8001/orders/orders
 Content-Type: application/json
-Access-Token: Bearer
+Access-Token: Bearer eyJkYXRlIjoxNzE3MTU1NzU3Mjc2LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6IjIxc29sIiwiZXhwIjoxNzE3MTU5MzU3fQ.x20CND8LmzusFuBA2WXk56zQ2O9sZCsWZMPu-85ZC-kh8Wcc1jVs1jvfrNr8D_ZeWE5sjHT0ulOCoRWC0-dJTg
 
 {
     "deliveryAddressCode": 1,
