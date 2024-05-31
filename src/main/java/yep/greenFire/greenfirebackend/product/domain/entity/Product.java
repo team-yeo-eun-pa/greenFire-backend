@@ -24,17 +24,39 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productCode;
+    private String productName;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryCode")
     private Category category;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "storeCode")
     private Store store;
-    private String productName;
     @CreatedDate
     private Date registDate;
     @Enumerated(value = EnumType.STRING)
     private SellableStatus sellableStatus = SellableStatus.SELLABLE;
+
+    public Product(String productName, Category category,
+                   Store store, Date registDate, SellableStatus sellableStatus) {
+        this.productName = productName;
+        this.category = category;
+        this.store = store;
+        this.registDate = registDate;
+        this.sellableStatus = sellableStatus;
+    }
+
+    public static Product of(
+            final String productName, final Category category,
+            final Store store, final Date registDate, final SellableStatus sellableStatus
+    ) {
+        return new Product(
+                productName,
+                category,
+                store,
+                registDate,
+                sellableStatus
+        );
+    }
 
 
 }

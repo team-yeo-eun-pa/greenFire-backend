@@ -10,16 +10,17 @@ import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 public class ProductsResponse {
 
     private final Long productCode;
+    private final String productName;
     private final String categoryName;
     private final String storeName;
-    private final String productName;
 
     public static ProductsResponse from(final Product product) {
         return new ProductsResponse (
             product.getProductCode(),
+            product.getProductName(),
             product.getCategory().getCategoryTitle(),
-            product.getStore().getStoreName(),
-            product.getProductName()
+            product.getStore().getStoreName()
+
         );
     }
 
