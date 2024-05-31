@@ -35,45 +35,29 @@ public class Member {
     @Enumerated(value = EnumType.STRING)
     private MemberRole memberRole = MemberRole.MEMBER;
     @CreatedDate
-    private LocalDateTime registAt;
-    @LastModifiedDate
-    private LocalDateTime quitAt;
+    private LocalDateTime registDate;
+//    @LastModifiedDate
+    private LocalDateTime quitDate;
     private String refreshToken;
-    private String addressSido;
-    private String addressSigungu;
-    private String addressDongeupmyeon;
-    private String addressDetail;
-    private String addressZipcode;
 
 
-
-    private Member(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String addressZipcode) {
+    private Member(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone) {
         this.memberId = memberId;
         this.memberPassword = memberPassword;
         this.memberName = memberName;
         this.memberNickname = memberNickname;
         this.memberEmail = memberEmail;
         this.memberPhone = memberPhone;
-        this.addressSido = addressSido;
-        this.addressSigungu = addressSigungu;
-        this.addressDongeupmyeon = addressDongeupmyeon;
-        this.addressDetail = addressDetail;
-        this.addressZipcode = addressZipcode;
     }
 
-    public static Member of(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String addressZipcode) {
+    public static Member of(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone) {
         return new Member(
                 memberId,
                 memberPassword,
                 memberName,
                 memberNickname,
                 memberEmail,
-                memberPhone,
-                addressSido,
-                addressSigungu,
-                addressDongeupmyeon,
-                addressDetail,
-                addressZipcode
+                memberPhone
         );
     }
 
@@ -83,16 +67,16 @@ public class Member {
 
     private Long reportCount;
 
-    public void increaseReportCount(Long reportCount) {
-        this.reportCount= reportCount;
-    }
-
-    private LocalDateTime suspendedEndDate;
-
-    public void suspensionEnd() {
-        if (this.memberStatus == MemberStatus.STOP || this.memberStatus == MemberStatus.PERMANENTLY_SUSPENDED){
-            this.memberStatus = MemberStatus.ACTIVE;
-            this.suspendedEndDate = null;
-        }
-    }
+//    public void increaseReportCount(Long reportCount) {
+//        this.reportCount= reportCount;
+//    }
+//
+//    private LocalDateTime suspendedEndDate;
+//
+//    public void suspensionEnd() {
+//        if (this.memberStatus == MemberStatus.STOP || this.memberStatus == MemberStatus.PERMANENTLY_SUSPENDED){
+//            this.memberStatus = MemberStatus.ACTIVE;
+//            this.suspendedEndDate = null;
+//        }
+//    }
 }

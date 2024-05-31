@@ -6,9 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
+import yep.greenFire.greenfirebackend.challenge.dto.request.AdminInquiryCreateRequest;
 import yep.greenFire.greenfirebackend.challenge.dto.request.InquiryCreateRequest;
-import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryOneResponse;
-import yep.greenFire.greenfirebackend.challenge.dto.response.InquiryResponse;
+import yep.greenFire.greenfirebackend.challenge.dto.response.inquiry.AdminInquiryResponse;
+import yep.greenFire.greenfirebackend.challenge.dto.response.inquiry.InquiryResponse;
 import yep.greenFire.greenfirebackend.challenge.service.InquiryService;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
@@ -18,11 +19,12 @@ import java.net.URI;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/inquiry") //경로매핑 잘하기
 public class InquiryController {
     private InquiryService inquiryService;
 
-    @GetMapping("/me")
+
+
+    @GetMapping("/member/inquiry")
    // @PreAuthorize("#memberId == authentication.principal.username")
     public ResponseEntity<PagingResponse> getInquiryContent(
             @RequestParam (defaultValue = "1") final Integer page
@@ -38,7 +40,7 @@ public class InquiryController {
         return ResponseEntity.ok(pagingResponse);
     }
 
-    @PostMapping("/me/regist")
+    @PostMapping("/member/inquiry/regist")
     public ResponseEntity<InquiryResponse> save (
             @RequestPart @Valid final InquiryCreateRequest inquiryCreateRequest
 
@@ -51,47 +53,50 @@ public class InquiryController {
     }
 
 
-        @GetMapping("/me/update")
-        public ResponseEntity<InquiryOneResponse> getInquiryDetail(
+
+    //관리자 - 등록된 문의 조회
+
+    @GetMapping("/admin/inquiry")
+    //@PreAuthorize("#memberRole == authentication.principal.admin")
+    public ResponseEntity<PagingResponse> getAdminInquiryList(
+            //반환 받을 타입에 대한 일치가 중요하다
+
+            @RequestParam (defaultValue = "1") final Integer page,
             @RequestParam int inquiryCode
-    )
-    {
-        InquiryOneResponse inquiryOneResponse = inquiryService.getInquiryDetail(inquiryCode);
-        return ResponseEntity.ok(inquiryOneResponse);
+
+
+    ) {
+        final Page<AdminInquiryResponse>  adminInquiryResponse = inquiryService.getAdminInquiryList(page, inquiryCode);
+        //페이지 기능을 적용한 리스폰스 타입에 대한 코드
+
+        final PagingButtonInfo pagingButtonInfo = Pagination.getPagingButtonInfo(adminInquiryResponse);
+        //필요한 페이지의, 필요한 계산을 하겠다. (총 몇페이지이고, 몇 페이지를 보여줘야 할 건지)
+
+        final PagingResponse pagingResponse = PagingResponse.of(adminInquiryResponse.getContent(), pagingButtonInfo);
+        //최종적으로 계산되어진, 리스폰스타입의 페이지에 대한 코드
+
+
+        return ResponseEntity.ok(pagingResponse);
+
 
     }
-//
-//    /* 5/29 해야할 것
-//    * 1. 관리자 : 등록된 문의 조회
-//    * 2. 관리자 : 문의 답변 등록
-//    * 3. 관리자 : 업데이트된 문의 목록 조회
-//    * 관리자 모드에서의 문의 목록 조회는 버튼모양으로 상태값을 보여줘야 한다
-//    **/
-//
-//
-//    //관리자 - 등록된 문의 조회
-//    @GetMapping("/admin/list")
-//    @PreAuthorize("#memberRole == authentication.principal.admin")
-//    public ResponseEntity<AdminInquiryResponse> getAdminCsList(
-//            @RequestParam int inquiryCode
-//
-//    ) {
-//        AdminInquiryResponse adminInquiryResponse = inquiryService.getAdminCsList(inquiryCode);
-//
-//        return ResponseEntity.ok(adminInquiryResponse);
-//
-//
-//    }
-//
-//    //문의 답변 등록
-//    @GetMapping("/admin/list/{inquiryCode}")
-//    @PreAuthorize("#memberRole == authentication.principal.admin")
-//    public ResponseEntity<Void> saveAdmin (
-//            @RequestPart @Valid final AdminCsCreateRequest admincsCreateRequest
-//    ) {
-//        final InquiryContent inquiryCode = inquiryService.saveAdmin(admincsCreateRequest);
-//        return ResponseEntity.created(URI.create("/admin/list" + inquiryCode)).build();
-//    }
+
+    //문의 답변 등록
+    @GetMapping("/admin/inquiry/regist")
+    public ResponseEntity<Void> saveAdmin (
+            @RequestPart @Valid final AdminInquiryCreateRequest adminInquiryCreateRequest
+    ) {
+        final InquiryContent inquiryCode = inquiryService.saveAdmin(adminInquiryCreateRequest);
+        return ResponseEntity.created(URI.create("/admin/list" + inquiryCode)).build();
+    }
+
+    @GetMapping("/admin/inquiry/rm")
+    public ResponseEntity<Void> remove (@RequestParam final int inquiryCode) {
+       inquiryService.remove(inquiryCode);
+
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 

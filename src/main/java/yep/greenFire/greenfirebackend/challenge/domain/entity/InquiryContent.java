@@ -4,10 +4,10 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import yep.greenFire.greenfirebackend.challenge.dto.response.inquiry.AdminInquiryResponse;
 
 import java.util.Date;
 
@@ -33,9 +33,17 @@ public class InquiryContent {
     private String inquiryReply;
     private String inquiryReplyStatus;
 
+
+
     public static InquiryContent of(
             final int inquiryCode, final int memberCode, final Date inquiryWriteDate,
             final String inquiryTitle, final String inquiryDetail, final String inquiryStatus) {
+        return new InquiryContent();
+    }
+
+    public static InquiryContent of2(
+            final int inquiryCode, final String inquiryWriteDate,
+            final String inquiryTitle, final String inquiryDetail) {
         return new InquiryContent();
     }
 
@@ -53,6 +61,27 @@ public class InquiryContent {
         this.inquiryReplyStatus = inquiryReplyStatus;
 
     }
+
+
+    public static AdminInquiryResponse from(AdminInquiryResponse adminInquiryResponse) {
+        return new AdminInquiryResponse (
+                adminInquiryResponse.getInquiryCode(),
+                adminInquiryResponse.getInquiryWriteDate(),
+                adminInquiryResponse.getMemberCode(),
+                adminInquiryResponse.getInquiryTitle(),
+                adminInquiryResponse.getInquiryDetail(),
+                adminInquiryResponse.getInquiryStatus(),
+                adminInquiryResponse.getInquiryReplyStatus()
+        );
+
+
+
+
+    }
+
+
+
+
 
 
 

@@ -1,0 +1,3 @@
+### seller-chl-regist-test
+POST http://localhost:8001/seller/challenge/regist
+Content-Type: 'application/json'

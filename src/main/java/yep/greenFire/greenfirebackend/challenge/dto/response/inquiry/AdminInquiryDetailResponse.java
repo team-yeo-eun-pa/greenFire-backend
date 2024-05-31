@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.challenge.dto.response;
+package yep.greenFire.greenfirebackend.challenge.dto.response.inquiry;
 
 
 import lombok.Getter;
@@ -11,19 +11,19 @@ import java.util.Date;
 @Getter
 @Service
 @RequiredArgsConstructor
-public class AdminInquiryResponse {
+public class AdminInquiryDetailResponse {
 
     // 로그인한 관리자가 마이페이지에서 등록된 문의를 볼 때 필요한 것들이 뭐가 있을까.
     // 상세 문의 내역 보기 전에 테이블에서 보여줄 것들. . ?
     private int inquiryCode;
     private Date inquiryWriteDate;
     private int memberCode;
-    //문의 제목이 여기쯤 들어가야 하지 않을까?
+    private int inquiryTitle;
     private String inquiryDetail;
     private String inquiryStatus;
     private String inquiryReplyStatus;
 
-    public AdminInquiryResponse(int inquiryCode, Date inquiryWriteDate, int memberCode, String inquiryDetail, String inquiryStatus, String inquiryReplyStatus) {
+    public AdminInquiryDetailResponse(int inquiryCode, Date inquiryWriteDate, int memberCode, String inquiryDetail, String inquiryStatus, String inquiryReplyStatus) {
         this.inquiryCode = inquiryCode;
         this.inquiryWriteDate = inquiryWriteDate;
         this.memberCode = memberCode;
@@ -33,8 +33,8 @@ public class AdminInquiryResponse {
     }
 
 
-    public static AdminInquiryResponse from(InquiryContent adminInquiryContent) {
-        return new AdminInquiryResponse(
+    public static AdminInquiryDetailResponse from(InquiryContent adminInquiryContent) {
+        return new AdminInquiryDetailResponse(
                 adminInquiryContent.getInquiryCode(),
                 adminInquiryContent.getInquiryWriteDate(),
                 adminInquiryContent.getMemberCode(),
