@@ -8,7 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
 
 @Entity
-@Table(name = "tbl_prouct_option")
+@Table(name = "tbl_product_option")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
