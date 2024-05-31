@@ -1,33 +1,34 @@
 package yep.greenFire.greenfirebackend.admin.notice.dto.response;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 import yep.greenFire.greenfirebackend.admin.notice.domain.entity.Notice;
 
 import java.util.Date;
 
 @Getter
 @Setter
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString
+@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class AdminNoticesResponse {
 
     private final Long noticeCode;
     private final String noticeTitle;
     private final String noticeFixable;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private final Date noticeDate;
     private final Long noticeWriter;
+    private final String memberName;
 
-    public static AdminNoticesResponse from(final Notice notice){
-        return new AdminNoticesResponse(
-                notice.getNoticeCode(),
-                notice.getNoticeTitle(),
-                notice.getNoticeFixable(),
-                notice.getNoticeDate(),
-                notice.getNoticeWriter()
-
-        );
-    }
+//    public static AdminNoticesResponse from(final Notice notice){
+//        return new AdminNoticesResponse(
+//                notice.getNoticeCode(),
+//                notice.getNoticeTitle(),
+//                notice.getNoticeFixable(),
+//                notice.getNoticeDate(),
+//                notice.getNoticeWriter()
+//
+//        );
+//    }
 
 }

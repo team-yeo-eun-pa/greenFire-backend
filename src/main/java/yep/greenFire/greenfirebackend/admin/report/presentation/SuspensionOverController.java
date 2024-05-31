@@ -16,11 +16,11 @@ public class SuspensionOverController {
     private final MemberService memberService;
 
 
-//    @PostMapping("/{memberCode}/suspendEnd")
-//    public ResponseEntity<String> suspendOver(@PathVariable Long memberCode) {
-//        memberService.suspensionEnd(memberCode);
-//        return ResponseEntity.ok("정지가 해제되었습니다");
-//    }
+    @PostMapping("/{memberCode}/suspendEnd")
+    public ResponseEntity<String> suspendOver(@PathVariable Long memberCode) {
+        memberService.suspensionEnd(memberCode);
+        return ResponseEntity.ok("정지가 해제되었습니다");
+    }
 
 
 }

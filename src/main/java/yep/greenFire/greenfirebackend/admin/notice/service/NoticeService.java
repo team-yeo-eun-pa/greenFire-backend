@@ -20,6 +20,7 @@ import yep.greenFire.greenfirebackend.user.notice.dto.response.MemberNoticesResp
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 
+import static yep.greenFire.greenfirebackend.admin.notice.domain.type.NoticeStatusType.ACTIVE;
 import static yep.greenFire.greenfirebackend.admin.notice.domain.type.NoticeStatusType.DELETE;
 
 @Service
@@ -37,19 +38,21 @@ public class NoticeService {
     @Transactional(readOnly = true)
     public Page<AdminNoticesResponse> getAdminNotices(final Integer page) {
 
-        Page<Notice> notices = noticeRepository.findByNoticeStatusNot(getPageable(page), DELETE);
+        Page<AdminNoticesResponse> notices = noticeRepository.getNotices(getPageable(page), ACTIVE);
 
-        return notices.map(AdminNoticesResponse::from);
+        return notices;
+//        return notices.map(AdminNoticesResponse::from);
     }
 
 
     @Transactional(readOnly = true)
     public AdminNoticeResponse getAdminNotice(final Long noticeCode) {
 
-        Notice notice = noticeRepository.findByNoticeCodeAndNoticeStatusNot(noticeCode, DELETE)
+        AdminNoticeResponse notice = noticeRepository.getNotice(noticeCode, ACTIVE)
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_NOTICE_CODE));
 
-        return AdminNoticeResponse.from(notice);
+        return notice;
+//        return AdminNoticeResponse.from(notice);
     }
 
     public Long save(NoticeCreateRequest noticeRequest, Long memberCode) {

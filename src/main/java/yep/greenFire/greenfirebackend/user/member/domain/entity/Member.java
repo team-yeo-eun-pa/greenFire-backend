@@ -67,16 +67,16 @@ public class Member {
 
     private Long reportCount;
 
-//    public void increaseReportCount(Long reportCount) {
-//        this.reportCount= reportCount;
-//    }
-//
-//    private LocalDateTime suspendedEndDate;
-//
-//    public void suspensionEnd() {
-//        if (this.memberStatus == MemberStatus.STOP || this.memberStatus == MemberStatus.PERMANENTLY_SUSPENDED){
-//            this.memberStatus = MemberStatus.ACTIVE;
-//            this.suspendedEndDate = null;
-//        }
-//    }
+    public void increaseReportCount(Long reportCount) {
+        this.reportCount= reportCount;
+    }
+
+    private LocalDateTime suspendedEndDate;
+
+    public void suspensionEnd() {
+        if (this.memberStatus == MemberStatus.STOP || this.memberStatus == MemberStatus.PERMANENTLY_SUSPENDED){
+            this.memberStatus = MemberStatus.ACTIVE;
+            this.suspendedEndDate = null;
+        }
+    }
 }
