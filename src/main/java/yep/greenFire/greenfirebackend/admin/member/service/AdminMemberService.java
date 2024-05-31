@@ -7,9 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yep.greenFire.greenfirebackend.admin.member.domain.entity.AdminMember;
-import yep.greenFire.greenfirebackend.admin.member.domain.repository.AdminMemberRepository;
-import yep.greenFire.greenfirebackend.admin.member.dto.response.AdminMemberResponse;
+import yep.greenFire.greenfirebackend.user.member.domain.entity.Member;
+import yep.greenFire.greenfirebackend.user.member.domain.repository.MemberRepository;
+import yep.greenFire.greenfirebackend.user.member.dto.response.MemberResponse;
 import yep.greenFire.greenfirebackend.user.member.domain.type.MemberStatus;
 
 
@@ -18,16 +18,17 @@ import yep.greenFire.greenfirebackend.user.member.domain.type.MemberStatus;
 @Transactional
 public class AdminMemberService {
 
-    private final AdminMemberRepository adminMemberRepository;
+    private final MemberRepository memberRepository;
 
     private Pageable getPageable(final Integer page) {
         return PageRequest.of(page -1, 10, Sort.by("memberCode").descending());
     }
 
     @Transactional(readOnly = true)
-    public Page<AdminMemberResponse> getAdminMembers(Integer page) {
-        Page<AdminMember> members = adminMemberRepository.findByMemberStatusNot(getPageable(page), MemberStatus.STOP);
+    public Page<MemberResponse> getAdminMembers(Integer page) {
 
-        return members.map(AdminMemberResponse::from);
+        Page<Member> members = memberRepository.findByMemberStatusNot(getPageable(page), MemberStatus.STOP);
+
+        return members.map(MemberResponse::from);
     }
 }

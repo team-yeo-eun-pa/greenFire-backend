@@ -15,6 +15,6 @@ public class NoticeCreateRequest {
     @NotBlank
     private final String noticeFixable;
 
-    private final Integer noticeWriter;
+    private final Long noticeWriter;
 
 }

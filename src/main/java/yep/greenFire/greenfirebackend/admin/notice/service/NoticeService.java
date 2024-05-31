@@ -15,8 +15,8 @@ import yep.greenFire.greenfirebackend.admin.notice.dto.request.NoticeCreateReque
 import yep.greenFire.greenfirebackend.admin.notice.dto.request.NoticeUpdateRequest;
 import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticeResponse;
 import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticesResponse;
-import yep.greenFire.greenfirebackend.admin.notice.dto.response.MemberNoticeResponse;
-import yep.greenFire.greenfirebackend.admin.notice.dto.response.MemberNoticesResponse;
+import yep.greenFire.greenfirebackend.user.notice.dto.response.MemberNoticeResponse;
+import yep.greenFire.greenfirebackend.user.notice.dto.response.MemberNoticesResponse;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 
@@ -52,7 +52,7 @@ public class NoticeService {
         return AdminNoticeResponse.from(notice);
     }
 
-    public Integer save(NoticeCreateRequest noticeRequest, Integer memberCode) {
+    public Long save(NoticeCreateRequest noticeRequest, Long memberCode) {
 
 
         final Notice newNotice = Notice.of(
@@ -81,23 +81,4 @@ public class NoticeService {
         noticeRepository.deleteById(noticeCode);
     }
 
-    public Page<MemberNoticesResponse> getMemberNotices(final Integer page, final Integer noticeCode) {
-
-        Page<Notice> notices = null;
-        if(noticeCode != null) {
-            notices = noticeRepository.findByNoticeTitleAndNoticeStatus(getPageable(page), noticeCode, NoticeStatusType.ACTIVE);
-
-        }
-
-        return notices.map(MemberNoticesResponse::from);
-    }
-
-    @Transactional(readOnly = true)
-    public MemberNoticeResponse getMemberNotice(Long noticeCode) {
-
-        Notice notice = noticeRepository.findByNoticeCodeAndNoticeStatusNot(noticeCode, DELETE)
-                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_NOTICE_CODE));
-
-        return MemberNoticeResponse.from(notice);
-    }
 }

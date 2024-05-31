@@ -3,9 +3,9 @@ POST http://localhost:8001/members/signup
 Content-Type: application/json
 
 {
-  "memberId" : "user02",
-  "memberPassword" : "pass02",
-  "memberName": "관리자",
+  "memberId" : "user04",
+  "memberPassword" : "pass4",
+  "memberName": "회원",
   "memberEmail": "user02@greenfire.com",
   "memberPhone": "01012341234",
   "addressSido": "서울시",
@@ -40,3 +40,11 @@ Refresh-Token: Bearer eyJkYXRlIjoxNzE2NzgwNDc4MzczLCJ0eXBlIjoiand0IiwiYWxnIjoiSF
 ### 4. Access Token은 유효하지만 권한이 없는 경우 -> 허가 되지 않은 요청 오류
 GET http://localhost:8001/admin
 Access-Token: Bearer eyJkYXRlIjoxNzE2Nzc5NTMwNzM2LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6InVzZXIwMiIsIm1lbWJlclJvbGUiOiJST0xFX01FTUJFUiIsImV4cCI6MTcxNjc4MzEzMH0.CO1_5Cy1-ryPLBt1fCBIkp51EwWd4K_sVnl6B6_Fol2IlyjpuYxXExty421_2QwlE6h-bvN-Uh5N9rwhjvRF1A
+
+### 프로필 조회
+GET http://localhost:8001/members/user02
+Access-Token: Bearer eyJkYXRlIjoxNzE2OTcxNTY3MzU4LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6InVzZXIwMiIsImV4cCI6MTcxNjk3NTE2N30.pOI8vOlRjdZLiSQUQZmxbUB2DXe4tob6tWIvbC1cjrhHXtRGdrRlj2dvMBlN3d7FBWeSmi4ylS9ElXaZEwHlMA
+
+### 로그아웃
+POST http://localhost:8001/members/logout
+Access-Token: Bearer eyJkYXRlIjoxNzE2OTcxNTY3MzU4LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6InVzZXIwMiIsImV4cCI6MTcxNjk3NTE2N30.pOI8vOlRjdZLiSQUQZmxbUB2DXe4tob6tWIvbC1cjrhHXtRGdrRlj2dvMBlN3d7FBWeSmi4ylS9ElXaZEwHlMA

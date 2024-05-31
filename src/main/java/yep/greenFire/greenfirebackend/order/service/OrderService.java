@@ -34,7 +34,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
 
-    public void save(OrderCreateRequest orderCreateRequest, Integer memberCode) {
+    public void save(OrderCreateRequest orderCreateRequest, Long memberCode) {
 
         Long totalOrderPrice = 0l;
         Long totalDeliveryPrice = 0L;

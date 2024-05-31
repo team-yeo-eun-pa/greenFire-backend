@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import yep.greenFire.greenfirebackend.admin.member.domain.entity.AdminMember;
 import yep.greenFire.greenfirebackend.admin.notice.dto.request.NoticeCreateRequest;
 import yep.greenFire.greenfirebackend.admin.notice.dto.request.NoticeUpdateRequest;
 import yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticeResponse;
@@ -26,7 +25,7 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-    @GetMapping("/adminNotices")
+    @GetMapping("/notices")
     public ResponseEntity<PagingResponse> getAdminNotices(
             @RequestParam(defaultValue = "1") final Integer page
     ){
@@ -39,26 +38,25 @@ public class NoticeController {
     }
 
     @GetMapping("/notices/{noticeCode}")
-    public ResponseEntity<AdminNoticeResponse> getAdminNotice (@PathVariable final Long noticeCode,
-                                                               @AuthenticationPrincipal final AdminMember adminMember) {
+    public ResponseEntity<AdminNoticeResponse> getAdminNotice (@PathVariable final Long noticeCode
+                                                               ) {
 
         final AdminNoticeResponse adminNoticeResponse = noticeService.getAdminNotice(noticeCode);
 
         return ResponseEntity.ok(adminNoticeResponse);
     }
 
-    @PostMapping("/adminNotices")
+    @PostMapping("/notices")
     public ResponseEntity<Void> save(
-            @RequestBody @Valid final NoticeCreateRequest noticeCreateRequest,
-            @AuthenticationPrincipal final AdminMember adminMember
+            @RequestBody @Valid final NoticeCreateRequest noticeCreateRequest
             ){
-       noticeService.save(noticeCreateRequest, 2);
+       noticeService.save(noticeCreateRequest, 2L);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 
-    @PutMapping("/adminNotices/{noticeCode}")
+    @PutMapping("/notices/{noticeCode}")
     public ResponseEntity<Void> modify(
             @PathVariable final Long noticeCode,
             @RequestBody @Valid final NoticeUpdateRequest noticeUpdateRequest){
@@ -69,7 +67,7 @@ public class NoticeController {
         return ResponseEntity.created(URI.create("/admin/adminNotices/" + noticeCode)).build();
     }
 
-    @DeleteMapping("/adminNotices/{noticeCode}")
+    @DeleteMapping("/notices/{noticeCode}")
     public ResponseEntity<Void> remove(@PathVariable final Long noticeCode) {
         noticeService.remove(noticeCode);
 

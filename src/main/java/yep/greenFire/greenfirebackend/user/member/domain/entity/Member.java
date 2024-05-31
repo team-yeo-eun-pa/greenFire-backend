@@ -23,9 +23,10 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer memberCode;
+    private Long memberCode;
     private String memberId;
     private String memberPassword;
+    private String memberNickname;
     private String memberName;
     private String memberEmail;
     private String memberPhone;
@@ -46,10 +47,11 @@ public class Member {
 
 
 
-    private Member(String memberId, String memberPassword, String memberName, String memberEmail, String memberPhone, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String addressZipcode) {
+    private Member(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String addressZipcode) {
         this.memberId = memberId;
         this.memberPassword = memberPassword;
         this.memberName = memberName;
+        this.memberNickname = memberNickname;
         this.memberEmail = memberEmail;
         this.memberPhone = memberPhone;
         this.addressSido = addressSido;
@@ -59,11 +61,12 @@ public class Member {
         this.addressZipcode = addressZipcode;
     }
 
-    public static Member of(String memberId, String memberPassword, String memberName, String memberEmail, String memberPhone, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String addressZipcode) {
+    public static Member of(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String addressZipcode) {
         return new Member(
                 memberId,
                 memberPassword,
                 memberName,
+                memberNickname,
                 memberEmail,
                 memberPhone,
                 addressSido,
@@ -76,5 +79,20 @@ public class Member {
 
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    private Long reportCount;
+
+    public void increaseReportCount(Long reportCount) {
+        this.reportCount= reportCount;
+    }
+
+    private LocalDateTime suspendedEndDate;
+
+    public void suspensionEnd() {
+        if (this.memberStatus == MemberStatus.STOP || this.memberStatus == MemberStatus.PERMANENTLY_SUSPENDED){
+            this.memberStatus = MemberStatus.ACTIVE;
+            this.suspendedEndDate = null;
+        }
     }
 }

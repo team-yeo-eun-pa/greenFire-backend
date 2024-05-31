@@ -10,7 +10,7 @@ import yep.greenFire.greenfirebackend.user.member.domain.type.MemberRole;
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class LoginDTO {
 
-    private final Integer memberCode;
+    private final Long memberCode;
     private final String memberId;
     private final String memberPassword;
     private final MemberRole memberRole;

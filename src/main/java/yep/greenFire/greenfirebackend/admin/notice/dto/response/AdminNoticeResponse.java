@@ -15,7 +15,7 @@ public class AdminNoticeResponse {
     private final String noticeTitle;
     private final String noticeFixable;
     private final Date noticeDate;
-    private final Integer noticeWriter;
+    private final Long noticeWriter;
 
     public static AdminNoticeResponse from(final Notice notice) {
         return new AdminNoticeResponse(
