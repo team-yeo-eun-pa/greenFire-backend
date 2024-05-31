@@ -31,7 +31,7 @@ public class ChallengeResponse {
     }
 
 
-    public ChallengeResponse from(ChallengeContent challengeContent) {
+    public static ChallengeResponse from(ChallengeContent challengeContent) {
         return new ChallengeResponse(
                 challengeContent.getChallengeCode(),
                 challengeContent.getChallengeStatus(),
