@@ -15,12 +15,12 @@ import java.net.URI;
 @RestController
 @AllArgsConstructor
 
-public class ChallegeController {
+public class ChallengeController {
 
     private ChallengeService challengeService;
     //판매자 - 챌린지 등록
     @PostMapping("/seller/challenge/regist")
-    public ResponseEntity<Void> chanllengeRegist (@RequestParam @Valid ChallengeCreateRequest challengeCreateRequest) {
+    public ResponseEntity<ChallengeContent> chanllengeRegist (@RequestParam @Valid ChallengeCreateRequest challengeCreateRequest) {
 
         final ChallengeContent challengeContent = challengeService.save(challengeCreateRequest);
         return ResponseEntity.created(URI.create("/seller/challenge/list" + challengeContent)).build();

@@ -3,6 +3,9 @@ POST http://localhost:8001/members/signup
 Content-Type: application/json
 
 {
+  "memberId" : "user03",
+  "memberPassword" : "pass03",
+  "memberName": "seller",
   "memberEmail": "user02@greenfire.com",
   "memberPhone": "01012341234",
   "addressSido": "서울시",

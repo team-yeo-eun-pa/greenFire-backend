@@ -48,6 +48,5 @@ public class ChallengeContent {
         return new ChallengeContent();
     }
 
-    public ChallengeContent save(ChallengeContent challengeRegist) {
-    }
+
 }

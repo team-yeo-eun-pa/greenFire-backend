@@ -13,9 +13,10 @@ import java.util.Date;
 public class ChallengeService {
 
     private ChallengeRepository challengeRepository;
-    public int save(@RequestParam @Valid ChallengeCreateRequest challengeCreateRequest) {
+    public ChallengeContent save(@RequestParam @Valid ChallengeCreateRequest challengeCreateRequest) {
 
-        final ChallengeContent challengeRegist = ChallengeContent.of(
+
+        final ChallengeContent newChallenge = ChallengeContent.of(
                 challengeCreateRequest.getChallengeCode(),
                 challengeCreateRequest.getChallengeName(),
                 challengeCreateRequest.getChallengeContent(),
@@ -25,8 +26,8 @@ public class ChallengeService {
                 challengeCreateRequest.getTagCode()
         );
 
-        final ChallengeContent challenge = challengeRepository.save(challengeRegist);
+       challengeRepository.save(newChallenge);
 
-        return challenge.getChallengeCode();
+      return newChallenge;
     }
 }
