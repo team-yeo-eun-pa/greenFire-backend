@@ -20,15 +20,4 @@ public class MemberSignupRequest {
     @NotBlank
     private final String memberPhone;
 
-    @NotBlank
-    private final String addressSido;
-    @NotBlank
-    private final String addressSigungu;
-    @NotBlank
-    private final String addressDongeupmyeon;
-    @NotBlank
-    private final String addressDetail;
-    @NotBlank
-    private final String addressZipcode;
-
 }

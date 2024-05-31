@@ -32,12 +32,7 @@ public class MemberService {
                 memberRequest.getMemberName(),
                 memberRequest.getMemberNickname(),
                 memberRequest.getMemberEmail(),
-                memberRequest.getMemberPhone(),
-                memberRequest.getAddressSido(),
-                memberRequest.getAddressSigungu(),
-                memberRequest.getAddressDongeupmyeon(),
-                memberRequest.getAddressDetail(),
-                memberRequest.getAddressZipcode()
+                memberRequest.getMemberPhone()
         );
 
         memberRepository.save(newMember);
@@ -87,9 +82,9 @@ public class MemberService {
         return member.getMemberStatus();
     }
 
-    public void suspensionEnd(Long memberCode) {
-        Member member = memberRepository.findByMemberCode(memberCode)
-                .orElseThrow(() -> new NotFoundException(NOT_FOUND_MEMBER_CODE));
-        member.suspensionEnd();
-    }
+//    public void suspensionEnd(Long memberCode) {
+//        Member member = memberRepository.findByMemberCode(memberCode)
+//                .orElseThrow(() -> new NotFoundException(NOT_FOUND_MEMBER_CODE));
+//        member.suspensionEnd();
+//    }
 }
