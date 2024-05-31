@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.order.domain.entity;
+package yep.greenFire.greenfirebackend.user.seller.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -7,30 +7,35 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.order.domain.type.AddressZonecode;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "tbl_delivery_address")
+@Table(name = "tbl_store")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-public class DeliveryAddress {
+public class Store {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long deliveryAddressCode;
+    private Long storeCode;
 
-    private Long memberCode;
+    private Long sellerCode;
 
-    private String deliveryAddressName;
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
-    private Boolean isOrdinaryAddress = true;
-
-    private String receiverName;
-    private String contactNumber;
+    private String storeName;
+    private String storeInfo;
 
     private AddressZonecode addressZonecode;
     private String addressType;
     private String address;
     private String addressDetail;
-    private String deliveryRequest;
 
+    /* 스토어 배송비 관련 */
+    private Long deliveryAmount;
+    private Long freeDeliveryCondition;
+
+    private Long reportCount;
+    private LocalDateTime suspendedEndDate;
+
+    private String storeStatus;
 }
