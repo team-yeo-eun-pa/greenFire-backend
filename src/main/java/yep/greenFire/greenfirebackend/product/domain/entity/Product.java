@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.admin.category.domain.entity.Category;
@@ -15,7 +14,7 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "tbl_prouct")
+@Table(name = "tbl_product")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
@@ -25,34 +24,36 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productCode;
     private String productName;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoryCode")
-    private Category category;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "storeCode")
-    private Store store;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "categoryCode")
+//    private Category category;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "storeCode")
+//    private Store store;
+    private Long categoryCode;
+    private Long storeCode;
     @CreatedDate
     private Date registDate;
     @Enumerated(value = EnumType.STRING)
     private SellableStatus sellableStatus = SellableStatus.SELLABLE;
 
-    public Product(String productName, Category category,
-                   Store store, Date registDate, SellableStatus sellableStatus) {
+    public Product(String productName, Long categoryCode,
+                   Long storeCode, Date registDate, SellableStatus sellableStatus) {
         this.productName = productName;
-        this.category = category;
-        this.store = store;
+        this.categoryCode = categoryCode;
+        this.storeCode = storeCode;
         this.registDate = registDate;
         this.sellableStatus = sellableStatus;
     }
 
     public static Product of(
-            final String productName, final Category category,
-            final Store store, final Date registDate, final SellableStatus sellableStatus
+            final String productName, final Long categoryCode,
+            final Long storeCode, final Date registDate, final SellableStatus sellableStatus
     ) {
         return new Product(
                 productName,
-                category,
-                store,
+                categoryCode,
+                storeCode,
                 registDate,
                 sellableStatus
         );

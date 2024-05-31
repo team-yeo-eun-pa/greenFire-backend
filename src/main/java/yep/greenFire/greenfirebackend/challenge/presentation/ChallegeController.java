@@ -22,8 +22,8 @@ public class ChallegeController {
     @PostMapping("/seller/challenge/regist")
     public ResponseEntity<Void> chanllengeRegist (@RequestParam @Valid ChallengeCreateRequest challengeCreateRequest) {
 
-        final ChallengeContent challengeContent = challengeService.save(challengeCreateRequest);
-        return ResponseEntity.created(URI.create("/seller/challenge/list" + challengeContent)).build();
-
+//        final ChallengeContent challengeContent = challengeService.save(challengeCreateRequest);
+//        return ResponseEntity.created(URI.create("/seller/challenge/list" + challengeContent)).build();
+            return null;
     }
 }
