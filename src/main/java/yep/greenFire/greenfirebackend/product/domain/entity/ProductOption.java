@@ -27,7 +27,7 @@ public class ProductOption {
 
     /* 상품 옵션 조회 가능 여부 */
     @Enumerated(value = EnumType.STRING)
-    private ProductOptionAppearActivate optionAppearActivate = ProductOptionAppearActivate.USABLE;
+    private ProductOptionAppearActivate optionAppearActivate = ProductOptionAppearActivate.Y;
 
     private ProductOption(
             String optionName, Long optionStock
