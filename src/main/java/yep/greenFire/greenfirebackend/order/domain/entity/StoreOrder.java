@@ -42,7 +42,7 @@ public class StoreOrder {
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<OrderDetail> orderDetails;
 
-    public StoreOrder(Long storeCode, Long orderAmount, Long deliveryAmount, List<OrderDetail> orderDetails) {
+    private StoreOrder(Long storeCode, Long orderAmount, Long deliveryAmount, List<OrderDetail> orderDetails) {
         this.storeCode = storeCode;
         this.orderAmount = orderAmount;
         this.deliveryAmount = deliveryAmount;

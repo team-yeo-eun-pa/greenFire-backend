@@ -32,7 +32,7 @@ public class OrderDetail {
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isOrderCancel = false;
 
-    public OrderDetail(Long optionCode, Long optionPrice, Long orderQuantity) {
+    private OrderDetail(Long optionCode, Long optionPrice, Long orderQuantity) {
         this.optionCode = optionCode;
         this.optionPrice = optionPrice;
         this.orderQuantity = orderQuantity;

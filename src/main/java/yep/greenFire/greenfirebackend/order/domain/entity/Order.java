@@ -54,7 +54,7 @@ public class Order {
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<StoreOrder> storeOrders;
 
-    public Order(Integer memberCode, String receiverName, String contactNumber, AddressZonecode addressZonecode, String addressType, String address, String addressDetail, String deliveryRequest,
+    private Order(Long memberCode, String receiverName, String contactNumber, AddressZonecode addressZonecode, String addressType, String address, String addressDetail, String deliveryRequest,
                  Long totalOrderAmount,/* Long totalDiscountAmount,*/ Long totalDeliveryAmount/*, Long totalRealPayment*/,
                   List<StoreOrder> storeOrders) {
         this.memberCode = memberCode;
@@ -73,7 +73,7 @@ public class Order {
     }
 
 
-    public static Order of(Integer memberCode, String receiverName, String contactNumber, AddressZonecode addressZonecode, String addressType, String address,String addressDetail, String deliveryRequest, Long totalOrderAmount, /* Long totalDiscountAmount,*/ Long totalDeliveryAmount/*, Long totalRealPayment,*/,  List<StoreOrder> storeOrders) {
+    public static Order of(Long memberCode, String receiverName, String contactNumber, AddressZonecode addressZonecode, String addressType, String address,String addressDetail, String deliveryRequest, Long totalOrderAmount, /* Long totalDiscountAmount,*/ Long totalDeliveryAmount/*, Long totalRealPayment,*/,  List<StoreOrder> storeOrders) {
         return new Order(memberCode,
                 receiverName, contactNumber,
                 addressZonecode,addressType, address, addressDetail, deliveryRequest,

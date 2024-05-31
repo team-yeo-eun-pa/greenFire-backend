@@ -86,7 +86,7 @@ public class OrderService {
             if (optionalStore.isPresent()) {
                 Store store = optionalStore.get();
                 deliveryAmount = store.getDeliveryAmount();
-                if (totalOrderAmount >= store.getFreeShippingLimit()) {
+                if (totalOrderAmount >= store.getFreeDeliveryCondition()) {
                     deliveryAmount = 0L;
                 }
             }
