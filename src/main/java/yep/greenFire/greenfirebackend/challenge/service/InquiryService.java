@@ -24,7 +24,7 @@ import yep.greenFire.greenfirebackend.challenge.dto.response.inquiry.InquiryResp
 @RequiredArgsConstructor
 public class InquiryService {
     private final InquiryRepository inquiryRepository;
-    private final InquiryResponse inquiryResponse;
+
 
     private Pageable getPageable(final Integer page) {
         return PageRequest.of(page - 1, 10, Sort.by("inquiryCode").descending());

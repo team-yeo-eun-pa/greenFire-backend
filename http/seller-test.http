@@ -1,3 +1,9 @@
 ### seller-chl-regist-test
 POST http://localhost:8001/seller/challenge/regist
 Content-Type: 'application/json'
+Access-Token: eyJkYXRlIjoxNzE3MTI3NjQ5NzA3LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6InVzZXIwMyIsImV4cCI6MTcxNzEzMTI0OX0.a6hVAfpu4i-le1nj_mo0iGsHrvCTpkQPXu7DDvpI9T86RTr9F8buLTFoRVCMdLWeMLUpvQKFf98-xmwaVXKRuw
+
+###seller-chl-view-test
+GET http://localhost:8001/seller/challenge
+Content-Type: 'application/json'
+Access-Token: eyJkYXRlIjoxNzE3MTI3NjQ5NzA3LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6InVzZXIwMyIsImV4cCI6MTcxNzEzMTI0OX0.a6hVAfpu4i-le1nj_mo0iGsHrvCTpkQPXu7DDvpI9T86RTr9F8buLTFoRVCMdLWeMLUpvQKFf98-xmwaVXKRuw
