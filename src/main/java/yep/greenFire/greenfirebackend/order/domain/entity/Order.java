@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-//import yep.greenFire.greenfirebackend.order.dto.request.OrderCreateRequest;
+import yep.greenFire.greenfirebackend.order.domain.type.AddressZonecode;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,63 +24,81 @@ public class Order {
     private Long memberCode;
 
     /* 배송지 - 수령자 연락처 주소 요청사항 //카카오 우편번호 서비스 적용해보기 */
-    private String receiver;
-    private String phone;
+    private String receiverName;
+    private String contactNumber;
 
-    private Long addressZipcode;
-    private String addressSido;
-    private String addressSigungu;
-    private String addressDongeupmyeon;
+    private AddressZonecode addressZonecode;
+    private String addressType;
+    private String address;
     private String addressDetail;
-    private String request;
+    private String deliveryRequest;
 
     /* 주문금액, 총할인, 배송비, 실결제금액 */
-    private Long orderPrice;
-    private Long discountAmount;
-    private Long deliveryAmount;
-    private Long realPayment;
+    private Long totalOrderAmount;
+    private Long totalDiscountAmount;
+    private Long totalDeliveryAmount;
+    private Long totalRealPayment;
 
-    /* 주문 날짜 */
+    /* 주문 취소 부분 취소 여부 - 기본값 false */
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    private Boolean isOrderCancel = false;
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    private Boolean isPartialCancel = false;
+
+    /* 주문 날짜, 취소 날짜 */
     @CreatedDate
     private LocalDateTime orderDate;
 
-    /* 주문 취소 여부 - 기본값 false */
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
-    private Boolean isOrderCancel = false;
-
+    private LocalDateTime cancelDate;
 
     @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "orderCode")
-    private List<StoreOrder> storeOrder;
+    private List<StoreOrder> storeOrders;
 
-
-    public Order(Long memberCode, String receiver, String phone, Long addressZipcode, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String request,
-//                 Long orderPrice, Long discountAmount, Long deliveryAmount, Long realPayment,
-                 List<StoreOrder> storeOrder) {
+    public Order(Integer memberCode, String receiverName, String contactNumber, AddressZonecode addressZonecode, String addressType, String address, String addressDetail, String deliveryRequest,
+                 Long totalOrderAmount,/* Long totalDiscountAmount,*/ Long totalDeliveryAmount/*, Long totalRealPayment*/,
+                  List<StoreOrder> storeOrders) {
         this.memberCode = memberCode;
-        this.receiver = receiver;
-        this.phone = phone;
-        this.addressZipcode = addressZipcode;
-        this.addressSido = addressSido;
-        this.addressSigungu = addressSigungu;
-        this.addressDongeupmyeon = addressDongeupmyeon;
+        this.receiverName = receiverName;
+        this.contactNumber = contactNumber;
+        this.addressZonecode = addressZonecode;
+        this.addressType = addressType;
+        this.address = address;
         this.addressDetail = addressDetail;
-        this.request = request;
-//        this.orderPrice = orderPrice;
-//        this.discountAmount = discountAmount;
-//        this.deliveryAmount = deliveryAmount;
-//        this.realPayment = realPayment;
-        this.storeOrder = storeOrder;
+        this.deliveryRequest = deliveryRequest;
+        this.totalOrderAmount = totalOrderAmount;
+//        this.totalDiscountAmount = totalDiscountAmount;
+        this.totalDeliveryAmount = totalDeliveryAmount;
+//        this.totalRealPayment = totalRealPayment;
+        this.storeOrders = storeOrders;
     }
 
 
-    public static Order of(Long memberCode, String receiver, String phone, Long addressZipcode, String addressSido, String addressSigungu, String addressDongeupmyeon, String addressDetail, String request, /* Long orderPrice, Long discountAmount, Long deliveryAmount, Long realPayment,*/ List<StoreOrder> storeOrders) {
+    public static Order of(Integer memberCode, String receiverName, String contactNumber, AddressZonecode addressZonecode, String addressType, String address,String addressDetail, String deliveryRequest, Long totalOrderAmount, /* Long totalDiscountAmount,*/ Long totalDeliveryAmount/*, Long totalRealPayment,*/,  List<StoreOrder> storeOrders) {
         return new Order(memberCode,
-                receiver, phone,
-                addressZipcode,addressSido, addressSigungu, addressDongeupmyeon, addressDetail, request,
-//                orderPrice, discountAmount, deliveryAmount, realPayment,
-                storeOrders
-                );
+                receiverName, contactNumber,
+                addressZonecode,addressType, address, addressDetail, deliveryRequest,
+                totalOrderAmount,/* totalDiscountAmount,*/ totalDeliveryAmount/* totalRealPayment,*/,
+                storeOrders);
+    }
+
+
+    /* 총 주문금액 */
+    public void totalOrderAmount(Long orderPrice) {
+        this.totalOrderAmount += orderPrice;
+    }
+
+    /* 총 배송비 */
+    public void totalDeliveryAmount(Long deliveryAmount) {
+        this.totalDeliveryAmount += deliveryAmount;
+    }
+
+    /* 주문 취소일 */
+    public void setCancel(boolean isOrderCancel, boolean isPartialCancel) {
+        this.isOrderCancel = isOrderCancel;
+        this.isPartialCancel = isPartialCancel;
+        if (isOrderCancel || isPartialCancel) {
+            this.cancelDate = LocalDateTime.now();
+        }
     }
 }
 
