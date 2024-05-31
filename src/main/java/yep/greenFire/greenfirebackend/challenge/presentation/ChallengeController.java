@@ -27,20 +27,20 @@ public class ChallengeController {
     private ChallengeService challengeService;
 
 
-    //판매자 - 챌린지 조회
-//    @GetMapping("/seller/challenge")
-//    public ResponseEntity<PagingResponse> challengeView (
-//            @RequestParam (defaultValue = "1") final Integer page
-//            ) {
-//        final Page<ChallengeResponse> challengeResponse = challengeService.getChallengeContent(1L, page);
-//
-//        final PagingButtonInfo pagingButtonInfo = Pagination.getPagingButtonInfo(challengeResponse);
-//        final PagingResponse pagingResponse = PagingResponse.of(challengeResponse.getContent(), pagingButtonInfo);
-//
-//        return ResponseEntity.ok(pagingResponse);
-//
-//
-//    }
+   // 판매자 - 챌린지 조회
+    @GetMapping("/seller/challenge")
+    public ResponseEntity<PagingResponse> challengeView (
+            @RequestParam (defaultValue = "1") final Integer page
+            ) {
+        final Page<ChallengeResponse> challengeResponse = challengeService.getChallengeContent(1L, page);
+
+        final PagingButtonInfo pagingButtonInfo = Pagination.getPagingButtonInfo(challengeResponse);
+        final PagingResponse pagingResponse = PagingResponse.of(challengeResponse.getContent(), pagingButtonInfo);
+
+        return ResponseEntity.ok(pagingResponse);
+
+
+    }
 
 
     //판매자 - 챌린지 등록

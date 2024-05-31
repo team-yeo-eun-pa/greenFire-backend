@@ -24,13 +24,13 @@ public class ChallengeService {
 
 
 
-//    @Transactional(readOnly = true)
-//    public Page<ChallengeResponse> getChallengeContent(Long challengeCode, Integer page) {
-//
-//        Page<ChallengeResponse> challengeResponse = challengeRepository.getChallengeContent(challengeCode, page);
-//
-//        return       challengeResponse.map(ChallengeResponse::from);
-//    }
+    @Transactional(readOnly = true)
+    public Page<ChallengeResponse> getChallengeContent(Long challengeCode, Integer page) {
+
+        Page<ChallengeContent> challengeResponse = challengeRepository.findByChallengeCode(challengeCode, getPageable(page));
+
+        return  challengeResponse.map(ChallengeResponse::from);
+    }
 
 
 
