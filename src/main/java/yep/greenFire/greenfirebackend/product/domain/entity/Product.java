@@ -29,7 +29,7 @@ public class Product {
     @CreatedDate
     private Date registDate;
     @Enumerated(value = EnumType.STRING)
-    private SellableStatus sellableStatus = SellableStatus.SELLABLE;
+    private SellableStatus sellableStatus = SellableStatus.Y;
 
     public Product(String productName, Long categoryCode,
                    Long storeCode, Date registDate, SellableStatus sellableStatus) {

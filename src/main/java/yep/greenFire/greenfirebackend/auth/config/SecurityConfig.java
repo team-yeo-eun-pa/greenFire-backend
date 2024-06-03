@@ -59,6 +59,7 @@ public class SecurityConfig {
                      * 이 때 OPTIONS 메소드로 서버에 사전 요청을 보내 확인한다. */
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/members/signup", "/members/login").permitAll();
+                    auth.requestMatchers(HttpMethod.GET,"/product/**").permitAll();
                     auth.requestMatchers("/admin/**").hasRole(MemberRole.ADMIN.toString());
                     auth.requestMatchers(HttpMethod.GET,"/Member/notices/**").permitAll();
                     auth.anyRequest().authenticated();
