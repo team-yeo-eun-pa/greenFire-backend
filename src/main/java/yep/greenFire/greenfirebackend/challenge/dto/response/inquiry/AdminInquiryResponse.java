@@ -3,9 +3,7 @@ package yep.greenFire.greenfirebackend.challenge.dto.response.inquiry;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
 
 import java.util.Date;
 

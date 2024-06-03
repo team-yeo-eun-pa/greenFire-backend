@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.challenge.domain.entity;
+package yep.greenFire.greenfirebackend.inquiry.member.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

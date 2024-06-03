@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.challenge.service;
+package yep.greenFire.greenfirebackend.inquiry.member.service;
 
 
 import jakarta.validation.Valid;
@@ -10,8 +10,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestPart;
-import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
-import yep.greenFire.greenfirebackend.challenge.domain.repository.InquiryRepository;
+import yep.greenFire.greenfirebackend.inquiry.member.entity.InquiryContent;
+import yep.greenFire.greenfirebackend.inquiry.member.repository.InquiryRepository;
 import yep.greenFire.greenfirebackend.challenge.dto.request.AdminInquiryCreateRequest;
 import yep.greenFire.greenfirebackend.challenge.dto.request.InquiryCreateRequest;
 import yep.greenFire.greenfirebackend.challenge.dto.response.inquiry.AdminInquiryResponse;
