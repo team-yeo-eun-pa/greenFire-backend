@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.inquiry.member.entity;
+package yep.greenFire.greenfirebackend.inquiry.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

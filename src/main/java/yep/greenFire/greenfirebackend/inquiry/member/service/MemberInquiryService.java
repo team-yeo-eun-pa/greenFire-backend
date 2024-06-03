@@ -10,11 +10,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestPart;
-import yep.greenFire.greenfirebackend.inquiry.member.entity.InquiryContent;
-import yep.greenFire.greenfirebackend.inquiry.member.repository.InquiryRepository;
-import yep.greenFire.greenfirebackend.challenge.dto.request.AdminInquiryCreateRequest;
-import yep.greenFire.greenfirebackend.challenge.dto.request.InquiryCreateRequest;
-import yep.greenFire.greenfirebackend.challenge.dto.response.inquiry.AdminInquiryResponse;
+import yep.greenFire.greenfirebackend.inquiry.entity.InquiryContent;
+import yep.greenFire.greenfirebackend.inquiry.member.domain.repository.MemberInquiryRepository;
+import yep.greenFire.greenfirebackend.inquiry.member.dto.request.InquiryCreateRequest;
 import yep.greenFire.greenfirebackend.challenge.dto.response.inquiry.InquiryResponse;
 
 
@@ -22,8 +20,8 @@ import yep.greenFire.greenfirebackend.challenge.dto.response.inquiry.InquiryResp
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class InquiryService {
-    private final InquiryRepository inquiryRepository;
+public class MemberInquiryService {
+    private final MemberInquiryRepository inquiryRepository;
 
 
     private Pageable getPageable(final Integer page) {
@@ -63,40 +61,10 @@ public class InquiryService {
 
 
 
-    @Transactional(readOnly = true)
-
-    public Page<AdminInquiryResponse> getAdminInquiryList(Integer page, int inquiryCode) {
-        Page<AdminInquiryResponse> adminInquiryResponses = inquiryRepository.findByInquiryCode(getPageable(page), inquiryCode);
-        return adminInquiryResponses.map(InquiryContent::from);
-
-    }
 
 
-    public InquiryContent saveAdmin(AdminInquiryCreateRequest adminInquiryCreateRequest) {
-//        InquiryContent newReply = (InquiryContent) inquiryRepository.findByInquiryCode(admincsCreateRequest.getInquiryCode());
-//        //문의 답변을 뉴리플라이에 담아서 반환하는 동작
-
-        final InquiryContent newAdminList = InquiryContent.of2(
-                adminInquiryCreateRequest.getInquiryCode(),
-                adminInquiryCreateRequest.getInquiryWriteDate(),
-                adminInquiryCreateRequest.getInquiryTitle(),
-                adminInquiryCreateRequest.getInquiryDetail()
-        );
-        //이런 내용을 토대로 뉴리플라이를 구성한다
-
-        final InquiryContent adminInquiry = inquiryRepository.save(newAdminList);
-        //새로운 내용을 adminCs 라는 변수에 담아 전달하겠다.
 
 
-        return adminInquiry;
-    }
-
-    public void remove(int inquiryCode) {
-
-        inquiryRepository.deleteById(inquiryCode);
-        //특정 문의 코드의 글을 삭제하겠다.
-
-    }
 }
 
 
