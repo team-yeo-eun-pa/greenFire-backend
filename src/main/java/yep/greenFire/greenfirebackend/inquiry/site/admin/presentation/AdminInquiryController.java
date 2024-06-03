@@ -59,7 +59,7 @@ public class AdminInquiryController {
 
     //문의 삭제
 
-    @GetMapping("/remve")
+    @GetMapping("/remove")
     public ResponseEntity<Void> remove (@RequestParam final int inquiryCode) {
         admininquiryService.remove(inquiryCode);
 

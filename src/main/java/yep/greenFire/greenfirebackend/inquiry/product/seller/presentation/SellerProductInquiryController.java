@@ -43,6 +43,16 @@ public class SellerProductInquiryController {
     }
 
 
+    @GetMapping("/remove")
+    public ResponseEntity<Void> remove (
+            @RequestParam int inquiryCode
+    ) {
+        sellerProductInquiryService.remove(inquiryCode);
+
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 
 }

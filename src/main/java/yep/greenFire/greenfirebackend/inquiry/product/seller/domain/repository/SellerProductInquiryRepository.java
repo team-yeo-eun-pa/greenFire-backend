@@ -14,4 +14,6 @@ public interface SellerProductInquiryRepository {
 
     InquiryContent save(InquiryContent newProductInquiryReply);
 
+    void deleteById(int inquiryCode);
+
 }
