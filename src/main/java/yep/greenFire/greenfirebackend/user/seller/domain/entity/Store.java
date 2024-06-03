@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.order.domain.type.AddressZonecode;
+import yep.greenFire.greenfirebackend.store.domain.type.StoreStatus;
 
 import java.time.LocalDateTime;
 
@@ -36,6 +37,7 @@ public class Store {
 
     private Long reportCount;
     private LocalDateTime suspendedEndDate;
+    @Enumerated(EnumType.STRING)
+    private StoreStatus storeStatus;
 
-    private String storeStatus;
 }
