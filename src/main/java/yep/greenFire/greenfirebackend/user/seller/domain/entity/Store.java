@@ -26,8 +26,9 @@ public class Store {
     private String storeName;
     private String storeInfo;
 
-    private AddressZonecode addressZonecode;
-    private String addressType;
+    private Long addressZonecode;
+    @Enumerated(value = EnumType.STRING)
+    private AddressType addressType;
     private String address;
     private String addressDetail;
 

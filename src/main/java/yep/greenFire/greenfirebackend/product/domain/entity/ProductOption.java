@@ -8,7 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
 
 @Entity
-@Table(name = "tbl_prouct_option")
+@Table(name = "tbl_product_option")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
@@ -22,12 +22,12 @@ public class ProductOption {
     private Long optionStock;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productCode", nullable = false)
+    @JoinColumn(name = "product_code", nullable = false)
     private Product product;
 
     /* 상품 옵션 조회 가능 여부 */
     @Enumerated(value = EnumType.STRING)
-    private ProductOptionAppearActivate optionAppearActivate = ProductOptionAppearActivate.USABLE;
+    private ProductOptionAppearActivate optionAppearActivate = ProductOptionAppearActivate.Y;
 
     private ProductOption(
             String optionName, Long optionStock
