@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.challenge.domain.entity;
+package yep.greenFire.greenfirebackend.inquiry.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import yep.greenFire.greenfirebackend.challenge.dto.response.inquiry.AdminInquiryResponse;
+import yep.greenFire.greenfirebackend.inquiry.site.admin.dto.response.AdminInquiryResponse;
 
 import java.util.Date;
 
@@ -30,8 +30,14 @@ public class InquiryContent {
     @LastModifiedDate
     private Date inquiryModifyDate;
     private Date inquiryDeleteDate;
+    private int replyMemberCode;
     private String inquiryReply;
     private String inquiryReplyStatus;
+
+    private int inquiryCateCode;
+
+    private int inquiryProduct;
+    private int inquiryChallenge;
 
 
 
@@ -45,6 +51,13 @@ public class InquiryContent {
             final int inquiryCode, final String inquiryWriteDate,
             final String inquiryTitle, final String inquiryDetail) {
         return new InquiryContent();
+    }
+
+    public static InquiryContent of3(
+            final int productCode, final String productName, final int memberCode,
+            final String inquiryTitle, final String inquiryDetail, final Date inquiryWriteDate) {
+
+         return new InquiryContent();
     }
 
 

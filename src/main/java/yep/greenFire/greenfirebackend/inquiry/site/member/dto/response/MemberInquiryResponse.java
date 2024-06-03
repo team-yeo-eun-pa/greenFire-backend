@@ -1,15 +1,15 @@
-package yep.greenFire.greenfirebackend.challenge.dto.response.inquiry;
+package yep.greenFire.greenfirebackend.inquiry.site.member.dto.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
+import yep.greenFire.greenfirebackend.inquiry.entity.InquiryContent;
 
 @Getter
 @RequiredArgsConstructor
 @Service
 
-public class InquiryResponse {
+public class MemberInquiryResponse {
 
     //문의 등록 전 문의 목록 조회
 
@@ -20,7 +20,7 @@ public class InquiryResponse {
     private int memberCode;
 
 
-    public InquiryResponse(int inquiryCode, String inquiryStatus, String inquiryReply, String inquiryReplyStatus, int memberCode) {
+    public MemberInquiryResponse(int inquiryCode, String inquiryStatus, String inquiryReply, String inquiryReplyStatus, int memberCode) {
         this.inquiryCode = inquiryCode;
         this.inquiryStatus = inquiryStatus;
         this.inquiryReply = inquiryReply;
@@ -28,8 +28,8 @@ public class InquiryResponse {
         this.memberCode = memberCode;
     }
 
-    public static InquiryResponse from(InquiryContent inquiryContent) {
-        return new InquiryResponse(
+    public static MemberInquiryResponse from(InquiryContent inquiryContent) {
+        return new MemberInquiryResponse(
                 inquiryContent.getInquiryCode(),
                 inquiryContent.getInquiryStatus(),
                 inquiryContent.getInquiryReply(),

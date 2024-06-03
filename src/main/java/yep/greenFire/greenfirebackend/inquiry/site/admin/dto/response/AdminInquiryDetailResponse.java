@@ -1,10 +1,10 @@
-package yep.greenFire.greenfirebackend.challenge.dto.response.inquiry;
+package yep.greenFire.greenfirebackend.inquiry.site.admin.dto.response;
 
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import yep.greenFire.greenfirebackend.challenge.domain.entity.InquiryContent;
+import yep.greenFire.greenfirebackend.inquiry.entity.InquiryContent;
 
 import java.util.Date;
 
