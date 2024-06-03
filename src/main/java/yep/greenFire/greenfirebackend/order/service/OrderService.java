@@ -36,7 +36,7 @@ public class OrderService {
 
     public void save(OrderCreateRequest orderCreateRequest, Long memberCode) {
 
-        Long totalOrderAmount = 0l;
+        Long totalOrderAmount = 0L;
         Long totalDeliveryAmount = 0L;
 
         // 여러 스토어별 주문을 리스트 처리
@@ -78,7 +78,7 @@ public class OrderService {
                 orderDetails.add(newOrderDetail);
 
                 /* 상품 테이블에서 스토어 코드를 가져온 후 넣기 */
-                storeCode = productOption.getProduct().getStoreCode();
+//                storeCode = productOption.getProduct().getStoreCode();
             }
 
             /* 스토어 테이블에 배송비 컬럼도 가져와서 변수에 넣는다. */
@@ -99,9 +99,9 @@ public class OrderService {
             final StoreOrder newStoreOrder = StoreOrder.of(
                     storeCode,
                     orderAmount,
-                    // 할인금액,
+                    1000,// 할인금액,
                     deliveryAmount,
-                    //실결제금액,
+                    1000,//실결제금액,
                     orderDetails
             );
 
@@ -110,10 +110,10 @@ public class OrderService {
         }
 
         // 배송지 테이블에서 불러옴
-        Optional<DeliveryAddress> addressOptional = deliveryAddressRepository.findById(orderCreateRequest.getDeliveryAddressCode());
+        Optional<DeliveryAddress> addressOptional = deliveryAddressRepository.findByDeliveryAddressCodeAndMemberCode(orderCreateRequest.getDeliveryAddressCode(), memberCode);
+        DeliveryAddress address = addressOptional.orElseThrow(() -> new IllegalArgumentException("Invalid delivery address"));
 //        if (!addressOptional.isPresent()) {
 //        }
-        DeliveryAddress address = addressOptional.get();
 
         /*order 주문 객체 생성 후 데이터 저장.*/
         final Order newOrder = Order.of(
@@ -130,10 +130,9 @@ public class OrderService {
 
                 /* 주문금액, 총할인, 배송비, 실결제금액 */
                 totalOrderAmount,
-//                orderCreateRequest.getDiscountAmount(),
+                10000L,  //orderCreateRequest.getDiscountAmount(),
                 totalDeliveryAmount,
-//                orderCreateRequest.getRealPayment(),
-
+                10000L,  //orderCreateRequest.getRealPayment(),
                 storeOrders
         );
         orderRepository.save(newOrder);
