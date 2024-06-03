@@ -44,4 +44,9 @@ public class SellerProductInquiryService {
         return newProductReply.getInquiryCode();
 
     }
+
+    public void remove(int inquiryCode) {
+
+        sellerProductInquiryRepository.deleteById(inquiryCode);
+    }
 }
