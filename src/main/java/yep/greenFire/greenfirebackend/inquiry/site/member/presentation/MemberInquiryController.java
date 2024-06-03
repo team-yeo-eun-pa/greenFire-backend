@@ -45,7 +45,7 @@ public class MemberInquiryController {
     ) {
 
         final int inquiryCode = memberinquiryService.save(inquiryCreateRequest);
-        return ResponseEntity.created(URI.create("/me" +inquiryCode)).build();
+        return ResponseEntity.created(URI.create("/list" +inquiryCode)).build();
 
 
     }

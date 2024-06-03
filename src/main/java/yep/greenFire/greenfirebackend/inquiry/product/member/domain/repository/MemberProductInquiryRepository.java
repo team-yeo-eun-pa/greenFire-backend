@@ -11,4 +11,6 @@ public interface MemberProductInquiryRepository {
 
     Page<InquiryContent> findByProductCode(long productCode, Pageable pageable);
 
+    InquiryContent save(InquiryContent newProductInquiry);
+
 }
