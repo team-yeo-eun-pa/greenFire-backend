@@ -18,6 +18,7 @@ public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberCode;
+    private Long memberId;
     private Long sellerCode;
     private String storeName;
     private String storeRepresentativeName;

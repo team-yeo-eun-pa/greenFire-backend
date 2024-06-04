@@ -13,7 +13,7 @@ public interface SellerRepository extends JpaRepository<Seller, Long> {
 
     // 판매자 보유 스토어 목록 조회
     @Query("SELECT new yep.greenFire.greenfirebackend.user.seller.dto.response.StoreListResponse" +
-            "(s.sellerCode, m.memberCode, st.storeCode, s.storeRepresentativeName, st.storeName, st.storeStatus) " +
+            "(s.sellerCode, m.memberCode, m.memberId, st.storeCode, s.storeRepresentativeName, st.storeName, st.storeStatus) " +
             "FROM Seller s " +
             "LEFT JOIN Member m ON s.memberCode = m.memberCode " +
             "LEFT JOIN Store st ON s.sellerCode = st.sellerCode " +
