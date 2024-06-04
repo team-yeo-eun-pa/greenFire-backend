@@ -8,6 +8,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.seller.domain.type.ApplyStatus;
 import yep.greenFire.greenfirebackend.store.domain.type.StoreStatus;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "tbl_seller")
 @Getter
@@ -30,6 +32,14 @@ public class Seller {
     private String mosNumber;
     private String businessImg;
     private String storeType;
+
+    // 입점 신청 관련
+    private String memberPhone;
+    private String applyContent;
+    private LocalDateTime applyDatetime;
+    private LocalDateTime applyProcessingDate;
+    private LocalDateTime applyCancelDate;
+    private String rejectReason;
 
 //    private AddressZonecode addressZonecode;
 //    private String addressType;
