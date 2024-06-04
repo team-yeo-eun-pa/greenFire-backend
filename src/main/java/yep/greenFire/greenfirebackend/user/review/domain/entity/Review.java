@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import yep.greenFire.greenfirebackend.user.member.domain.entity.Member;
+import yep.greenFire.greenfirebackend.member.domain.entity.Member;
 
 @Entity
 @Table(name = "tbl_review")

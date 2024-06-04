@@ -14,7 +14,7 @@ import yep.greenFire.greenfirebackend.auth.dto.LoginDTO;
 import yep.greenFire.greenfirebackend.auth.dto.TokenDTO;
 import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.auth.util.TokenUtils;
-import yep.greenFire.greenfirebackend.user.member.service.MemberService;
+import yep.greenFire.greenfirebackend.member.service.MemberService;
 
 import java.util.Map;
 
