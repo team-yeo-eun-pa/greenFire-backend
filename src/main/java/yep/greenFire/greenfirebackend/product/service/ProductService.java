@@ -14,6 +14,7 @@ import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductOptionRepository;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductRepository;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
+import yep.greenFire.greenfirebackend.product.dto.response.ProductResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
 import yep.greenFire.greenfirebackend.user.seller.domain.entity.Store;
 import yep.greenFire.greenfirebackend.user.seller.domain.repository.StoreRepository;
@@ -46,17 +47,16 @@ public class ProductService {
     @Transactional(readOnly = true)
     public Page<ProductsResponse> getProducts(final Integer page, final Long categoryCode,
                                               final Long storeCode, final String productName) {
-        Page<Product> products = null;
+        Page<ProductsResponse> products = null;
         if (categoryCode != null && categoryCode > 0) {
-            products = productRepository.findByCategoryCodeAndSellableStatus(getPageable(page), categoryCode, SellableStatus.Y);
+            return productRepository.findByCategoryCodeAndSellableStatus(getPageable(page), categoryCode, SellableStatus.Y);
         } else if (storeCode != null && storeCode > 0) {
-            products = productRepository.findByStoreCodeAndSellableStatus(getPageable(page), storeCode, SellableStatus.Y);
+            return productRepository.findByStoreCodeAndSellableStatus(getPageable(page), storeCode, SellableStatus.Y);
         } else if (productName != null && !productName.isEmpty()) {
-            products = productRepository.findByProductNameContainsAndSellableStatus(getPageable(page), productName, SellableStatus.Y);
+            return productRepository.findByProductNameContainsAndSellableStatus(getPageable(page), productName, SellableStatus.Y);
         } else {
-            products = productRepository.findBySellableStatus(getPageable(page), SellableStatus.Y);
+            return productRepository.findBySellableStatus(getPageable(page), SellableStatus.Y);
         }
-        return products.map(ProductsResponse::from);
     }
 
 
