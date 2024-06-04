@@ -60,6 +60,16 @@ public class InquiryContent {
          return new InquiryContent();
     }
 
+    public static InquiryContent of4(
+            final int productCode, final String productName, final int memberCode,
+            final String inquiryTitle, final String inquiryDetail, final Date inquiryWriteDate,
+            final String inquiryReply, final String inquiryReplyStatus
+    ) {
+        return new InquiryContent();
+
+
+    }
+
 
     public void inquiryContent(int inquiryCode, int memberCode, Date inquiryWriteDate, String inquiryStatus, String inquiryDetail, String inquiryTitle, Date inquiryModifyDate, Date inquiryDeleteDate, String inquiryReply, String inquiryReplyStatus, String memberId, String memberName, String memberEmail) {
         this.inquiryCode = inquiryCode;
