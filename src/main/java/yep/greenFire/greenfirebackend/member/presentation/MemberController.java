@@ -35,8 +35,8 @@ public class MemberController {
     }
 
     // 프로필 조회
-    @GetMapping("/{memberId}")
-    @PreAuthorize("#memberId == authentication.principal.username")
+    @GetMapping("/mypage/{memberId}")
+    //@PreAuthorize("#memberId == authentication.principal.username")
     public ResponseEntity<ProfileResponse> getProfile(@PathVariable String memberId) {
 
         ProfileResponse profileResponse = memberService.getProfile(memberId);

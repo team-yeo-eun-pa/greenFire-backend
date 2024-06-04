@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.ChallengeContent;
 import yep.greenFire.greenfirebackend.challenge.dto.request.ChallengeCreateRequest;
 import yep.greenFire.greenfirebackend.challenge.dto.response.challenge.ChallengeResponse;
-import yep.greenFire.greenfirebackend.challenge.dto.response.inquiry.InquiryResponse;
 import yep.greenFire.greenfirebackend.challenge.service.ChallengeService;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
