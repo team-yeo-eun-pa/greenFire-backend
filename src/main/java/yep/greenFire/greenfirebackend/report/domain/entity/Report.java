@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.challenge.domain.entity.Comment;
-import yep.greenFire.greenfirebackend.user.review.domain.entity.Review;
+import yep.greenFire.greenfirebackend.review.domain.entity.Review;
 
 import java.time.LocalDateTime;
 
