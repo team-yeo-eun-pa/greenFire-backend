@@ -7,9 +7,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -27,11 +24,8 @@ import yep.greenFire.greenfirebackend.auth.handler.JwtAccessDeniedHandler;
 import yep.greenFire.greenfirebackend.auth.handler.JwtAuthenticationEntryPoint;
 import yep.greenFire.greenfirebackend.auth.handler.LoginFailureHandler;
 import yep.greenFire.greenfirebackend.auth.handler.LoginSuccessHandler;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import yep.greenFire.greenfirebackend.auth.service.AuthService;
-import yep.greenFire.greenfirebackend.user.member.domain.type.MemberRole;
+import yep.greenFire.greenfirebackend.member.domain.type.MemberRole;
 
 import java.util.Arrays;
 
