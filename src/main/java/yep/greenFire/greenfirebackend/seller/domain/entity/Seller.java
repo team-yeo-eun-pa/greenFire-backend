@@ -43,6 +43,33 @@ public class Seller {
     private LocalDateTime applyCancelDate;
     private String rejectReason;
 
+    private Seller(String storeName, String businessNumber, String mosNumber,
+                   String storeType, String memberPhone, String applyContent, String businessImg
+    ) {
+        this.storeName = storeName;
+        this.businessNumber = businessNumber;
+        this.mosNumber = mosNumber;
+        this.storeType = storeType;
+        this.memberPhone = memberPhone;
+        this.applyContent = applyContent;
+        this.businessImg = businessImg;
+    }
+
+    public static Seller of(
+            final String storeName, final String businessNumber, final String mosNumber,
+            final String storeType, final String memberPhone, final String applyContent, final String businessImg
+    ) {
+        return new Seller(
+                storeName,
+                businessNumber,
+                mosNumber,
+                storeType,
+                memberPhone,
+                applyContent,
+                businessImg
+        );
+    }
+
 //    private AddressZonecode addressZonecode;
 //    private String addressType;
 //    private String address;
