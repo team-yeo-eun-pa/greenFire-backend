@@ -38,6 +38,8 @@ public class Member {
 //    @LastModifiedDate
     private LocalDateTime quitDate;
     private String refreshToken;
+    private Long reportCount;
+    private LocalDateTime suspendedEndDate;
 
 
     private Member(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone) {
@@ -64,13 +66,10 @@ public class Member {
         this.refreshToken = refreshToken;
     }
 
-    private Long reportCount;
 
     public void increaseReportCount(Long reportCount) {
         this.reportCount= reportCount;
     }
-
-    private LocalDateTime suspendedEndDate;
 
     public void suspensionEnd() {
         if (this.memberStatus == MemberStatus.STOP || this.memberStatus == MemberStatus.PERMANENTLY_SUSPENDED){

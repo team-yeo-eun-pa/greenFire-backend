@@ -1,15 +1,15 @@
 package yep.greenFire.greenfirebackend.report.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yep.greenFire.greenfirebackend.member.domain.entity.Member;
+import lombok.RequiredArgsConstructor;
 import yep.greenFire.greenfirebackend.member.domain.repository.MemberRepository;
 import yep.greenFire.greenfirebackend.member.domain.type.MemberStatus;
+import yep.greenFire.greenfirebackend.report.dto.response.ReportsVO;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,10 +25,9 @@ public class ReportMembersService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Member> getMembersByStatus(Integer page) {
+    public Page<ReportsVO> getMembersByStatus(Integer page) {
         Pageable pageable = getPageable(page);
         List<MemberStatus> statuses = Arrays.asList(MemberStatus.STOP, MemberStatus.PERMANENTLY_SUSPENDED);
-        return memberRepository.findByMemberStatusIn(statuses, pageable);
+        return memberRepository.findReportVOByMemberStatusIn(statuses, pageable);
     }
 }
-

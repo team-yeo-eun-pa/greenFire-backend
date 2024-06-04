@@ -19,7 +19,7 @@ public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
     @Query(
             value = "SELECT " +
-                    " new yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticesResponse(" +
+                    " new yep.greenFire.greenfirebackend.notice.dto.response.AdminNoticesResponse(" +
                     " N.noticeCode,N.noticeTitle, N.noticeFixable,N.noticeDate,N.noticeWriter,M.memberName)" +
                     " FROM" +
                     " Notice N" +
@@ -35,7 +35,7 @@ public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
     @Query(
             value = " SELECT" +
-                    " new yep.greenFire.greenfirebackend.admin.notice.dto.response.AdminNoticeResponse(" +
+                    " new yep.greenFire.greenfirebackend.notice.dto.response.AdminNoticeResponse(" +
                     " N.noticeCode, N.noticeTitle, N.noticeContent, N.noticeDate, N.noticeWriter, M.memberName)" +
                     " FROM " +
                     " Notice N" +

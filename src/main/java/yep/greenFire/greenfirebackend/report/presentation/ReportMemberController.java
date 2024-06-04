@@ -1,17 +1,10 @@
 package yep.greenFire.greenfirebackend.report.presentation;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import yep.greenFire.greenfirebackend.report.domain.entity.Report;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import yep.greenFire.greenfirebackend.report.dto.response.ReportVO;
 import yep.greenFire.greenfirebackend.report.service.ReportMemberService;
-import yep.greenFire.greenfirebackend.member.domain.type.MemberStatus;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,29 +13,14 @@ public class ReportMemberController {
 
     private final ReportMemberService reportMemberService;
 
-    @GetMapping("/{memberCode}/report-detail")
-    public Map<String, Object> getReportSummaryByMember(@PathVariable("memberCode") Long memberCode) {
-        MemberStatus memberStatus = reportMemberService.getMemberStatus(memberCode);
+    @GetMapping("/suspend/{reportCode}")
+    public ResponseEntity<ReportVO> getReportedMember(
+            @PathVariable final Long reportCode
+    ) {
 
-        if(memberStatus == MemberStatus.STOP || memberStatus == MemberStatus.PERMANENTLY_SUSPENDED){
-            List<Report> reports = reportMemberService.getReportsByMember(memberCode);
-            Long reportCount = reportMemberService.getReportCountByMember(memberCode);
+        final ReportVO reportVO = reportMemberService.getReportsByMember(reportCode);
 
-            Map<String, Object> response = new HashMap<>();
-            response.put("memberCode", memberCode);
-            response.put("reportCount", reportCount);
-            response.put("reports",reports);
-
-            return response;
-        } else {
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("message","정지또는 영구정지 회원이 아님");
-            return response;
-        }
-
-
-
+        return ResponseEntity.ok(reportVO);
     }
-
 }
+

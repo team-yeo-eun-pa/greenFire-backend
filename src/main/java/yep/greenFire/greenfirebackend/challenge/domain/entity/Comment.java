@@ -20,7 +20,5 @@ public class Comment {
 
     private String commentContent;
 
-    @ManyToOne
-    @JoinColumn(name = "member_code")
-    private Member writerMemberCode;
+    private Long memberCode;
 }
