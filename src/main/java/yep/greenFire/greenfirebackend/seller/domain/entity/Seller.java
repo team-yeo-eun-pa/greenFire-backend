@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.seller.domain.type.ApplyStatus;
 import yep.greenFire.greenfirebackend.store.domain.type.StoreStatus;
@@ -36,6 +37,7 @@ public class Seller {
     // 입점 신청 관련
     private String memberPhone;
     private String applyContent;
+    @CreatedDate
     private LocalDateTime applyDatetime;
     private LocalDateTime applyProcessingDate;
     private LocalDateTime applyCancelDate;
