@@ -9,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.inquiry.site.admin.dto.response.AdminInquiryResponse;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -24,7 +25,8 @@ public class InquiryContent {
 
     private int memberCode;
 
-
+    @CreatedDate
+    private LocalDateTime inquiryWriteDate;
 
  //   private String inquiryStatus;
     private String inquiryDetail;
