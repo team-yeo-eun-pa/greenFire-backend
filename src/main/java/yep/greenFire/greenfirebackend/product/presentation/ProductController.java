@@ -1,18 +1,20 @@
 package yep.greenFire.greenfirebackend.product.presentation;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
 import yep.greenFire.greenfirebackend.product.service.ProductService;
+
+import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,8 +36,17 @@ public class ProductController {
         final PagingButtonInfo pagingButtonInfo = Pagination.getPagingButtonInfo(products);
         final PagingResponse pagingResponse = PagingResponse.of(products.getContent(), pagingButtonInfo);
 
-//        return ResponseEntity.ok(pagingResponse);
         return ResponseEntity.ok(pagingResponse);
+    }
+
+    /* 판매자 상품 등록 */
+    @PostMapping("/regist")
+    public ResponseEntity<Void> save(
+            @RequestPart @Valid final ProductCreateRequest productCreateRequest,
+            @RequestPart final MultipartFile productImg
+            ) {
+        final Long productCode = productService.save(productCreateRequest, productImg);
+        return ResponseEntity.created(URI.create("/seller/mystore/regist" + productCode)).build();
     }
 
 

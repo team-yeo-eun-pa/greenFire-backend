@@ -20,11 +20,9 @@ public class ProductCreateRequest {
     private final Long storeCode;
     @Min(value = 0)
     private final Long price;
-    @Min(value = 0)
-    private final Long stock;
-    @NotBlank
-    private final SellableStatus sellableStatus;
     @NotBlank
     private final Date registDate;
+    @NotBlank
+    private final SellableStatus sellableStatus;
 
 }

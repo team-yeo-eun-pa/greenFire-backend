@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
+import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "tbl_product_option")
@@ -30,6 +33,19 @@ public class ProductOption {
         this.optionPrice = optionPrice;
         this.optionStock = optionStock;
         this.optionAppearActivate = optionAppearActivate;
+    }
+
+    public static ProductOption of(
+            final Long productCode, final String optionName, final Long optionPrice,
+            final Long optionStock, final ProductOptionAppearActivate optionAppearActivate
+    ) {
+        return new ProductOption(
+                productCode,
+                optionName,
+                optionPrice,
+                optionStock,
+                optionAppearActivate
+        );
     }
 
     /* 상품 옵션 조회 가능 여부 */

@@ -1,5 +1,6 @@
 package yep.greenFire.greenfirebackend.product.domain.repository;
 
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -52,4 +53,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<ProductsResponse> findByProductNameContainsAndSellableStatus(Pageable pageable, String productName, SellableStatus sellableStatus);
 
 
+    boolean existsByProductCode (Long productCode);
 }

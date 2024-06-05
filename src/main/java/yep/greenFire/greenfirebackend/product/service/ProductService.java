@@ -10,12 +10,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.web.multipart.MultipartFile;
+import yep.greenFire.greenfirebackend.common.exception.ConflictException;
+import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
+import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
+import yep.greenFire.greenfirebackend.product.domain.entity.Category;
+import yep.greenFire.greenfirebackend.product.domain.entity.Product;
+import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
+import yep.greenFire.greenfirebackend.product.domain.repository.CategoryRepository;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductOptionRepository;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductRepository;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductCreateRequest;
-import yep.greenFire.greenfirebackend.product.dto.response.ProductResponse;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
+import yep.greenFire.greenfirebackend.seller.domain.entity.Store;
+import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 
 
 @Service
@@ -25,6 +34,8 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductOptionRepository productOptionRepository;
+    private final CategoryRepository categoryRepository;
+    private final StoreRepository storeRepository;
 
 
     @Value("${image.image-url}")
@@ -57,11 +68,58 @@ public class ProductService {
 
 
     /* 판매자 상품 등록 */
-    public Long saveProduct(final ProductCreateRequest productCreateRequest, final MultipartFile productImg) {
+    public Long save(final ProductCreateRequest productCreateRequest, final MultipartFile productImg) {
 
-//        String replaceFileName =
+        // 이미지 파일 저장
 
-        return null;
+
+        // category
+        Category category = categoryRepository.findById(productCreateRequest.getCategoryCode())
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_CATEGORY_CODE));
+
+        // store
+        Store store = storeRepository.findById(productCreateRequest.getStoreCode())
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+
+        final Product newProduct = Product.of(
+                productCreateRequest.getProductName(),
+                category.getCategoryCode(),
+                store.getStoreCode(),
+                productCreateRequest.getPrice(),
+                productCreateRequest.getRegistDate(),
+                productCreateRequest.getSellableStatus()
+
+        );
+
+        final Product product = productRepository.save(newProduct);
+
+        return product.getProductCode();
+
+    }
+
+
+    /* 상품 옵션 등록 */
+
+    private void verifyProductCreated(Long productCode) {
+        if (productRepository.existsByProductCode(productCode)) {
+            throw new ConflictException(ExceptionCode.NOT_FOUND_PRODUCT_CODE);
+        }
+    }
+
+    public void save(final ProductOptionCreateRequest productOptionCreateRequest, Long productCode) {
+
+        //상품 존재하는지 확인 후 저장
+        verifyProductCreated(productOptionCreateRequest.getProductCode());
+
+        ProductOption newOption = ProductOption.of(
+                productOptionCreateRequest.getProductCode(),
+                productOptionCreateRequest.getOptionName(),
+                productOptionCreateRequest.getOptionPrice(),
+                productOptionCreateRequest.getOptionStock(),
+                productOptionCreateRequest.getOptionAppearActivate()
+        );
+
+        productOptionRepository.save(newOption);
     }
 
 
