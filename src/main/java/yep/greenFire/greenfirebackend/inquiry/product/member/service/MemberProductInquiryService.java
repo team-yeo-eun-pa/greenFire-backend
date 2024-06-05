@@ -23,30 +23,30 @@ public class MemberProductInquiryService {
     private Pageable getPageable(final Integer page) {
         return PageRequest.of(page - 1, 10, Sort.by("inquiryCode").descending());
     }
-    public Page<MemberProductInquiryResponse> getProductInquiryContent(long productCode, Integer page) {
-
-        Page<InquiryContent> productInquiry = memberProductInquiryRepository.findByProductCode(productCode, getPageable(page));
-
-        return productInquiry.map(MemberProductInquiryResponse::from);
-
-    }
-
-
-    public int save(
-            @RequestPart @Valid final MemberProductInquiryCreatRequest memberProductInquiryCreateRequest) {
-
-        final InquiryContent newProductInquiry = InquiryContent.of3(
-                memberProductInquiryCreateRequest.getProductCode(),
-                memberProductInquiryCreateRequest.getProductName(),
-                memberProductInquiryCreateRequest.getMemberCode(),
-                memberProductInquiryCreateRequest.getInquiryTitle(),
-                memberProductInquiryCreateRequest.getInquiryDetail(),
-                memberProductInquiryCreateRequest.getInquiryWriteDate()
-        );
-
-        final InquiryContent newInquiry = memberProductInquiryRepository.save(newProductInquiry);
-
-        return newInquiry.getInquiryCode();
-
-    }
+//    public Page<MemberProductInquiryResponse> getProductInquiryContent(long productCode, Integer page) {
+//
+//        Page<InquiryContent> productInquiry = memberProductInquiryRepository.findByProductCode(productCode, getPageable(page));
+//
+//        return productInquiry.map(MemberProductInquiryResponse::from);
+//
+//    }
+//
+//
+//    public int save(
+//            @RequestPart @Valid final MemberProductInquiryCreatRequest memberProductInquiryCreateRequest) {
+//
+//        final InquiryContent newProductInquiry = InquiryContent.of3(
+//                memberProductInquiryCreateRequest.getProductCode(),
+//                memberProductInquiryCreateRequest.getProductName(),
+//                memberProductInquiryCreateRequest.getMemberCode(),
+//                memberProductInquiryCreateRequest.getInquiryTitle(),
+//                memberProductInquiryCreateRequest.getInquiryDetail(),
+//                memberProductInquiryCreateRequest.getInquiryWriteDate()
+//        );
+//
+//        final InquiryContent newInquiry = memberProductInquiryRepository.save(newProductInquiry);
+//
+//        return newInquiry.getInquiryCode();
+//
+//    }
 }

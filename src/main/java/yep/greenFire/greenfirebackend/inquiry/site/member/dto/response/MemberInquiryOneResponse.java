@@ -30,13 +30,13 @@ public class MemberInquiryOneResponse {
         this.inquiryReplyStatus = inquiryReplyStatus;
     }
 
-    public static MemberInquiryOneResponse from(InquiryContent newInquiry) {
-
-        return new MemberInquiryOneResponse(
-                newInquiry.getInquiryCode(),
-                newInquiry.getInquiryWriteDate(),
-                newInquiry.getInquiryTitle(),
-                newInquiry.getInquiryReplyStatus()
-        );
-    }
+//    public static MemberInquiryOneResponse from(InquiryContent newInquiry) {
+//
+//        return new MemberInquiryOneResponse(
+//                newInquiry.getInquiryCode(),
+//                newInquiry.getInquiryWriteDate(),
+//                newInquiry.getInquiryTitle(),
+//                newInquiry.getInquiryReplyStatus()
+//        );
+//    }
 }

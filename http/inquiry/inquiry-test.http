@@ -5,9 +5,8 @@ Access-Token: Bearer eyJkYXRlIjoxNzE2OTYzOTA3MzUyLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
 
 
 ###member-regist-test
-GET http://localhost:8001/inquiry/me/regist
-Access-Token: Bearer eyJkYXRlIjoxNzE2OTcxOTUyNDI3LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6InVzZXIwMiIsImV4cCI6MTcxNjk3NTU1Mn0.bZRVwLGx_H9PG_sMOUrdamppNVou3ruc4DbulNkXJ-1XwLAH2jz3Zv9WQ8mLzI3xa7dRMVH9KPz_dTEO1gGFpg
-
+GET http://localhost:8001/inquiry/member/regist
+Access-Token: Barer eyJkYXRlIjoxNzE3NTU1ODE1ODI5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6InVzZXIwMiIsIm1lbWJlclJvbGUiOiJST0xFX01FTUJFUiIsImV4cCI6MTcxNzU1OTQxNX0.t6Hcc6e99HaQnIJTgMco8Osm33DrTFopX52YN6rqsd1EWc0dE-WBcVhVVIY0ewtDypUYvOwfcunzq3W0pZ3vNQ
 
 ###member-inquiryUpdateList-test
 GET http://localhost:8001/inquiry/me/update
