@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import yep.greenFire.greenfirebackend.admin.category.domain.entity.Category;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
-import yep.greenFire.greenfirebackend.user.seller.domain.entity.Store;
 
 import java.util.Date;
 
@@ -26,32 +24,36 @@ public class Product {
     private String productName;
     private Long categoryCode;
     private Long storeCode;
+    private Long price;
     @CreatedDate
     private Date registDate;
     @Enumerated(value = EnumType.STRING)
     private SellableStatus sellableStatus = SellableStatus.Y;
 
-    public Product(String productName, Long categoryCode,
-                   Long storeCode, Date registDate, SellableStatus sellableStatus) {
+    public Product(String productName, Long categoryCode, Long storeCode,
+                   Long price, Date registDate, SellableStatus sellableStatus) {
         this.productName = productName;
         this.categoryCode = categoryCode;
         this.storeCode = storeCode;
+        this.price = price;
         this.registDate = registDate;
         this.sellableStatus = sellableStatus;
     }
 
     public static Product of(
-            final String productName, final Long categoryCode,
-            final Long storeCode, final Date registDate, final SellableStatus sellableStatus
+            final String productName, final Long categoryCode, final Long storeCode,
+            final Long price, final Date registDate, final SellableStatus sellableStatus
     ) {
         return new Product(
                 productName,
                 categoryCode,
                 storeCode,
+                price,
                 registDate,
                 sellableStatus
         );
     }
+
 
 
 }

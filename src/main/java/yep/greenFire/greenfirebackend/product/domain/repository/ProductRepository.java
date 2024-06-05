@@ -18,21 +18,37 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "select new yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse(p, c, s) " +
                     "from Product p join Category c on c.categoryCode = p.categoryCode " +
                     "join Store s on s.storeCode = p.storeCode " +
-                    "where p.sellableStatus = 'Y'"
+                    "where p.categoryCode = :categoryCode " +
+                    "and p.sellableStatus = :sellableStatus"
     )
     Page<ProductsResponse> findByCategoryCodeAndSellableStatus(Pageable pageable, Long categoryCode, SellableStatus sellableStatus);
-
-
-    Page<ProductsResponse> findBySellableStatus(Pageable pageable, SellableStatus sellableStatus);
-
-    Page<ProductsResponse> findByProductNameContainsAndSellableStatus(Pageable pageable, String productName, SellableStatus sellableStatus);
-
 
     @Query(
             "select new yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse(p, c, s) " +
                     "from Product p join Category c on c.categoryCode = p.categoryCode " +
                     "join Store s on s.storeCode = p.storeCode " +
-                    "where p.sellableStatus = 'Y'"
+                    "where p.storeCode = :storeCode " +
+                    "and p.sellableStatus = :sellableStatus"
     )
     Page<ProductsResponse> findByStoreCodeAndSellableStatus(Pageable pageable, Long storeCode, SellableStatus sellableStatus);
+
+    @Query(
+            "select new yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse(p, c, s) " +
+                    "from Product p join Category c on c.categoryCode = p.categoryCode " +
+                    "join Store s on s.storeCode = p.storeCode " +
+                    "where p.sellableStatus = :sellableStatus"
+    )
+    Page<ProductsResponse> findBySellableStatus(Pageable pageable, SellableStatus sellableStatus);
+
+    @Query(
+            "select new yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse(p, c, s) " +
+                    "from Product p join Category c on c.categoryCode = p.categoryCode " +
+                    "join Store s on s.storeCode = p.storeCode " +
+                    "where p.productName like %:productName% " +
+                    "and p.sellableStatus = :sellableStatus"
+    )
+    Page<ProductsResponse> findByProductNameContainsAndSellableStatus(Pageable pageable, String productName, SellableStatus sellableStatus);
+
+
+
 }

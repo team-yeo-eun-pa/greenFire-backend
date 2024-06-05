@@ -8,16 +8,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yep.greenFire.greenfirebackend.admin.category.domain.entity.Category;
-import yep.greenFire.greenfirebackend.admin.category.domain.repository.CategoryRepository;
-import yep.greenFire.greenfirebackend.product.domain.entity.Product;
+
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductOptionRepository;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductRepository;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
-import yep.greenFire.greenfirebackend.user.seller.domain.entity.Store;
-import yep.greenFire.greenfirebackend.user.seller.domain.repository.StoreRepository;
+
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +23,6 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductOptionRepository productOptionRepository;
-    private final CategoryRepository categoryRepository;
-    private final StoreRepository storeRepository;
 
 
     @Value("${image.image-url}")

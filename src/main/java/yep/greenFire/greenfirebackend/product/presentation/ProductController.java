@@ -34,6 +34,7 @@ public class ProductController {
         final PagingButtonInfo pagingButtonInfo = Pagination.getPagingButtonInfo(products);
         final PagingResponse pagingResponse = PagingResponse.of(products.getContent(), pagingButtonInfo);
 
+//        return ResponseEntity.ok(pagingResponse);
         return ResponseEntity.ok(pagingResponse);
     }
 
