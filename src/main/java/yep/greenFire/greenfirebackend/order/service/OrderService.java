@@ -12,8 +12,8 @@ import yep.greenFire.greenfirebackend.order.domain.repository.OrderRepository;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderCreateRequest;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
 import yep.greenFire.greenfirebackend.product.service.ProductOptionService;
-import yep.greenFire.greenfirebackend.user.seller.domain.entity.Store;
-import yep.greenFire.greenfirebackend.user.seller.domain.repository.StoreRepository;
+import yep.greenFire.greenfirebackend.seller.domain.entity.Store;
+import yep.greenFire.greenfirebackend.seller.domain.repository.StoreRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,7 @@ public class OrderService {
             for (OrderCreateRequest.OrderDetailRequest orderDetailRequest : storeOrderRequest.getOrderDetails()) {
 
                 /* 재고 수정 */
-//                updateStock(orderDetailRequest.getOptionCode(), orderDetailRequest.getOrderQuantity());
+                updateStock(orderDetailRequest.getOptionCode(), orderDetailRequest.getOrderQuantity());
 
                 /* !장바구니 제거 updateCart */
 
@@ -78,8 +78,7 @@ public class OrderService {
                 orderDetails.add(newOrderDetail);
 
                 /* 상품 테이블에서 스토어 코드를 가져온 후 넣기 */
-//                storeCode = productOption.getProductCode().getStoreCode();
-                storeCode = productOption.getProductCode();
+                storeCode = productOption.getProduct().getStoreCode();
             }
 
             /* 스토어 테이블에 배송비 컬럼도 가져와서 변수에 넣는다. */
@@ -92,58 +91,56 @@ public class OrderService {
                 }
             }
 
-//            /* 주문 테이블의 총 배송비에 각 판매자의 배송비를 합산해야 한다. */
-//            totalOrderAmount += orderAmount;
-//            totalDeliveryAmount += deliveryAmount;
-//
-//            /*storeOrder 스토어별 주문 객체 생성 후 데이터 저장.*/
-//            final StoreOrder newStoreOrder = StoreOrder.of(
-//                    storeCode,
-//                    orderAmount,
-//                    1000,// 할인금액,
-//                    deliveryAmount,
-//                    1000,//실결제금액,
-//                    orderDetails
-//            );
-//
-//            storeOrders.add(newStoreOrder);
-//
-//        }
+            /* 주문 테이블의 총 배송비에 각 판매자의 배송비를 합산해야 한다. */
+            totalOrderAmount += orderAmount;
+            totalDeliveryAmount += deliveryAmount;
 
-            // 배송지 테이블에서 불러옴
-            Optional<DeliveryAddress> addressOptional = deliveryAddressRepository.findByDeliveryAddressCodeAndMemberCode(orderCreateRequest.getDeliveryAddressCode(), memberCode);
-            DeliveryAddress address = addressOptional.orElseThrow(() -> new IllegalArgumentException("Invalid delivery address"));
+            /*storeOrder 스토어별 주문 객체 생성 후 데이터 저장.*/
+            final StoreOrder newStoreOrder = StoreOrder.of(
+                    storeCode,
+                    orderAmount,
+                    1000,// 할인금액,
+                    deliveryAmount,
+                    1000,//실결제금액,
+                    orderDetails
+            );
+
+            storeOrders.add(newStoreOrder);
+
+        }
+
+        // 배송지 테이블에서 불러옴
+        Optional<DeliveryAddress> addressOptional = deliveryAddressRepository.findByDeliveryAddressCodeAndMemberCode(orderCreateRequest.getDeliveryAddressCode(), memberCode);
+        DeliveryAddress address = addressOptional.orElseThrow(() -> new IllegalArgumentException("Invalid delivery address"));
 //        if (!addressOptional.isPresent()) {
 //        }
 
-//        /*order 주문 객체 생성 후 데이터 저장.*/
-//        final Order newOrder = Order.of(
-//                memberCode,
-//
-//                address.getReceiverName(),
-//                address.getContactNumber(),
-//
-//                address.getAddressZonecode(),
-//                address.getAddressType(),
-//                address.getAddress(),
-//                address.getAddressDetail(),
-//                address.getDeliveryRequest(),
-//
-//                /* 주문금액, 총할인, 배송비, 실결제금액 */
-//                totalOrderAmount,
-//                10000L,  //orderCreateRequest.getDiscountAmount(),
-//                totalDeliveryAmount,
-//                10000L,  //orderCreateRequest.getRealPayment(),
-//                storeOrders
-//        );
-//        orderRepository.save(newOrder);
-//    }
-//
-//
-//    private void updateStock(Long productOptionCode, Long optionStock) {
-//        productOptionService.updateStock(productOptionCode, optionStock);
-//    }
-//    /* 장바구니 제거 */
-        }
+        /*order 주문 객체 생성 후 데이터 저장.*/
+        final Order newOrder = Order.of(
+                memberCode,
+
+                address.getReceiverName(),
+                address.getContactNumber(),
+
+                address.getAddressZonecode(),
+                address.getAddressType(),
+                address.getAddress(),
+                address.getAddressDetail(),
+                address.getDeliveryRequest(),
+
+                /* 주문금액, 총할인, 배송비, 실결제금액 */
+                totalOrderAmount,
+                10000L,  //orderCreateRequest.getDiscountAmount(),
+                totalDeliveryAmount,
+                10000L,  //orderCreateRequest.getRealPayment(),
+                storeOrders
+        );
+        orderRepository.save(newOrder);
     }
+
+
+    private void updateStock(Long productOptionCode, Long optionStock) {
+        productOptionService.updateStock(productOptionCode, optionStock);
+    }
+    /* 장바구니 제거 */
 }
