@@ -23,6 +23,8 @@ public class Order {
     private Long orderCode;
     private Long memberCode;
 
+    private String orderName;
+
     /* 배송지 - 수령자 연락처 주소 요청사항 //카카오 우편번호 서비스 적용해보기 */
     private String receiverName;
     private String contactNumber;
@@ -56,10 +58,11 @@ public class Order {
     @JoinColumn(name = "order_code")
     private List<StoreOrder> storeOrders;
 
-    private Order(Long memberCode, String receiverName, String contactNumber, Long addressZonecode, AddressType addressType, String address, String addressDetail, String deliveryRequest,
+    private Order(Long memberCode,String orderName, String receiverName, String contactNumber, Long addressZonecode, AddressType addressType, String address, String addressDetail, String deliveryRequest,
                  Long totalOrderAmount, Long totalDiscountAmount, Long totalDeliveryAmount, Long totalRealPayment,
                   List<StoreOrder> storeOrders) {
         this.memberCode = memberCode;
+        this.orderName = orderName;
         this.receiverName = receiverName;
         this.contactNumber = contactNumber;
         this.addressZonecode = addressZonecode;
@@ -75,8 +78,8 @@ public class Order {
     }
 
 
-    public static Order of(Long memberCode, String receiverName, String contactNumber, Long addressZonecode, AddressType addressType, String address,String addressDetail, String deliveryRequest, Long totalOrderAmount, Long totalDiscountAmount, Long totalDeliveryAmount, Long totalRealPayment,  List<StoreOrder> storeOrders) {
-        return new Order(memberCode,
+    public static Order of(Long memberCode, String orderName, String receiverName, String contactNumber, Long addressZonecode, AddressType addressType, String address,String addressDetail, String deliveryRequest, Long totalOrderAmount, Long totalDiscountAmount, Long totalDeliveryAmount, Long totalRealPayment,  List<StoreOrder> storeOrders) {
+        return new Order(memberCode, orderName,
                 receiverName, contactNumber,
                 addressZonecode,addressType, address, addressDetail, deliveryRequest,
                 totalOrderAmount, totalDiscountAmount, totalDeliveryAmount, totalRealPayment,
