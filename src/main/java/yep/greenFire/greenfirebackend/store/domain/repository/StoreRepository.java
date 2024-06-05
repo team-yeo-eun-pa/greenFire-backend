@@ -1,7 +1,7 @@
-package yep.greenFire.greenfirebackend.seller.domain.repository;
+package yep.greenFire.greenfirebackend.store.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import yep.greenFire.greenfirebackend.seller.domain.entity.Store;
+import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 
 import java.util.Optional;
 

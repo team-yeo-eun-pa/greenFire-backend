@@ -1,9 +1,10 @@
-package yep.greenFire.greenfirebackend.seller.domain.entity;
+package yep.greenFire.greenfirebackend.store.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.order.domain.type.AddressType;
 import yep.greenFire.greenfirebackend.store.domain.type.StoreStatus;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "tbl_store")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 @EntityListeners(AuditingEntityListener.class)
 public class Store {
 
@@ -41,4 +43,7 @@ public class Store {
     @Enumerated(EnumType.STRING)
     private StoreStatus storeStatus;
 
+    public void increaseStoreReportCount(long reportCount) {
+        this.reportCount=reportCount;
+    }
 }

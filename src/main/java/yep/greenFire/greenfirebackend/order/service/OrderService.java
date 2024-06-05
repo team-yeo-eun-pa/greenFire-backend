@@ -14,8 +14,8 @@ import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
 import yep.greenFire.greenfirebackend.product.service.ProductOptionService;
-import yep.greenFire.greenfirebackend.seller.domain.entity.Store;
-import yep.greenFire.greenfirebackend.seller.domain.repository.StoreRepository;
+import yep.greenFire.greenfirebackend.store.domain.entity.Store;
+import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 
 import java.util.ArrayList;
 import java.util.List;

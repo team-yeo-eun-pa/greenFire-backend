@@ -11,10 +11,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-
 public class ReportsVO {
 
-    private Long reportCode;
 
     private Long memberCode;
 
@@ -32,8 +30,7 @@ public class ReportsVO {
 
     private LocalDateTime suspendedEndDate;
 
-    public ReportsVO(Long reportCode, Long memberCode, String memberId, String memberName, String memberNickname, MemberStatus memberStatus, MemberRole memberRole, Long reportCount, LocalDateTime suspendedEndDate) {
-        this.reportCode=reportCode;
+    public ReportsVO(Long memberCode, String memberId, String memberName, String memberNickname, MemberStatus memberStatus, MemberRole memberRole, Long reportCount, LocalDateTime suspendedEndDate) {
         this.memberCode = memberCode;
         this.memberId=memberId;
         this.memberName = memberName;

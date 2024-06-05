@@ -24,6 +24,8 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
 
     @Query("SELECT new yep.greenFire.greenfirebackend.report.dto.response.ReportVO(r.reportCode, r.reportType, r.reportReason, r.reportDate)" +
-            " FROM Report r")
-    Optional<ReportVO> getReportCode(Long reportCode);
+            " FROM Report r" +
+            " JOIN Member m ON r.memberCode = m.memberCode" +
+            " WHERE m.memberId = :memberId")
+    List<ReportVO> getReportCode(String memberId);
 }

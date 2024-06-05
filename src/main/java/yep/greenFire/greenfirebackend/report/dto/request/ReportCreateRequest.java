@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -13,7 +14,7 @@ public class ReportCreateRequest {
 
     private String reportReason;
 
-    private Date reportDate;
+    private LocalDate reportDate;
 
     private String reportType;
 

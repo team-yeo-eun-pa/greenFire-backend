@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import yep.greenFire.greenfirebackend.product.domain.entity.Category;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
-import yep.greenFire.greenfirebackend.seller.domain.entity.Store;
+import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 
 import java.time.LocalDateTime;
 import java.util.Date;
