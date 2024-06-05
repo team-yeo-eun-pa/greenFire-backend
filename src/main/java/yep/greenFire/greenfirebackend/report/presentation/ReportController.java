@@ -17,7 +17,8 @@ public class ReportController {
     private final ReportService reportService;
 
     @PostMapping("/reports")
-    public ResponseEntity<?> createReport(@RequestBody ReportCreateRequest reportRequest) {
+    public ResponseEntity<Void> createReport(@RequestBody ReportCreateRequest reportRequest) {
+        System.out.println("report req :" + reportRequest);
         reportService.createMemberReport(reportRequest);
         return ResponseEntity.ok().build();
     }
