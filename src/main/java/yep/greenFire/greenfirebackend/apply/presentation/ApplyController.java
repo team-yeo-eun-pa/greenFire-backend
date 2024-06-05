@@ -4,13 +4,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import yep.greenFire.greenfirebackend.apply.dto.request.ApplyCreateRequest;
+import yep.greenFire.greenfirebackend.apply.dto.request.ApplyUpdateRequest;
 import yep.greenFire.greenfirebackend.apply.dto.response.ApplyResponse;
 import yep.greenFire.greenfirebackend.apply.service.ApplyService;
 import yep.greenFire.greenfirebackend.auth.type.CustomUser;
@@ -22,8 +21,8 @@ import java.net.URI;
 
 @Slf4j
 @RestController
-@RequestMapping("/members")
 @RequiredArgsConstructor
+@RequestMapping("/members")
 public class ApplyController {
 
     private final ApplyService applyService;
@@ -49,9 +48,44 @@ public class ApplyController {
             @RequestPart final MultipartFile businessImg
             ) {
 
-        final Long applyCode = applyService.save(applyCreateRequest, businessImg);
+        final Long applyCode = applyService.save(applyCreateRequest, businessImg, customUser.getMemberCode());
 
-        return ResponseEntity.created(URI.create("/admin/applies" + applyCode)).build();
+        log.info(applyCode.toString());
+        return ResponseEntity.created(URI.create("/admin/applies/" + applyCode)).build();
+    }
+
+    @PutMapping("/applies/{sellerCode}")
+    public ResponseEntity<Void> modify(
+            @PathVariable final Long sellerCode,
+            @RequestPart @Valid final ApplyUpdateRequest applyRequest,
+            @RequestPart(required = false) final MultipartFile businessImg,
+            @AuthenticationPrincipal final CustomUser customUser
+    ) {
+
+        log.info("Received applyRequest: {}", applyRequest);
+        if (businessImg != null) {
+            log.info("Received businessImg: {}", businessImg.getOriginalFilename());
+        } else {
+            log.info("No businessImg provided");
+        }
+
+        applyService.modify(sellerCode, applyRequest, businessImg, customUser.getMemberCode());
+
+        return ResponseEntity.created(URI.create("/admin/applies/" + sellerCode)).build();
+    }
+
+    @PostMapping("/applies/{sellerCode}/cancel")
+    public ResponseEntity<Void> cancel(
+            @PathVariable final Long sellerCode,
+            @RequestPart @Valid final ApplyUpdateRequest applyRequest,
+            @AuthenticationPrincipal final CustomUser customUser
+    ) {
+
+        log.info("Cancel request for sellerCode: {}, with applyRequest: {}", sellerCode, applyRequest);
+
+        applyService.cancel(sellerCode, applyRequest, customUser.getMemberCode());
+
+        return ResponseEntity.noContent().build();
     }
 
 }
