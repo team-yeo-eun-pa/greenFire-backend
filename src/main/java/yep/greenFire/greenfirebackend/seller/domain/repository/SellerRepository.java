@@ -17,7 +17,7 @@ public interface SellerRepository extends JpaRepository<Seller, Long> {
             "FROM Seller s " +
             "LEFT JOIN Member m ON s.memberCode = m.memberCode " +
             "LEFT JOIN Store st ON s.sellerCode = st.sellerCode " +
-            "WHERE m.memberCode = :memberCode AND s.applyStatus = yep.greenFire.greenfirebackend.seller.domain.type.ApplyStatus.APPLY")
+            "WHERE m.memberCode = :memberCode AND s.applyStatus = yep.greenFire.greenfirebackend.apply.domain.type.ApplyStatus.APPLY")
     List<StoreListResponse> findByMemberCode(@Param("memberCode") Long memberCode);
 
     // 특정 스토어 프로필 조회
