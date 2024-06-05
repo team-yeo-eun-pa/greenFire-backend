@@ -28,16 +28,16 @@ public class MemberInquiryResponse {
         this.memberCode = memberCode;
     }
 
-    public static MemberInquiryResponse from(InquiryContent inquiryContent) {
-        return new MemberInquiryResponse(
-                inquiryContent.getInquiryCode(),
-                inquiryContent.getInquiryStatus(),
-                inquiryContent.getInquiryReply(),
-                inquiryContent.getInquiryReplyStatus(),
-                inquiryContent.getMemberCode()
-
-        );
-
-    }
+//    public static MemberInquiryResponse from(InquiryContent inquiryContent) {
+//        return new MemberInquiryResponse(
+//                inquiryContent.getInquiryCode(),
+//                inquiryContent.getInquiryStatus(),
+//                inquiryContent.getInquiryReply(),
+//                inquiryContent.getInquiryReplyStatus(),
+//                inquiryContent.getMemberCode()
+//
+//        );
+//
+//    }
 
 }
