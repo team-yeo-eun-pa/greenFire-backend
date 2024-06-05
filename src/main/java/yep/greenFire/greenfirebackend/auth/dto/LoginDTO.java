@@ -3,8 +3,8 @@ package yep.greenFire.greenfirebackend.auth.dto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import yep.greenFire.greenfirebackend.user.member.domain.entity.Member;
-import yep.greenFire.greenfirebackend.user.member.domain.type.MemberRole;
+import yep.greenFire.greenfirebackend.member.domain.entity.Member;
+import yep.greenFire.greenfirebackend.member.domain.type.MemberRole;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)

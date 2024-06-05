@@ -2,9 +2,8 @@ package yep.greenFire.greenfirebackend.product.domain.type;
 
 public enum ProductOptionAppearActivate {
 
-    USABLE("usable"),
-    DISABLE("disable"),
-    DELETED("deleted");
+    Y("y"),
+    N("n");
 
     private final String optionAppearActivate;
 
