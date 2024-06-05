@@ -11,6 +11,7 @@ import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductCreateRequest;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
 import yep.greenFire.greenfirebackend.product.service.ProductService;
 
@@ -18,14 +19,14 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/product")
+//@RequestMapping("")
 public class ProductController {
 
     private final ProductService productService;
 
     /* 상품 목록 조회 */
     /* 이미지, 옵션 참조 */
-    @GetMapping("")
+    @GetMapping("product")
     public ResponseEntity<PagingResponse> getProducts(
             @RequestParam(defaultValue = "1") final Integer page,
             @RequestParam(required = false) final Long categoryCode,
@@ -40,12 +41,14 @@ public class ProductController {
     }
 
     /* 판매자 상품 등록 */
-    @PostMapping("/regist")
+    @PostMapping("seller/mystore/regist")
     public ResponseEntity<Void> save(
             @RequestPart @Valid final ProductCreateRequest productCreateRequest,
+            @RequestPart @Valid final ProductOptionCreateRequest productOptionCreateRequest,
             @RequestPart final MultipartFile productImg
             ) {
         final Long productCode = productService.save(productCreateRequest, productImg);
+        productService.save(productOptionCreateRequest, productCode);
         return ResponseEntity.created(URI.create("/seller/mystore/regist" + productCode)).build();
     }
 
