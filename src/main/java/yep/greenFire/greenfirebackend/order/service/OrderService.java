@@ -10,10 +10,12 @@ import yep.greenFire.greenfirebackend.order.domain.entity.StoreOrder;
 import yep.greenFire.greenfirebackend.order.domain.repository.DeliveryAddressRepository;
 import yep.greenFire.greenfirebackend.order.domain.repository.OrderRepository;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderCreateRequest;
+import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
+import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
 import yep.greenFire.greenfirebackend.product.service.ProductOptionService;
-import yep.greenFire.greenfirebackend.user.seller.domain.entity.Store;
-import yep.greenFire.greenfirebackend.user.seller.domain.repository.StoreRepository;
+import yep.greenFire.greenfirebackend.seller.domain.entity.Store;
+import yep.greenFire.greenfirebackend.seller.domain.repository.StoreRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +80,8 @@ public class OrderService {
                 orderDetails.add(newOrderDetail);
 
                 /* 상품 테이블에서 스토어 코드를 가져온 후 넣기 */
-                storeCode = productOption.getProduct().getStoreCode();
+//                storeCode = Product.getProduct().getStoreCode();
+                storeCode = 1;
             }
 
             /* 스토어 테이블에 배송비 컬럼도 가져와서 변수에 넣는다. */

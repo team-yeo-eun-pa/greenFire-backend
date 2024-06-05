@@ -31,6 +31,7 @@ public enum ExceptionCode {
     NOT_FOUND_CATEGORY_CODE(404, "카테고리 코드가 존재하지않습니다."),
     NOT_FOUND_ADMIN_CODE(404, "관리자 코드에 해당하는 회원코드가 존재하지 않습니다."),
     NOT_FOUND_MEMBER_CODE(404, "회원 코드에 해당하는 회원코드가 존재하지 않습니다."),
+    NOT_FOUND_REPORT_CODE(404, "신고 코드에 해당하는 신고가 존재하지 않습니다."),
     NOT_FOUND_NOTICE_CODE(404, "공지사항 코드에 해당하는 공지사항이 존재하지 않습니다."),
     NOT_FOUND_VALID_ORDER(404, "유효한 주문 건이 아닙니다."),
     NOT_FOUND_PRODUCT_CODE(404, "상품 코드에 해당하는 상품이 존재하지 않습니다." ),
