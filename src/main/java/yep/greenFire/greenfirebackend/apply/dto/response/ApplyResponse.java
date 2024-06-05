@@ -3,8 +3,7 @@ package yep.greenFire.greenfirebackend.apply.dto.response;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import yep.greenFire.greenfirebackend.seller.domain.entity.Seller;
-import yep.greenFire.greenfirebackend.seller.domain.type.ApplyStatus;
+import yep.greenFire.greenfirebackend.apply.domain.type.ApplyStatus;
 
 import java.time.LocalDateTime;
 
