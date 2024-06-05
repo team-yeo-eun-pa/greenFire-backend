@@ -121,6 +121,7 @@ public class OrderService {
         /*order 주문 객체 생성 후 데이터 저장.*/
         final Order newOrder = Order.of(
                 memberCode,
+                "양말2개다시로직만들어랑", // 오더 네임 결제하면서 추가
 
                 address.getReceiverName(),
                 address.getContactNumber(),
