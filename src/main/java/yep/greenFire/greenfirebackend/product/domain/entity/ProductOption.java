@@ -17,17 +17,28 @@ public class ProductOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long optionCode;
+    private Long productCode;
     private String optionName;
     private Long optionPrice;
     private Long optionStock;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_code", nullable = false)
-    private Product product;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "product_code", nullable = false)
+//    private Product product;
+
+
+    public ProductOption(Long productCode, String optionName, Long optionPrice,
+                         Long optionStock, ProductOptionAppearActivate optionAppearActivate) {
+        this.productCode = productCode;
+        this.optionName = optionName;
+        this.optionPrice = optionPrice;
+        this.optionStock = optionStock;
+        this.optionAppearActivate = optionAppearActivate;
+    }
 
     /* 상품 옵션 조회 가능 여부 */
     @Enumerated(value = EnumType.STRING)
-    private ProductOptionAppearActivate optionAppearActivate = ProductOptionAppearActivate.Y;
+    private ProductOptionAppearActivate optionAppearActivate = ProductOptionAppearActivate.USABLE;
 
     private ProductOption(
             String optionName, Long optionStock

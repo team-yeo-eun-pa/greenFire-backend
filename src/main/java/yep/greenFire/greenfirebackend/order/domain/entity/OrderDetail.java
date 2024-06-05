@@ -18,6 +18,9 @@ public class OrderDetail {
     private Long orderDetailCode;
 
     private Long optionCode;
+    @ManyToOne
+    @JoinColumn
+    private StoreOrder storeOrder;
 
     private Long optionPrice;
     private Long orderQuantity;

@@ -1,7 +1,7 @@
 package yep.greenFire.greenfirebackend.order.dto.request;
 
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class OrderCreateRequest {
 
     /* 배송지 - 수령자 연락처 주소 요청사항 */
-    @NotNull
+    @NotBlank
     private Long deliveryAddressCode;
 
     private List<StoreOrderRequest> storeOrders;

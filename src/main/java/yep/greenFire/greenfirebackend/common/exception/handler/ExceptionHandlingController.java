@@ -13,15 +13,6 @@ import yep.greenFire.greenfirebackend.common.exception.dto.response.ExceptionRes
 @RestControllerAdvice
 public class ExceptionHandlingController {
 
-    /* General Exception */
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Void> notFoundException(Exception e) {
-
-        e.printStackTrace();
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    }
-
     /* Not Found Exception */
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ExceptionResponse> notFoundException(NotFoundException e) {

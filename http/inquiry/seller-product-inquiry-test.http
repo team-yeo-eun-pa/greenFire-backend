@@ -1,3 +1,0 @@
-### seller-product-inquiry-view-test
-GET http://localhost:8001/inquiry/product/seller/list
-Access-Token: eyJkYXRlIjoxNzE3NDAzOTE1Mjk5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6InVzZXIwMiIsImV4cCI6MTcxNzQwNzUxNX0.RquWLYriBjenxPjqsGnYIkxil-0IuwIBznwpaFcecXIKq-tDFDKolSX3gir12c-jI8URGr1TsnK52iAYd4MG9Q

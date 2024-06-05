@@ -11,18 +11,18 @@ public enum OrderStatus {
     REFUNDED("refunded"),           // 환불 완료
     COMPLETED("completed");         // 주문 완료
 
-    private final String orderStatus;
+    private final String status;
 
-    OrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
+    OrderStatus(String status) {
+        this.status = status;
     }
 
-    public String getOrderStatus() {
-        return orderStatus;
+    public String getStatus() {
+        return status;
     }
 
     @Override
     public String toString() {
-        return this.orderStatus;
+        return this.status;
     }
 }

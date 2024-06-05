@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import yep.greenFire.greenfirebackend.order.domain.type.AddressType;
+import yep.greenFire.greenfirebackend.order.domain.type.AddressZonecode;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,9 +27,8 @@ public class Order {
     private String receiverName;
     private String contactNumber;
 
-    private Long addressZonecode;
-    @Enumerated(value = EnumType.STRING)
-    private AddressType addressType;
+    private AddressZonecode addressZonecode;
+    private String addressType;
     private String address;
     private String addressDetail;
     private String deliveryRequest;
@@ -53,11 +52,10 @@ public class Order {
     private LocalDateTime cancelDate;
 
     @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "order_code")
     private List<StoreOrder> storeOrders;
 
-    private Order(Long memberCode, String receiverName, String contactNumber, Long addressZonecode, AddressType addressType, String address, String addressDetail, String deliveryRequest,
-                 Long totalOrderAmount, Long totalDiscountAmount, Long totalDeliveryAmount, Long totalRealPayment,
+    private Order(Long memberCode, String receiverName, String contactNumber, AddressZonecode addressZonecode, String addressType, String address, String addressDetail, String deliveryRequest,
+                 Long totalOrderAmount,/* Long totalDiscountAmount,*/ Long totalDeliveryAmount/*, Long totalRealPayment*/,
                   List<StoreOrder> storeOrders) {
         this.memberCode = memberCode;
         this.receiverName = receiverName;
@@ -68,20 +66,21 @@ public class Order {
         this.addressDetail = addressDetail;
         this.deliveryRequest = deliveryRequest;
         this.totalOrderAmount = totalOrderAmount;
-        this.totalDiscountAmount = totalDiscountAmount;
+//        this.totalDiscountAmount = totalDiscountAmount;
         this.totalDeliveryAmount = totalDeliveryAmount;
-        this.totalRealPayment = totalRealPayment;
+//        this.totalRealPayment = totalRealPayment;
         this.storeOrders = storeOrders;
     }
 
 
-    public static Order of(Long memberCode, String receiverName, String contactNumber, Long addressZonecode, AddressType addressType, String address,String addressDetail, String deliveryRequest, Long totalOrderAmount, Long totalDiscountAmount, Long totalDeliveryAmount, Long totalRealPayment,  List<StoreOrder> storeOrders) {
+    public static Order of(Long memberCode, String receiverName, String contactNumber, AddressZonecode addressZonecode, String addressType, String address,String addressDetail, String deliveryRequest, Long totalOrderAmount, /* Long totalDiscountAmount,*/ Long totalDeliveryAmount/*, Long totalRealPayment,*/,  List<StoreOrder> storeOrders) {
         return new Order(memberCode,
                 receiverName, contactNumber,
                 addressZonecode,addressType, address, addressDetail, deliveryRequest,
-                totalOrderAmount, totalDiscountAmount, totalDeliveryAmount, totalRealPayment,
+                totalOrderAmount,/* totalDiscountAmount,*/ totalDeliveryAmount/* totalRealPayment,*/,
                 storeOrders);
     }
+
 
     /* 총 주문금액 */
     public void totalOrderAmount(Long orderPrice) {

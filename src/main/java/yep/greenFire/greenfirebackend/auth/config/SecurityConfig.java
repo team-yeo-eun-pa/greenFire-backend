@@ -7,6 +7,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -24,8 +27,11 @@ import yep.greenFire.greenfirebackend.auth.handler.JwtAccessDeniedHandler;
 import yep.greenFire.greenfirebackend.auth.handler.JwtAuthenticationEntryPoint;
 import yep.greenFire.greenfirebackend.auth.handler.LoginFailureHandler;
 import yep.greenFire.greenfirebackend.auth.handler.LoginSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import yep.greenFire.greenfirebackend.auth.service.AuthService;
-import yep.greenFire.greenfirebackend.member.domain.type.MemberRole;
+import yep.greenFire.greenfirebackend.user.member.domain.type.MemberRole;
 
 import java.util.Arrays;
 
@@ -53,8 +59,8 @@ public class SecurityConfig {
                      * 이 때 OPTIONS 메소드로 서버에 사전 요청을 보내 확인한다. */
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/members/signup", "/members/login").permitAll();
+                    auth.requestMatchers(HttpMethod.GET,"/product/**").permitAll();
                     auth.requestMatchers("/admin/**").hasRole(MemberRole.ADMIN.toString());
-                    auth.requestMatchers("/seller/**").hasRole(MemberRole.SELLER.toString());
                     auth.requestMatchers(HttpMethod.GET,"/Member/notices/**").permitAll();
                     auth.anyRequest().authenticated();
 

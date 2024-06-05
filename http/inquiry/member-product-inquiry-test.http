@@ -1,4 +1,0 @@
-### member-product-inquiry-test
-GET http://localhost:8001/inquiry/product/list
-Access-Token: eyJkYXRlIjoxNzE3Mzk2OTg1MTA3LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6InVzZXIwMiIsIm1lbWJlclJvbGUiOiJST0xFX01FTUJFUiIsImV4cCI6MTcxNzQwMDU4NX0.BaZjgbFJe__ie4Fw8SZ2K6aC3tE09SW9GaRUTtHDHdg4wuywSWe31egDf69bXmummMzCiiADc4UuA_naeSE3vQ
-
