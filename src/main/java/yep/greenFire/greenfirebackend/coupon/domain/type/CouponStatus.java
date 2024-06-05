@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.seller.domain.type;
+package yep.greenFire.greenfirebackend.coupon.domain.type;
 
 public enum CouponStatus {
 
