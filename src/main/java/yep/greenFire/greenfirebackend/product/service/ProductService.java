@@ -98,29 +98,6 @@ public class ProductService {
     }
 
 
-    /* 상품 옵션 등록 */
-
-    private void verifyProductCreated(Long productCode) {
-        if (productRepository.existsByProductCode(productCode)) {
-            throw new ConflictException(ExceptionCode.NOT_FOUND_PRODUCT_CODE);
-        }
-    }
-
-    public void save(final ProductOptionCreateRequest productOptionCreateRequest, Long productCode) {
-
-        //상품 존재하는지 확인 후 저장
-        verifyProductCreated(productOptionCreateRequest.getProductCode());
-
-        ProductOption newOption = ProductOption.of(
-                productOptionCreateRequest.getProductCode(),
-                productOptionCreateRequest.getOptionName(),
-                productOptionCreateRequest.getOptionPrice(),
-                productOptionCreateRequest.getOptionStock(),
-                productOptionCreateRequest.getOptionAppearActivate()
-        );
-
-        productOptionRepository.save(newOption);
-    }
 
 
 

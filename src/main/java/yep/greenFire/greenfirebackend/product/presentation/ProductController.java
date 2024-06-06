@@ -13,6 +13,7 @@ import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
+import yep.greenFire.greenfirebackend.product.service.ProductOptionService;
 import yep.greenFire.greenfirebackend.product.service.ProductService;
 
 import java.net.URI;
@@ -23,6 +24,7 @@ import java.net.URI;
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductOptionService productOptionService;
 
     /* 상품 목록 조회 */
     /* 이미지, 옵션 참조 */
@@ -48,7 +50,7 @@ public class ProductController {
             @RequestPart final MultipartFile productImg
             ) {
         final Long productCode = productService.save(productCreateRequest, productImg);
-        productService.save(productOptionCreateRequest, productCode);
+        productOptionService.save(productOptionCreateRequest, productCode);
         return ResponseEntity.created(URI.create("/seller/mystore/regist" + productCode)).build();
     }
 
