@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +14,7 @@ import yep.greenFire.greenfirebackend.apply.domain.repository.ApplyRepository;
 import yep.greenFire.greenfirebackend.apply.domain.type.ApplyStatus;
 import yep.greenFire.greenfirebackend.apply.dto.request.ApplyCreateRequest;
 import yep.greenFire.greenfirebackend.apply.dto.request.ApplyUpdateRequest;
+import yep.greenFire.greenfirebackend.apply.dto.response.AdminApplyResponse;
 import yep.greenFire.greenfirebackend.apply.dto.response.ApplyResponse;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
@@ -111,5 +111,16 @@ public class ApplyService {
             throw new NotFoundException(ExceptionCode.ACCESS_DENIED);
         }
             seller.cancel(applyRequest.getApplyStatus());
+    }
+
+
+    // admin
+
+    @Transactional(readOnly = true)
+    public Page<AdminApplyResponse> getAdminApplies(Integer page, Long memberCode) {
+
+        Page<AdminApplyResponse> applies = applyRepository.getAdminApplies(getPageable(page), ApplyStatus.CHECKING);
+
+        return applies;
     }
 }
