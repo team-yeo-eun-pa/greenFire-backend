@@ -117,10 +117,19 @@ public class ApplyService {
     // admin
 
     @Transactional(readOnly = true)
-    public Page<AdminApplyResponse> getAdminApplies(Integer page, Long memberCode) {
+    public Page<AdminApplyResponse> getAdminApplies(Integer page) {
 
         Page<AdminApplyResponse> applies = applyRepository.getAdminApplies(getPageable(page), ApplyStatus.CHECKING);
 
         return applies;
+    }
+
+    @Transactional(readOnly = true)
+    public AdminApplyResponse getAdminApplyDetail(Long sellerCode) {
+
+        AdminApplyResponse apply = applyRepository.getApplyDetail(sellerCode, ApplyStatus.CHECKING)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_SELLER_CODE));
+
+        return apply;
     }
 }

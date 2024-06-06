@@ -39,4 +39,11 @@ public interface ApplyRepository extends JpaRepository<Seller, Long> {
             "(s.sellerCode, m.memberCode, s.storeName, s.storeRepresentativeName, s.businessImg, s.businessNumber, s.mosNumber, s.storeType, m.memberPhone, s.applyContent, s.applyStatus, s.applyDatetime, s.applyProcessingDate, s.applyCancelDate, s.rejectReason) " +
             "FROM Seller s LEFT JOIN Member m on s.memberCode = m.memberCode ")
     Page<AdminApplyResponse> getAdminApplies(Pageable pageable, @Param("applyStatus") ApplyStatus applyStatus);
+
+    // 입점 신청 내역 상세 조회
+    @Query("SELECT new yep.greenFire.greenfirebackend.apply.dto.response.AdminApplyResponse" +
+            "(s.sellerCode, m.memberCode, s.storeName, s.storeRepresentativeName, s.businessImg, s.businessNumber, s.mosNumber, s.storeType, m.memberPhone, s.applyContent, s.applyStatus, s.applyDatetime, s.applyProcessingDate, s.applyCancelDate, s.rejectReason) " +
+            "FROM Seller s LEFT JOIN Member m on s.memberCode = m.memberCode " +
+            "WHERE s.sellerCode = :sellerCode AND s.applyStatus = :applyStatus")
+    Optional<AdminApplyResponse> getApplyDetail(@Param("sellerCode") Long sellerCode, @Param("applyStatus") ApplyStatus applyStatus);
 }
