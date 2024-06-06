@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.apply.domain.type.ApplyStatus;
-import yep.greenFire.greenfirebackend.store.domain.type.StoreStatus;
 
 import java.time.LocalDateTime;
 
@@ -84,8 +83,22 @@ public class Seller {
         this.applyContent = applyContent;
     }
 
+    // member : cancel
     public void cancel(ApplyStatus applyStatus) {
         this.applyStatus = applyStatus;
+        this.applyCancelDate = LocalDateTime.now();
+    }
+
+    // admin : accept
+    public void accept(ApplyStatus applyStatus) {
+        this.applyStatus = applyStatus;
+        this.applyProcessingDate = LocalDateTime.now(); }
+
+    // admin : reject
+    public void reject(String rejectReason) {
+        this.applyStatus = ApplyStatus.REJECT;
+        this.rejectReason = rejectReason;
+        this.applyProcessingDate = LocalDateTime.now();
     }
 
 

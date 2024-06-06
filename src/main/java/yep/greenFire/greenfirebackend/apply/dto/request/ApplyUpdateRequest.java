@@ -21,5 +21,8 @@ public class ApplyUpdateRequest {
     private final String storeType;
     @NotBlank
     private final String applyContent;
+
     private final ApplyStatus applyStatus;
+
+    private final String rejectReason;
 }
