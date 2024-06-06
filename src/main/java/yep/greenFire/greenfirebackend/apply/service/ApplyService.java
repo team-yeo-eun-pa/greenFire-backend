@@ -132,4 +132,20 @@ public class ApplyService {
 
         return apply;
     }
+
+    @Transactional
+    public void applyAccept(Long sellerCode, ApplyUpdateRequest applyRequest) {
+        Seller seller = applyRepository.findBySellerCodeAndApplyStatus(sellerCode, ApplyStatus.CHECKING)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.INVALID_STATUS_CHANGE));
+
+        seller.accept(applyRequest.getApplyStatus());
+    }
+
+    @Transactional
+    public void applyReject(Long sellerCode, ApplyUpdateRequest applyRequest) {
+        Seller seller = applyRepository.findBySellerCodeAndApplyStatus(sellerCode, ApplyStatus.CHECKING)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.INVALID_STATUS_CHANGE));
+
+        seller.reject(applyRequest.getRejectReason());
+    }
 }
