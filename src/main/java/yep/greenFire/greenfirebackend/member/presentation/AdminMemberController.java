@@ -22,7 +22,7 @@ public class AdminMemberController {
     private final AdminMemberService adminMemberService;
 
     @GetMapping("/members")
-    public ResponseEntity<PagingResponse> getAdminNotice(
+    public ResponseEntity<PagingResponse> getAdminMember(
             @RequestParam(defaultValue = "1") final Integer page
     ) {
         final Page<MemberResponse> members = adminMemberService.getAdminMembers(page);

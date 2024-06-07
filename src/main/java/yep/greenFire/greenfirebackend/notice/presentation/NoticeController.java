@@ -5,7 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.notice.dto.request.NoticeCreateRequest;
 import yep.greenFire.greenfirebackend.notice.dto.request.NoticeUpdateRequest;
 import yep.greenFire.greenfirebackend.notice.dto.response.AdminNoticeResponse;
@@ -25,7 +27,6 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @GetMapping("/notices")
-//    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<PagingResponse> getAdminNotices(
             @RequestParam(defaultValue = "1") final Integer page
     ){
@@ -46,11 +47,12 @@ public class NoticeController {
         return ResponseEntity.ok(adminNoticeResponse);
     }
 
-    @PostMapping("/notices")
+    @PostMapping("/notice-create")
     public ResponseEntity<Void> save(
-            @RequestBody @Valid final NoticeCreateRequest noticeCreateRequest
+            @RequestPart(value="file",required = false)  @Valid final NoticeCreateRequest noticeCreateRequest,
+            @AuthenticationPrincipal final CustomUser customUser
             ){
-       noticeService.save(noticeCreateRequest, 1L);
+       noticeService.save(noticeCreateRequest, customUser.getMemberCode());
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
