@@ -23,7 +23,7 @@ import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
-import yep.greenFire.greenfirebackend.seller.domain.entity.Store;
+import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 
 
