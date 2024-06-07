@@ -46,4 +46,16 @@ public class Store {
     public void increaseStoreReportCount(long reportCount) {
         this.reportCount=reportCount;
     }
+
+    public void modifyProfile(Long sellerCode, String storeName, String storeInfo, Long addressZonecode, AddressType addressType, String address, String addressDetail, Long deliveryAmount, Long freeDeliveryCondition) {
+        this.sellerCode = sellerCode;
+        this.storeName = storeName;
+        this.storeInfo = storeInfo;
+        this.addressZonecode = addressZonecode;
+        this.addressType = addressType;
+        this.address = address;
+        this.addressDetail = addressDetail;
+        this.deliveryAmount = deliveryAmount;
+        this.freeDeliveryCondition = freeDeliveryCondition;
+    }
 }
