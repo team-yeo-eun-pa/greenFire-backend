@@ -1,16 +1,17 @@
 package yep.greenFire.greenfirebackend.member.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yep.greenFire.greenfirebackend.auth.dto.LoginDTO;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
+import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 import yep.greenFire.greenfirebackend.member.domain.entity.Member;
 import yep.greenFire.greenfirebackend.member.domain.repository.MemberRepository;
 import yep.greenFire.greenfirebackend.member.dto.request.MemberSignupRequest;
 import yep.greenFire.greenfirebackend.member.domain.type.MemberStatus;
+import yep.greenFire.greenfirebackend.member.dto.request.ProfileUpdateRequest;
 import yep.greenFire.greenfirebackend.member.dto.response.ProfileResponse;
 
 import static yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode.NOT_FOUND_MEMBER_CODE;
@@ -42,7 +43,7 @@ public class MemberService {
     public LoginDTO findByMemberId(String memberId) {
 
         Member member = memberRepository.findByMemberId(memberId)
-                .orElseThrow(() -> new UsernameNotFoundException("해당 아이디가 존재하지 않습니다."));
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_MEMBER_ID));
 
         return LoginDTO.from(member);
     }
@@ -50,7 +51,8 @@ public class MemberService {
     public void updateRefreshToken(String memberId, String refreshToken) {
 
         Member member = memberRepository.findByMemberId(memberId)
-                .orElseThrow(() -> new UsernameNotFoundException("해당 아이디가 존재하지 않습니다."));
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_MEMBER_ID));
+
         member.updateRefreshToken(refreshToken);
     }
 
@@ -69,9 +71,27 @@ public class MemberService {
     public ProfileResponse getProfile(String memberId) {
 
         Member member = memberRepository.findByMemberId(memberId)
-                .orElseThrow(() -> new UsernameNotFoundException("해당 아이디가 존재하지 않습니다."));
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_MEMBER_ID));
 
         return ProfileResponse.from(member);
+    }
+
+    public void modifyProfile(String memberId, ProfileUpdateRequest profileRequest, Long memberCode) {
+
+        Member member = memberRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_MEMBER_ID));
+
+        if (!member.getMemberCode().equals(memberCode)) {
+            throw new NotFoundException(ExceptionCode.ACCESS_DENIED);
+        }
+
+        member.modifyProfile(
+                memberCode,
+                profileRequest.getMemberNickname(),
+                profileRequest.getMemberEmail(),
+                profileRequest.getMemberPhone()
+        );
+
     }
 
     @Transactional(readOnly = true)

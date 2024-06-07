@@ -25,14 +25,10 @@ public class Seller {
     private String storeRepresentativeName;
     @Enumerated(value = EnumType.STRING)
     private ApplyStatus applyStatus = ApplyStatus.CHECKING;
-//    @Enumerated(value = EnumType.STRING)
-//    private StoreStatus storeStatus = StoreStatus.OPEN;
     private String businessNumber;
     private String mosNumber;
     private String businessImg;
     private String storeType;
-
-    // 입점 신청 관련
     private String applyContent;
     @CreatedDate
     private LocalDateTime applyDatetime;
@@ -100,11 +96,5 @@ public class Seller {
         this.rejectReason = rejectReason;
         this.applyProcessingDate = LocalDateTime.now();
     }
-
-
-//    private AddressZonecode addressZonecode;
-//    private String addressType;
-//    private String address;
-//    private String addressDetail;
 
 }

@@ -28,6 +28,8 @@ public enum ExceptionCode {
     ACCESS_DENIED(403, "허가 되지 않은 요청입니다."),
 
     // 404 Error
+    NOT_FOUND_MEMBER_ID(404, "해당 아이디가 존재하지 않습니다."),
+    NOT_FOUND_SELLERS_STORE_CODE(404, "해당 스토어가 존재하지 않습니다."),
     NOT_FOUND_CATEGORY_CODE(404, "카테고리 코드가 존재하지않습니다."),
     NOT_FOUND_ADMIN_CODE(404, "관리자 코드에 해당하는 회원코드가 존재하지 않습니다."),
     NOT_FOUND_MEMBER_CODE(404, "회원 코드에 해당하는 회원코드가 존재하지 않습니다."),
