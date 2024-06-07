@@ -20,7 +20,7 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-//@RequestMapping("")
+@RequestMapping("/")
 public class ProductController {
 
     private final ProductService productService;
