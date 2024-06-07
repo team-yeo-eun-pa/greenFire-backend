@@ -28,4 +28,6 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
             " JOIN Member m ON r.memberCode = m.memberCode" +
             " WHERE m.memberId = :memberId")
     List<ReportVO> getReportCode(String memberId);
+
+
 }

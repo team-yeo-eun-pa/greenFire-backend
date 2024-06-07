@@ -13,7 +13,7 @@ public class NoticeCreateRequest {
     private final String noticeTitle;
     @NotBlank
     private final String noticeContent;
-    @NotBlank
+
     private final String noticeFixable;
 
     private final Member noticeWriter;
