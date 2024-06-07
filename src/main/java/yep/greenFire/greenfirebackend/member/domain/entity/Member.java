@@ -46,7 +46,7 @@ public class Member {
         this.memberId = memberId;
         this.memberPassword = memberPassword;
         this.memberName = memberName;
-        this.memberNickname = memberNickname;
+        this.memberNickname = memberNickname == null || memberNickname.trim().isEmpty() ? memberId : memberNickname;
         this.memberEmail = memberEmail;
         this.memberPhone = memberPhone;
     }
@@ -76,5 +76,12 @@ public class Member {
             this.memberStatus = MemberStatus.ACTIVE;
             this.suspendedEndDate = null;
         }
+    }
+
+    public void modifyProfile(Long memberCode, String memberNickname, String memberEmail, String memberPhone) {
+        this.memberCode = memberCode;
+        this.memberNickname = memberNickname;
+        this.memberEmail = memberEmail;
+        this.memberPhone = memberPhone;
     }
 }

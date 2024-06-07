@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.apply.domain.type.ApplyStatus;
-import yep.greenFire.greenfirebackend.store.domain.type.StoreStatus;
 
 import java.time.LocalDateTime;
 
@@ -26,14 +25,10 @@ public class Seller {
     private String storeRepresentativeName;
     @Enumerated(value = EnumType.STRING)
     private ApplyStatus applyStatus = ApplyStatus.CHECKING;
-//    @Enumerated(value = EnumType.STRING)
-//    private StoreStatus storeStatus = StoreStatus.OPEN;
     private String businessNumber;
     private String mosNumber;
     private String businessImg;
     private String storeType;
-
-    // 입점 신청 관련
     private String applyContent;
     @CreatedDate
     private LocalDateTime applyDatetime;
@@ -84,14 +79,22 @@ public class Seller {
         this.applyContent = applyContent;
     }
 
+    // member : cancel
     public void cancel(ApplyStatus applyStatus) {
         this.applyStatus = applyStatus;
+        this.applyCancelDate = LocalDateTime.now();
     }
 
+    // admin : accept
+    public void accept(ApplyStatus applyStatus) {
+        this.applyStatus = applyStatus;
+        this.applyProcessingDate = LocalDateTime.now(); }
 
-//    private AddressZonecode addressZonecode;
-//    private String addressType;
-//    private String address;
-//    private String addressDetail;
+    // admin : reject
+    public void reject(String rejectReason) {
+        this.applyStatus = ApplyStatus.REJECT;
+        this.rejectReason = rejectReason;
+        this.applyProcessingDate = LocalDateTime.now();
+    }
 
 }
