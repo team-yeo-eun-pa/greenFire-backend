@@ -51,7 +51,7 @@ public class ProductController {
             ) {
         final Long productCode = productService.save(productCreateRequest, productImg);
         productOptionService.save(productOptionCreateRequest, productCode);
-        return ResponseEntity.created(URI.create("/seller/mystore/regist" + productCode)).build();
+        return ResponseEntity.created(URI.create("/seller/mystore/regist/" + productCode)).build();
     }
 
 

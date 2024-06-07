@@ -2,14 +2,20 @@ package yep.greenFire.greenfirebackend.product.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import yep.greenFire.greenfirebackend.common.exception.ConflictException;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
+import yep.greenFire.greenfirebackend.product.domain.entity.Category;
+import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductOptionRepository;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductRepository;
 import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionCreateRequest;
+import yep.greenFire.greenfirebackend.product.dto.response.ProductOptionResponse;
+
+import java.util.Optional;
 
 import static yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode.NOT_ENOUGH_STOCK;
 
@@ -19,6 +25,7 @@ public class ProductOptionService {
 
     private final ProductOptionRepository productOptionRepository;
     private final ProductRepository productRepository;
+
 
     /* 상품 옵션 등록 */
 
@@ -33,8 +40,11 @@ public class ProductOptionService {
         //상품 존재하는지 확인 후 저장
         verifyProductCreated(productOptionCreateRequest.getProductCode());
 
+        Product product = productRepository.findById(productOptionCreateRequest.getProductCode())
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+
         ProductOption newOption = ProductOption.of(
-                productOptionCreateRequest.getProductCode(),
+                product.getProductCode(),
                 productOptionCreateRequest.getOptionName(),
                 productOptionCreateRequest.getOptionPrice(),
                 productOptionCreateRequest.getOptionStock(),
@@ -42,6 +52,14 @@ public class ProductOptionService {
         );
 
         productOptionRepository.save(newOption);
+    }
+
+    /* 상품 옵션 조회 */
+
+    @Transactional(readOnly = true)
+    public Optional<ProductOption> getOptions(Long productCode) {
+
+        return productOptionRepository.findByProductCode(productCode);
     }
 
 
