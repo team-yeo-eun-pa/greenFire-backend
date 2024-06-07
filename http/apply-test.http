@@ -1,0 +1,3 @@
+### 입점 신청 내역 조회
+GET http://localhost:8001/members/user05/applies
+Access-Token: Bearer eyJkYXRlIjoxNzE3NTE2Nzg5MDg4LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9TRUxMRVIiLCJtZW1iZXJJZCI6InVzZXIwMyIsImV4cCI6MTcxNzUyMDM4OX0.DZyPQQIJqguTHiuvjEUAQS926Mu6OSnahma8Kurr0HkgDsWX9YCdRQQbn3f3JxNUTVvvpyoTtGohW4hroe2Bxw

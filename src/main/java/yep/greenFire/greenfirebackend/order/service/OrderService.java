@@ -12,7 +12,6 @@ import yep.greenFire.greenfirebackend.order.domain.repository.OrderRepository;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderCreateRequest;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
 import yep.greenFire.greenfirebackend.product.service.ProductOptionService;
-import yep.greenFire.greenfirebackend.seller.domain.entity.Store;
 import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 
 import java.util.ArrayList;
@@ -119,6 +118,7 @@ public class OrderService {
         /*order 주문 객체 생성 후 데이터 저장.*/
         final Order newOrder = Order.of(
                 memberCode,
+                "양말2개다시로직만들어랑", // 오더 네임 결제하면서 추가
 
                 address.getReceiverName(),
                 address.getContactNumber(),

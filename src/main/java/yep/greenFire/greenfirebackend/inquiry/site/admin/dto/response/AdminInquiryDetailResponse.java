@@ -18,7 +18,7 @@ public class AdminInquiryDetailResponse {
     private int inquiryCode;
     private Date inquiryWriteDate;
     private int memberCode;
-    private int inquiryTitle;
+    private String inquiryTitle;
     private String inquiryDetail;
     private String inquiryStatus;
     private String inquiryReplyStatus;
@@ -33,14 +33,14 @@ public class AdminInquiryDetailResponse {
     }
 
 
-    public static AdminInquiryDetailResponse from(InquiryContent adminInquiryContent) {
-        return new AdminInquiryDetailResponse(
-                adminInquiryContent.getInquiryCode(),
-                adminInquiryContent.getInquiryWriteDate(),
-                adminInquiryContent.getMemberCode(),
-                adminInquiryContent.getInquiryDetail(),
-                adminInquiryContent.getInquiryStatus(),
-                adminInquiryContent.getInquiryReplyStatus()
-        );
-    }
+//    public static AdminInquiryDetailResponse from(InquiryContent adminInquiryContent) {
+//        return new AdminInquiryDetailResponse(
+//                adminInquiryContent.getInquiryCode(),
+//                adminInquiryContent.getInquiryWriteDate(),
+//                adminInquiryContent.getMemberCode(),
+//                adminInquiryContent.getInquiryDetail(),
+//                adminInquiryContent.getInquiryStatus(),
+//                adminInquiryContent.getInquiryReplyStatus()
+//        );
+//    }
 }

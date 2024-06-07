@@ -40,7 +40,7 @@ public class NoticeController {
     @GetMapping("/notices/{noticeCode}")
     public ResponseEntity<AdminNoticeResponse> getAdminNotice (@PathVariable final Long noticeCode
                                                                ) {
-
+        System.out.println("noticeCode = " + noticeCode);
         final AdminNoticeResponse adminNoticeResponse = noticeService.getAdminNotice(noticeCode);
 
         return ResponseEntity.ok(adminNoticeResponse);

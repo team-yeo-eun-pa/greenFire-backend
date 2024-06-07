@@ -1,4 +1,4 @@
-package yep.greenFire.greenfirebackend.seller.domain.entity;
+package yep.greenFire.greenfirebackend.coupon.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

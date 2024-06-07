@@ -38,10 +38,10 @@ public class ProductService {
     private final StoreRepository storeRepository;
 
 
-    @Value("${image.image-url}")
-    private String IMG_URL;
-    @Value("src/main/resources/static/productimg")
-    private String IMG_DIR;
+//    @Value("${image.image-url}")
+//    private String IMG_URL;
+//    @Value("src/main/resources/static/productimg")
+//    private String IMG_DIR;
 
 
 

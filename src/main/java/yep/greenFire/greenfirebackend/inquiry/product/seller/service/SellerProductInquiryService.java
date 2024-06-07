@@ -19,31 +19,31 @@ public class SellerProductInquiryService {
     }
 
 
-    public Page<SellerProductInquiryResponse> getProductInquiryList(long productCode, Integer page) {
-        Page<InquiryContent> sellerProductInquiry = sellerProductInquiryRepository.findByProductCode(productCode, getPageable(page));
+//    public Page<SellerProductInquiryResponse> getProductInquiryList(long productCode, Integer page) {
+//        Page<InquiryContent> sellerProductInquiry = sellerProductInquiryRepository.findByProductCode(productCode, getPageable(page));
+//
+//        return sellerProductInquiry.map(SellerProductInquiryResponse::from);
+//
+//    }
 
-        return sellerProductInquiry.map(SellerProductInquiryResponse::from);
-
-    }
-
-    public int save(SellerProductReplyCreateRequest sellerProductReplyCreateRequest) {
-
-        final InquiryContent newProductInquiryReply = InquiryContent.of4(
-                sellerProductReplyCreateRequest.getProductCode(),
-                sellerProductReplyCreateRequest.getProductName(),
-                sellerProductReplyCreateRequest.getMemberCode(),
-                sellerProductReplyCreateRequest.getInquiryTitle(),
-                sellerProductReplyCreateRequest.getInquiryDetail(),
-                sellerProductReplyCreateRequest.getInquiryWriteDate(),
-                sellerProductReplyCreateRequest.getInquiryReply(),
-                sellerProductReplyCreateRequest.getInquiryReplyStatus()
-
-        );
-
-        final InquiryContent newProductReply = sellerProductInquiryRepository.save(newProductInquiryReply);
-        return newProductReply.getInquiryCode();
-
-    }
+//    public int save(SellerProductReplyCreateRequest sellerProductReplyCreateRequest) {
+//
+//        final InquiryContent newProductInquiryReply = InquiryContent.of4(
+//                sellerProductReplyCreateRequest.getProductCode(),
+//                sellerProductReplyCreateRequest.getProductName(),
+//                sellerProductReplyCreateRequest.getMemberCode(),
+//                sellerProductReplyCreateRequest.getInquiryTitle(),
+//                sellerProductReplyCreateRequest.getInquiryDetail(),
+//                sellerProductReplyCreateRequest.getInquiryWriteDate(),
+//                sellerProductReplyCreateRequest.getInquiryReply(),
+//                sellerProductReplyCreateRequest.getInquiryReplyStatus()
+//
+//        );
+//
+//        final InquiryContent newProductReply = sellerProductInquiryRepository.save(newProductInquiryReply);
+//        return newProductReply.getInquiryCode();
+//
+//    }
 
     public void remove(int inquiryCode) {
 

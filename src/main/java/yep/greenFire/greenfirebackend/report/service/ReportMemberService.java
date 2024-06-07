@@ -20,9 +20,9 @@ public class ReportMemberService {
     private final ReportRepository reportRepository;
     private final MemberService memberService;
 
-    public ReportVO getReportsByMember(final Long reportCode) {
+    public List<ReportVO> getReportsByMember(final String memberId) {
 
-        ReportVO reportVO = reportRepository.getReportCode(reportCode).orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_REPORT_CODE));
+        List<ReportVO> reportVO = reportRepository.getReportCode(memberId);
 
         return reportVO;
     }

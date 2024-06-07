@@ -25,17 +25,17 @@ public class SellerProductInquiryResponse {
         this.inquiryReply = inquiryReply;
     }
 
-    public static SellerProductInquiryResponse from(InquiryContent inquiryContent) {
-
-        return new SellerProductInquiryResponse(
-
-                inquiryContent.getInquiryProduct(),
-                inquiryContent.getInquiryTitle(),
-                inquiryContent.getInquiryDetail(),
-                inquiryContent.getInquiryWriteDate(),
-                inquiryContent.getInquiryReplyStatus(),
-                inquiryContent.getInquiryReply()
-
-        );
-    }
+//    public static SellerProductInquiryResponse from(InquiryContent inquiryContent) {
+//
+//        return new SellerProductInquiryResponse(
+//
+//                inquiryContent.getInquiryProduct(),
+//                inquiryContent.getInquiryTitle(),
+//                inquiryContent.getInquiryDetail(),
+//                inquiryContent.getInquiryWriteDate(),
+//                inquiryContent.getInquiryReplyStatus(),
+//                inquiryContent.getInquiryReply()
+//
+//        );
+//    }
 }

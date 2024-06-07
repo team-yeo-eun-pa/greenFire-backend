@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin")
+@RequestMapping("/")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -26,7 +26,7 @@ public class CategoryController {
 
     }
 
-    @PostMapping("/categories")
+    @PostMapping("/admin/categories")
     public ResponseEntity<Void> save(
             @RequestBody @Valid final CategoryCreateRequest categoryCreateRequest
             ) {
@@ -35,7 +35,7 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/categories/{categoryCode}")
+    @PutMapping("/admin/categories/{categoryCode}")
     public ResponseEntity<Void> modify(
             @PathVariable final Long categoryCode,
             @RequestBody @Valid final CategoryUpdateRequest categoryUpdateRequest
@@ -44,7 +44,7 @@ public class CategoryController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/categories/{categoryCode}")
+    @DeleteMapping("/admin/categories/{categoryCode}")
     public ResponseEntity<Void> remove(@PathVariable final Long categoryCode) {
         categoryService.remove(categoryCode);
 

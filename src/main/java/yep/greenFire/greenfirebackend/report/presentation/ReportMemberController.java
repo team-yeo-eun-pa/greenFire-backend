@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.report.dto.response.ReportVO;
 import yep.greenFire.greenfirebackend.report.service.ReportMemberService;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
@@ -13,12 +15,13 @@ public class ReportMemberController {
 
     private final ReportMemberService reportMemberService;
 
-    @GetMapping("/suspend/{reportCode}")
-    public ResponseEntity<ReportVO> getReportedMember(
-            @PathVariable final Long reportCode
+    @GetMapping("/suspend/{memberId}")
+    public ResponseEntity<List<ReportVO>> getReportedMember(
+            @PathVariable final String memberId
     ) {
+        System.out.println("memberId : "+memberId);
 
-        final ReportVO reportVO = reportMemberService.getReportsByMember(reportCode);
+        final List<ReportVO> reportVO = reportMemberService.getReportsByMember(memberId);
 
         return ResponseEntity.ok(reportVO);
     }
