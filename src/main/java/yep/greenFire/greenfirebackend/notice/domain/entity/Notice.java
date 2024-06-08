@@ -1,5 +1,6 @@
 package yep.greenFire.greenfirebackend.notice.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

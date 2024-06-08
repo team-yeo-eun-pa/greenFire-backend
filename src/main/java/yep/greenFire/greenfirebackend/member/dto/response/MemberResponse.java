@@ -1,6 +1,7 @@
 package yep.greenFire.greenfirebackend.member.dto.response;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class MemberResponse {
     private String memberEmail;
     private String memberPhone;
     private MemberStatus memberStatus;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime registDate;
     private LocalDateTime quitDate;
 
