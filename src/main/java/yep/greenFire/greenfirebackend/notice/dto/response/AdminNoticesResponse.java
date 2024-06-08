@@ -14,7 +14,8 @@ public class AdminNoticesResponse {
     private final Long noticeCode;
     private final String noticeTitle;
     private final String noticeFixable;
-    @JsonFormat(pattern = "yyyy-MM-dd")
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm ")
     private final Date noticeDate;
     private final Long noticeWriter;
     private final String memberName;

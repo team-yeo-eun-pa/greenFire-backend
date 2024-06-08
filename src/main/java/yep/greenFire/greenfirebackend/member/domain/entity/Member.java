@@ -1,5 +1,6 @@
 package yep.greenFire.greenfirebackend.member.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -33,9 +34,10 @@ public class Member {
     private MemberStatus memberStatus = MemberStatus.ACTIVE;
     @Enumerated(value = EnumType.STRING)
     private MemberRole memberRole = MemberRole.MEMBER;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @CreatedDate
     private LocalDateTime registDate;
-//    @LastModifiedDate
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime quitDate;
     private String refreshToken;
     private Long reportCount;
