@@ -7,22 +7,16 @@ import yep.greenFire.greenfirebackend.order.domain.entity.StoreOrder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 public class StoreOrderDTO {
 
     private final Long storeOrderCode;
+//    private final String storeName;
     private final String orderStatus;
 
     private final List<OrderDetailDTO> orderDetails;
 
-    public static StoreOrderDTO from(final StoreOrderDTO storeOrder) {
-        return new StoreOrderDTO(
-                storeOrder.getStoreOrderCode(),
-//                storeOrder.getOrderStatus().getOrderStatus(),
-                storeOrder.getOrderStatus(),
-                storeOrder.getOrderDetails()
-        );
-    }
 }

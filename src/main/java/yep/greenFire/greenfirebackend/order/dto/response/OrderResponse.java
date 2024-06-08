@@ -1,14 +1,18 @@
 package yep.greenFire.greenfirebackend.order.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import yep.greenFire.greenfirebackend.order.domain.entity.Order;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
+import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ToString
 @Getter
@@ -33,7 +37,12 @@ public class OrderResponse {
     private final Long totalDeliveryAmount;
     private final Long totalRealPayment;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private final LocalDateTime orderDate;
+
     private final List<StoreOrderDTO> storeOrders;
+
+
 
     public OrderResponse(Order order,
                          ProductOption productOption, Product product) {
@@ -50,27 +59,26 @@ public class OrderResponse {
         this.totalDiscountAmount = order.getTotalDiscountAmount();
         this.totalDeliveryAmount = order.getTotalDeliveryAmount();
         this.totalRealPayment = order.getTotalRealPayment();
+        this.orderDate = order.getOrderDate();
 
-        this.storeOrders = new ArrayList<>();
+        // StoreOrder -> StoreOrderDTO 변환
+        this.storeOrders = order.getStoreOrders().stream()
+                .map(storeOrder -> new StoreOrderDTO(
+                        storeOrder.getStoreOrderCode(),
+//                        store.getStoreName(),
+                        storeOrder.getOrderStatus().getOrderStatus(),
+                        storeOrder.getOrderDetails().stream()
+                                .map(orderDetail -> new OrderDetailDTO(
+                                        orderDetail.getOrderDetailCode(),
+                                        orderDetail.getOptionCode(),
+                                        orderDetail.getOptionPrice(),
+                                        orderDetail.getOrderQuantity(),
+                                        productOption.getOptionName(),
+                                        product.getProductName(),
+                                        product.getProductImg()
+                                        ))
+                                .collect(Collectors.toList())))
+                .collect(Collectors.toList());
 
-    }
-
-    public static OrderResponse from(final OrderResponse order) {
-        return new OrderResponse(
-                order.getOrderCode(),
-                order.getMemberCode(),
-                order.getOrderName(),
-                order.getReceiverName(),
-                order.getContactNumber(),
-                order.getAddressZonecode(),
-                order.getAddress(),
-                order.getAddressDetail(),
-                order.getDeliveryRequest(),
-                order.getTotalOrderAmount(),
-                order.getTotalDiscountAmount(),
-                order.getTotalDeliveryAmount(),
-                order.getTotalRealPayment(),
-                order.getStoreOrders()
-        );
     }
 }

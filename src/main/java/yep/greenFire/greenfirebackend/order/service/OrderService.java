@@ -18,6 +18,7 @@ import yep.greenFire.greenfirebackend.order.domain.repository.OrderRepository;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderCreateRequest;
 import yep.greenFire.greenfirebackend.order.dto.response.OrderDetailDTO;
 import yep.greenFire.greenfirebackend.order.dto.response.OrderResponse;
+import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
 import yep.greenFire.greenfirebackend.product.service.ProductOptionService;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
@@ -166,40 +167,16 @@ public class OrderService {
 
     // 주문 조회
     @Transactional
-    public Page<Order> getOrders(Long memberCode, Integer page) {
+    public Page<OrderResponse> getOrders(Long memberCode, Integer page) {
 
         return orderRepository.findByMemberCode(memberCode, getPageable(page));
     }
 
-//    @Transactional
-//    public OrderResponse getOrderDetail(Long memberCode, Long orderCode) {
-//        List<OrderResponse> orderDetailList = orderRepository.findByMemberCodeAndOrderCode(memberCode, orderCode)
-//                .orElseThrow(() -> new NotFoundException(NOT_FOUND_VALID_ORDER));
-//        return OrderResponse.from(orderDetailList);
-//    }
-
-
-//    @Transactional
-//    public OrderResponse getOrderDetail(Long memberCode, Long orderCode) {
-//
-//        List<OrderResponse> orderResponses = orderRepository.findByMemberCodeAndOrderCode(memberCode, orderCode);
-//
-//        OrderResponse orderResponse = orderResponses;
-//        System.out.println("여기야여기야여기"+orderResponse);
-//
-//        return OrderResponse.from(orderResponse);
-//    }
 
     @Transactional
     public OrderResponse getOrderDetail(Long memberCode, Long orderCode) {
-        // 전달된 매개변수 로그 출력
-        System.out.println("memberCode: " + memberCode);
-        System.out.println("orderCode: " + orderCode);
 
         List<OrderResponse> orderResponses = orderRepository.findByMemberCodeAndOrderCode(memberCode, orderCode);
-
-        // 쿼리 결과를 로그로 출력
-        System.out.println("Order Responses: " + orderResponses);
 
         if (orderResponses.isEmpty()) {
             // 예외를 던지거나 기본값을 반환하는 등의 처리
@@ -207,9 +184,8 @@ public class OrderService {
         }
 
         OrderResponse orderResponse = orderResponses.get(0);
-        System.out.println("여기야여기야여기" + orderResponse);
 
-        return OrderResponse.from(orderResponse);
+        return orderResponse;
     }
 
 }

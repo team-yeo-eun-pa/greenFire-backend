@@ -11,7 +11,6 @@ import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
-import yep.greenFire.greenfirebackend.order.domain.entity.Order;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderCreateRequest;
 import yep.greenFire.greenfirebackend.order.dto.response.OrderResponse;
 import yep.greenFire.greenfirebackend.order.service.OrderService;
@@ -36,13 +35,13 @@ public class OrderController {
 
     // 회원 - 주문 목록 조회
     @GetMapping("/members/{memberId}/orders")
-//    @PreAuthorize("#memberCode == authentication.principal.")
+//    @PreAuthorize("#memberId == authentication.principal.memberCode.toString()")
     public ResponseEntity<PagingResponse> getOrders(
             @RequestParam(defaultValue = "1") final Integer page,
             @PathVariable String memberId,
             @AuthenticationPrincipal CustomUser customUser
     ){
-        final Page<Order> orders = orderService.getOrders(customUser.getMemberCode(), page);
+        final Page<OrderResponse> orders = orderService.getOrders(customUser.getMemberCode(), page);
         final PagingButtonInfo pagingButtonInfo = Pagination.getPagingButtonInfo(orders);
         final PagingResponse pagingResponse = PagingResponse.of(orders.getContent(), pagingButtonInfo);
         return ResponseEntity.ok(pagingResponse);

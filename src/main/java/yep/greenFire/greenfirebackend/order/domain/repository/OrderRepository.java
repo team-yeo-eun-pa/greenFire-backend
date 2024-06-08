@@ -13,7 +13,18 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository <Order, Long> {
 
     /* 특정 회원 코드 주문 목록 조회 */
-    Page<Order> findByMemberCode (Long memberCode, Pageable pageable);
+//    Page<Order> findByMemberCode (Long memberCode, Pageable pageable);
+
+    /* 특정 회원 코드 주문 목록 조회 */
+    @Query("select distinct new yep.greenFire.greenfirebackend.order.dto.response.OrderResponse(o, po, p) " +
+            "from Order o " +
+            "join o.storeOrders so " +
+            "join so.orderDetails od " +
+            "join ProductOption po on od.optionCode = po.optionCode " +
+            "join Product p on po.productCode = p.productCode " +
+//            "join Store s on p.storeCode = s.storeCode" +
+            "where o.memberCode = :memberCode")
+    Page<OrderResponse> findByMemberCode(@Param("memberCode") Long memberCode, Pageable pageable);
 
     /* 특정 회원 코드 주문 목록 상세 조회 */
     @Query("select distinct new yep.greenFire.greenfirebackend.order.dto.response.OrderResponse(o, po, p) " +
@@ -22,6 +33,7 @@ public interface OrderRepository extends JpaRepository <Order, Long> {
             "join so.orderDetails od " +
             "join ProductOption po on od.optionCode = po.optionCode " +
             "join Product p on po.productCode = p.productCode " +
+//            "join Store s on p.storeCode = s.storeCode" +
             "where o.memberCode = :memberCode and o.orderCode = :orderCode")
     List<OrderResponse> findByMemberCodeAndOrderCode(@Param("memberCode") Long memberCode, @Param("orderCode")Long orderCode);
 
