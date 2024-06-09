@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,9 +50,14 @@ public class ProductController {
             @RequestPart @Valid final ProductOptionCreateRequest productOptionCreateRequest,
             @RequestPart final MultipartFile productImg
             ) {
-        final Long productCode = productService.save(productCreateRequest, productImg);
-        productOptionService.save(productOptionCreateRequest, productCode);
-        return ResponseEntity.created(URI.create("/seller/mystore/regist/" + productCode)).build();
+        try {
+            final Long productCode = productService.save(productCreateRequest, productImg);
+            productOptionService.save(productOptionCreateRequest, productCode);
+            return ResponseEntity.created(URI.create("/seller/mystore/regist/" + productCode)).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
     }
 
 
