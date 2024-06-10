@@ -8,9 +8,12 @@ import org.springframework.data.repository.query.Param;
 import yep.greenFire.greenfirebackend.order.domain.entity.Order;
 import yep.greenFire.greenfirebackend.order.dto.response.OrderResponse;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
+
+    /* 특정 주문 조회 */
+    Optional<Order> findByOrderCode(Long orderCode);
 
     /* 특정 회원 코드 주문 목록 조회 */
     @Query("select distinct new yep.greenFire.greenfirebackend.order.dto.response.OrderResponse(o, po, p, s, pm) " +
@@ -23,6 +26,20 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "join Payment pm on pm.orderCode = o.orderCode " +
             "where o.memberCode = :memberCode")
     Page<OrderResponse> findByMemberCode(@Param("memberCode") Long memberCode, Pageable pageable);
+
+
+    /* 특정 스토어 코드 주문 목록 조회 */
+    @Query("select distinct new yep.greenFire.greenfirebackend.order.dto.response.OrderResponse(o, po, p, s, pm) " +
+            "from Order o " +
+            "join o.storeOrders so " +
+            "join so.orderDetails od " +
+            "join ProductOption po on od.optionCode = po.optionCode " +
+            "join Product p on po.productCode = p.productCode " +
+            "join Store s on p.storeCode = s.storeCode " +
+            "join Payment pm on pm.orderCode = o.orderCode " +
+            "where s.storeCode = :storeCode")
+    Page<OrderResponse> findByStoreCode(@Param("storeCode") Long storeCode, Pageable pageable);
+
 
     /* 특정 회원 코드 주문 목록 상세 조회 */
 //    @Query("select distinct new yep.greenFire.greenfirebackend.order.dto.response.OrderResponse(o, po, p) " +

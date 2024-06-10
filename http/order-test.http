@@ -1,7 +1,7 @@
 ### 주문 등록
 POST http://localhost:8001/orders
 Content-Type: application/json
-Access-Token: Bearer eyJkYXRlIjoxNzE3OTM5OTA5NDcyLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6IjIxc29sIiwibWVtYmVyUm9sZSI6IlJPTEVfTUVNQkVSIiwiZXhwIjoxNzE3OTQzNTA5fQ.6pC8SFM2gOO3c8F8ujEVvVTQ0MsPl7CtLIaWcY_ifHdqbrMAdHuKKuCmUPqPNrqMMn7NJIC3Fhwmq3n9yXfAqQ
+Access-Token: Bearer eyJkYXRlIjoxNzE3OTgzODU0NjQ5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6IjEyMyIsIm1lbWJlclJvbGUiOiJST0xFX01FTUJFUiIsImV4cCI6MTcxNzk4NzQ1NH0.wAa8EeMkw1jIkSUdaL9kZf_TBCn-2GZqy-J8N6EsWKio_h58WPZ0CeCSEKGV317Jo6kM0IX5hNTTWUqrRjK6Fg
 
 {
     "deliveryAddressCode": 1,
@@ -9,7 +9,7 @@ Access-Token: Bearer eyJkYXRlIjoxNzE3OTM5OTA5NDcyLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
         {
             "orderDetails": [
                 {
-                    "optionCode": 3,
+                    "optionCode": 5,
                     "orderQuantity": 1
                 }
             ]
@@ -17,7 +17,7 @@ Access-Token: Bearer eyJkYXRlIjoxNzE3OTM5OTA5NDcyLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
         {
             "orderDetails": [
                 {
-                    "optionCode": 3,
+                    "optionCode": 6,
                     "orderQuantity": 1
                 }
             ]
@@ -25,9 +25,22 @@ Access-Token: Bearer eyJkYXRlIjoxNzE3OTM5OTA5NDcyLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
     ]
 }
 
+### 주문 승인, 거절
+POST http://localhost:8001/orders/apply
+Content-Type: application/json
+Access-Token: Bearer eyJkYXRlIjoxNzE4MDAxNDgzMTIzLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9TRUxMRVIiLCJtZW1iZXJJZCI6IjEyMyIsImV4cCI6MTcxODAwNTA4M30.bRRGWR6hxPeDQq5Rq-oft0ulFbUKTaue2MinipCfgWTrsyFNEB3mfMUzwAabzSW1kMuhqqUGUsl1nULMs_faIw
+
+{
+  "orderCode":26,
+  "storeCode":8,
+  "orderStatus":"주문 거절",
+  "rejectionReason": "거절이다"
+}
+
+
 ### 회원 주문 조회
-GET http://localhost:8001/members/21sol/orders?page=1
-Access-Token: Bearer eyJkYXRlIjoxNzE3OTQzNTY1NzY5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6IjIxc29sIiwiZXhwIjoxNzE3OTQ3MTY1fQ.qpHEF3hn0eoJP3Tn8WS3pxLRxsY9ziuS-KCdXIOL_0OwrHBvdzUYADv3Endoe66AX_4Qx0JkGisBGuPTd0upvQ
+GET http://localhost:8001/members/123/orders?page=1
+Access-Token: Bearer eyJkYXRlIjoxNzE3OTgzODU0NjQ5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6IjEyMyIsIm1lbWJlclJvbGUiOiJST0xFX01FTUJFUiIsImV4cCI6MTcxNzk4NzQ1NH0.wAa8EeMkw1jIkSUdaL9kZf_TBCn-2GZqy-J8N6EsWKio_h58WPZ0CeCSEKGV317Jo6kM0IX5hNTTWUqrRjK6Fg
 ### 회원 주문 상세 조회
 GET http://localhost:8001/members/21sol/orders/10
 Access-Token: Bearer  eyJkYXRlIjoxNzE3OTA4ODg1NDcwLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6IjIxc29sIiwiZXhwIjoxNzE3OTEyNDg1fQ.GHUOcf8IR3gIXhxkVqIfz62R1DYoPZ4c559kJy0RugTnrhTlGioNUIIchXzBIGipH_t4l0QQ8Ppm2Kyo9Qbv4A
