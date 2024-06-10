@@ -29,6 +29,17 @@ public class StoreController {
         return ResponseEntity.ok(storeList);
     }
 
+    // 관리자 승인 후 새로운 스토어 등록
+    @PutMapping("/seller/mystore/{sellerCode}/regist")
+    public ResponseEntity<Void> modifyNewStore(
+            @PathVariable final Long sellerCode,
+            @RequestBody @Valid final StoreProfileUpdateRequest profileRequest,
+            @AuthenticationPrincipal final CustomUser customUser
+    ) {
+        storeService.modifyNewStore(sellerCode, profileRequest, customUser.getMemberCode());
+        return ResponseEntity.noContent().build();
+    }
+
     // 스토어 프로필 조회
     @GetMapping("/seller/mystore/{sellerCode}")
     public ResponseEntity<StoreProfileResponse> getStoreProfile(@PathVariable Long sellerCode) {

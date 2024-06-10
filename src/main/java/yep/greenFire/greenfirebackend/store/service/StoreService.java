@@ -31,10 +31,31 @@ public class StoreService {
         final Store newStore = Store.of(
             sellerCode,
             applyRequest.getStoreName(),
-            StoreStatus.OPEN
+            StoreStatus.PRE_OPEN
         );
 
         storeRepository.save(newStore);
+    }
+
+    @Transactional
+    public void modifyNewStore(Long sellerCode, StoreProfileUpdateRequest profileRequest, Long memberCode) {
+        Store store = storeRepository.findBySellerCodeAndStoreStatus(sellerCode, StoreStatus.PRE_OPEN)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_SELLERS_STORE_CODE));
+
+        store.modifyProfile(
+                sellerCode,
+                profileRequest.getStoreName(),
+                profileRequest.getStoreInfo(),
+                profileRequest.getAddressZonecode(),
+                profileRequest.getAddressType(),
+                profileRequest.getAddress(),
+                profileRequest.getAddressDetail(),
+                profileRequest.getDeliveryAmount(),
+                profileRequest.getFreeDeliveryCondition()
+        );
+
+        // 상태를 OPEN으로 변경하여 활성화
+        store.setStoreStatus(StoreStatus.OPEN);
     }
 
     @Transactional(readOnly = true)
@@ -72,7 +93,5 @@ public class StoreService {
                 profileRequest.getFreeDeliveryCondition()
         );
     }
-
-
 }
 

@@ -18,6 +18,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     Optional<Store> findByStoreCode(Long storeCode);
 
     // 스토어 승인 후 신규 등록
+    Optional<Store> findBySellerCodeAndStoreStatus(Long sellerCode, StoreStatus storeStatus);
 
     // 판매자 보유 스토어 목록 조회
     @Query("SELECT new yep.greenFire.greenfirebackend.store.dto.response.StoreListResponse" +
@@ -38,4 +39,5 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 
     // 스토어 프로필 수정
     Optional<Store> findByStoreCodeAndStoreStatus(Long storeCode, StoreStatus storeStatus);
+
 }
