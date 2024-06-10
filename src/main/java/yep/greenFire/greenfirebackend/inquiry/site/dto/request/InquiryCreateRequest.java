@@ -10,10 +10,10 @@ import lombok.RequiredArgsConstructor;
 public class InquiryCreateRequest {
     private int memberCode;
 
-    @NotBlank
+
     private String inquiryTitle;
 
-    @NotBlank
+
     private String inquiryDetail;
 
 
