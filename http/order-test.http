@@ -1,7 +1,7 @@
 ### 주문 등록
-POST http://localhost:8001/orders/orders
+POST http://localhost:8001/orders
 Content-Type: application/json
-Access-Token: Bearer eyJkYXRlIjoxNzE3MTU1NzU3Mjc2LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6IjIxc29sIiwiZXhwIjoxNzE3MTU5MzU3fQ.x20CND8LmzusFuBA2WXk56zQ2O9sZCsWZMPu-85ZC-kh8Wcc1jVs1jvfrNr8D_ZeWE5sjHT0ulOCoRWC0-dJTg
+Access-Token: Bearer eyJkYXRlIjoxNzE3OTM5OTA5NDcyLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6IjIxc29sIiwibWVtYmVyUm9sZSI6IlJPTEVfTUVNQkVSIiwiZXhwIjoxNzE3OTQzNTA5fQ.6pC8SFM2gOO3c8F8ujEVvVTQ0MsPl7CtLIaWcY_ifHdqbrMAdHuKKuCmUPqPNrqMMn7NJIC3Fhwmq3n9yXfAqQ
 
 {
     "deliveryAddressCode": 1,
@@ -9,12 +9,8 @@ Access-Token: Bearer eyJkYXRlIjoxNzE3MTU1NzU3Mjc2LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
         {
             "orderDetails": [
                 {
-                    "optionCode": 1,
-                    "orderQuantity": 10
-                },
-                {
-                    "optionCode": 2,
-                    "orderQuantity": 5
+                    "optionCode": 3,
+                    "orderQuantity": 1
                 }
             ]
         },
@@ -22,9 +18,16 @@ Access-Token: Bearer eyJkYXRlIjoxNzE3MTU1NzU3Mjc2LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
             "orderDetails": [
                 {
                     "optionCode": 3,
-                    "orderQuantity": 2
+                    "orderQuantity": 1
                 }
             ]
         }
     ]
 }
+
+### 회원 주문 조회
+GET http://localhost:8001/members/21sol/orders?page=1
+Access-Token: Bearer eyJkYXRlIjoxNzE3OTQzNTY1NzY5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6IjIxc29sIiwiZXhwIjoxNzE3OTQ3MTY1fQ.qpHEF3hn0eoJP3Tn8WS3pxLRxsY9ziuS-KCdXIOL_0OwrHBvdzUYADv3Endoe66AX_4Qx0JkGisBGuPTd0upvQ
+### 회원 주문 상세 조회
+GET http://localhost:8001/members/21sol/orders/10
+Access-Token: Bearer  eyJkYXRlIjoxNzE3OTA4ODg1NDcwLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6IjIxc29sIiwiZXhwIjoxNzE3OTEyNDg1fQ.GHUOcf8IR3gIXhxkVqIfz62R1DYoPZ4c559kJy0RugTnrhTlGioNUIIchXzBIGipH_t4l0QQ8Ppm2Kyo9Qbv4A

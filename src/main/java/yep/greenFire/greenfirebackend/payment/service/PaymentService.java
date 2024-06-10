@@ -27,9 +27,7 @@ public class PaymentService {
                 paymentCreateRequest.getOrderId(),
                 paymentCreateRequest.getPaymentAmount()
         );
-
         paymentRepository.save(newPayment);
-
     }
 
     public void modifyPayment(PaymentRequest paymentRequest) {
@@ -52,7 +50,6 @@ public class PaymentService {
         LocalDateTime requestedAt = requestedAtOffset.toLocalDateTime();
         LocalDateTime approvedAt = approvedAtOffset.toLocalDateTime();
 
-        System.out.println("modify request : " + paymentRequest);
         payment.modifyPayment(
                 paymentRequest.getPaymentKey(),
                 paymentWay,

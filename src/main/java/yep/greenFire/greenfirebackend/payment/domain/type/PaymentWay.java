@@ -1,5 +1,7 @@
 package yep.greenFire.greenfirebackend.payment.domain.type;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum PaymentWay {
     CARD("카드"),
     VIRTUAL_ACCOUNT("가상계좌"),
@@ -12,6 +14,7 @@ public enum PaymentWay {
         this.paymentWay = paymentWay;
     }
 
+    @JsonValue
     public String getPaymentWay() {
         return paymentWay;
     }
