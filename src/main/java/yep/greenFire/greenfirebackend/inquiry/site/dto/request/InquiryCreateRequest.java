@@ -14,21 +14,11 @@ public class InquiryCreateRequest {
 
     private int memberCode;
 
-    private Date inquiryWriteDate;
-
-    private String inquiryStatus;
-
     private String inquiryTitle;
 
     private String inquiryDetail;
 
-    private Date inquiryModifyDate;
 
-    private Date inquiryDeleteDate;
-
-    private String inquiryReply;
-
-    private String inquiryReplyStatus;
 
 
 

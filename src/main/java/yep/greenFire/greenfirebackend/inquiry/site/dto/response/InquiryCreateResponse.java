@@ -5,19 +5,18 @@ package yep.greenFire.greenfirebackend.inquiry.site.dto.response;
 
 public class InquiryCreateResponse {
     final int inquiryCode;
-    final String inquiryStatus;
-    final String inquiryReply;
-    final String inquiryReplyStatus;
+
     final int memberCode;
+    final String inquiryTitle;
+    final String inquiryDetail;
 
-
-    public InquiryCreateResponse(int inquiryCode, String inquiryStatus, String inquiryReply, String inquiryReplyStatus, int memberCode) {
+    public InquiryCreateResponse(int inquiryCode, int memberCode, String inquiryTitle, String inquiryDetail) {
         this.inquiryCode = inquiryCode;
-        this.inquiryStatus = inquiryStatus;
-        this.inquiryReply = inquiryReply;
-        this.inquiryReplyStatus = inquiryReplyStatus;
         this.memberCode = memberCode;
+        this.inquiryTitle = inquiryTitle;
+        this.inquiryDetail = inquiryDetail;
     }
+
 
 //    public static InquiryResponse from(InquiryContent inquiryContent) {
 //        return new MemberInquiryResponse(

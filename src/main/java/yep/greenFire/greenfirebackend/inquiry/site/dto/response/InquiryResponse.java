@@ -10,10 +10,10 @@ public class InquiryResponse {
     private String inquiryStatus;
     private String inquiryReply;
     private String inquiryReplyStatus;
-    private int memberCode;
+    private Long memberCode;
 
 
-    public InquiryResponse(int inquiryCode, String inquiryStatus, String inquiryReply, String inquiryReplyStatus, int memberCode) {
+    public InquiryResponse(int inquiryCode, String inquiryStatus, String inquiryReply, String inquiryReplyStatus, Long memberCode) {
         this.inquiryCode = inquiryCode;
         this.inquiryStatus = inquiryStatus;
         this.inquiryReply = inquiryReply;

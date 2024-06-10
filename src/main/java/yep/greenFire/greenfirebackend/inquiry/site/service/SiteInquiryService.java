@@ -43,20 +43,14 @@ public class SiteInquiryService {
 
         public int save(
             InquiryCreateRequest inquiryCreateRequest,
-            CustomUser customUser
+            Long memberCode
     ) {
 
         final InquiryContent newInquiryContent = InquiryContent.of(
-                inquiryCreateRequest.getInquiryCode(),
-                inquiryCreateRequest.getMemberCode(),
-                inquiryCreateRequest.getInquiryWriteDate(),
-                inquiryCreateRequest.getInquiryStatus(),
-                inquiryCreateRequest.getInquiryDetail(),
+                memberCode,
                 inquiryCreateRequest.getInquiryTitle(),
-                inquiryCreateRequest.getInquiryModifyDate(),
-                inquiryCreateRequest.getInquiryDeleteDate(),
-                inquiryCreateRequest.getInquiryReply(),
-                inquiryCreateRequest.getInquiryReplyStatus()
+                inquiryCreateRequest.getInquiryDetail()
+
 
 
         );

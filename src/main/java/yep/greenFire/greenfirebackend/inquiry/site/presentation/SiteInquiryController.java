@@ -12,6 +12,7 @@ import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
 import yep.greenFire.greenfirebackend.inquiry.site.dto.request.InquiryCreateRequest;
+import yep.greenFire.greenfirebackend.inquiry.site.dto.response.InquiryCreateResponse;
 import yep.greenFire.greenfirebackend.inquiry.site.dto.response.InquiryResponse;
 import yep.greenFire.greenfirebackend.inquiry.site.service.SiteInquiryService;
 
@@ -46,13 +47,13 @@ public class SiteInquiryController {
     }
 
     @PostMapping("/members/regist")
-    public ResponseEntity<InquiryResponse> save (
+    public ResponseEntity<InquiryCreateResponse> save (
             @RequestBody @Valid final InquiryCreateRequest inquiryCreateRequest,
             @AuthenticationPrincipal CustomUser customUser
     ) {
 
 
-        final int inquiryCode = siteInquiryService.save(inquiryCreateRequest, customUser);
+        final int inquiryCode = siteInquiryService.save(inquiryCreateRequest, customUser.getMemberCode());
 
         return ResponseEntity.created(URI.create("/view" +inquiryCode)).build();
 
