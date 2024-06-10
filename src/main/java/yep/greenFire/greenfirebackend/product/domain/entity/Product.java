@@ -25,32 +25,40 @@ public class Product {
     private Long categoryCode;
     private Long storeCode;
     private Long price;
+    private String productDescription;
     @CreatedDate
     private Date registDate;
     @Enumerated(value = EnumType.STRING)
     private SellableStatus sellableStatus = SellableStatus.Y;
+    private String productImageUrl;
 
     public Product(String productName, Long categoryCode, Long storeCode,
-                   Long price, Date registDate, SellableStatus sellableStatus) {
+                   Long price, String productDescription, Date registDate,
+                   SellableStatus sellableStatus, String productImageUrl) {
         this.productName = productName;
         this.categoryCode = categoryCode;
         this.storeCode = storeCode;
         this.price = price;
+        this.productDescription = productDescription;
         this.registDate = registDate;
         this.sellableStatus = sellableStatus;
+        this.productImageUrl = productImageUrl;
     }
 
     public static Product of(
             final String productName, final Long categoryCode, final Long storeCode,
-            final Long price, final Date registDate, final SellableStatus sellableStatus
+            final Long price, final String productDescription, final Date registDate,
+            final SellableStatus sellableStatus, final String productImageUrl
     ) {
         return new Product(
                 productName,
                 categoryCode,
                 storeCode,
                 price,
+                productDescription,
                 registDate,
-                sellableStatus
+                sellableStatus,
+                productImageUrl
         );
     }
 

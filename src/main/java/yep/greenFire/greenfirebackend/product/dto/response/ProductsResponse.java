@@ -24,6 +24,7 @@ public class ProductsResponse {
     private final Long price;
     private final Date registDate;
     private final SellableStatus sellableStatus;
+    private final String productImageUrl;
 
 
     public ProductsResponse(Product product, Category category, Store store) {
@@ -36,6 +37,7 @@ public class ProductsResponse {
         this.price = product.getPrice();
         this.registDate = product.getRegistDate();
         this.sellableStatus = product.getSellableStatus();
+        this.productImageUrl = product.getProductImageUrl();
     }
 
 }

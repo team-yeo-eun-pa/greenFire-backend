@@ -38,4 +38,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 
     // 스토어 프로필 수정
     Optional<Store> findByStoreCodeAndStoreStatus(Long storeCode, StoreStatus storeStatus);
+
+
+
 }

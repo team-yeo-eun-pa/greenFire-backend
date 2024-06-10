@@ -20,6 +20,7 @@ public class ProductCreateRequest {
     private final Long storeCode;
     @Min(value = 0)
     private final Long price;
+    private final String productDescription;
     @NotBlank
     private final Date registDate;
     @NotBlank

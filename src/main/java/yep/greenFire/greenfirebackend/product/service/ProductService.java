@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import yep.greenFire.greenfirebackend.common.exception.ConflictException;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
+import yep.greenFire.greenfirebackend.common.util.FileUploadUtils;
 import yep.greenFire.greenfirebackend.product.domain.entity.Category;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
@@ -26,6 +27,9 @@ import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 
+import java.util.UUID;
+
+
 
 @Service
 @RequiredArgsConstructor
@@ -38,10 +42,10 @@ public class ProductService {
     private final StoreRepository storeRepository;
 
 
-//    @Value("${image.image-url}")
-//    private String IMG_URL;
-//    @Value("src/main/resources/static/productimg")
-//    private String IMG_DIR;
+    @Value("${image.image-url}")
+    private String IMG_URL;
+    @Value("src/main/resources/static/productimg")
+    private String IMG_DIR;
 
 
 
@@ -68,26 +72,35 @@ public class ProductService {
 
 
     /* 판매자 상품 등록 */
-    public Long save(final ProductCreateRequest productCreateRequest, final MultipartFile productImg) {
+    private String getRandomName() { return UUID.randomUUID().toString().replace("-", ""); }
+
+    public Long save(final ProductCreateRequest productCreateRequest,
+                     final MultipartFile productImg) {
 
         // 이미지 파일 저장
+        String replaceFileName = FileUploadUtils.saveFile(IMG_DIR, getRandomName(), productImg);
 
 
         // category
         Category category = categoryRepository.findById(productCreateRequest.getCategoryCode())
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_CATEGORY_CODE));
 
-        // store
+        // store 로그인한 회원 슽토어 맞는지 확인 추가 +memberCode
         Store store = storeRepository.findById(productCreateRequest.getStoreCode())
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+
+//        Store store = storeRepository.findByMemberCode(Long memberCode)
+//                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
 
         final Product newProduct = Product.of(
                 productCreateRequest.getProductName(),
                 category.getCategoryCode(),
-                store.getStoreCode(),
+                productCreateRequest.getStoreCode(),
                 productCreateRequest.getPrice(),
+                productCreateRequest.getProductDescription(),
                 productCreateRequest.getRegistDate(),
-                productCreateRequest.getSellableStatus()
+                productCreateRequest.getSellableStatus(),
+                IMG_URL + replaceFileName
 
         );
 
