@@ -18,7 +18,7 @@ import java.net.URI;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin")
+@RequestMapping("/admin/dashboard")
 public class AdminApplyController {
 
     private final ApplyService applyService;
