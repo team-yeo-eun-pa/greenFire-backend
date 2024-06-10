@@ -6,9 +6,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import yep.greenFire.greenfirebackend.auth.handler.LoginSuccessHandler;
+import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductOptionRepository;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductRepository;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
@@ -54,12 +57,12 @@ public class ProductService {
     }
 
 
+    /* 판매자 상품 조회 */
+    @Transactional(readOnly = true)
+    public Page<ProductsResponse> getMystoreProducts(Integer page, CustomUser customUser) {
 
+        Long storeCode = customUser.getMemberCode();
 
-
-
-
-
-
-
+        return productRepository.findByStoreCode(getPageable(page), storeCode);
+    }
 }
