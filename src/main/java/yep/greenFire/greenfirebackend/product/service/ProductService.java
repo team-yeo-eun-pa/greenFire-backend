@@ -86,11 +86,9 @@ public class ProductService {
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_CATEGORY_CODE));
 
         // store 로그인한 회원 슽토어 맞는지 확인 추가 +memberCode
-        Store store = storeRepository.findById(productCreateRequest.getStoreCode())
-                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
-
-//        Store store = storeRepository.findByMemberCode(Long memberCode)
+//        Store store = storeRepository.findById(productCreateRequest.getStoreCode())
 //                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+
 
         final Product newProduct = Product.of(
                 productCreateRequest.getProductName(),
