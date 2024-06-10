@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.inquiry.entity.InquiryContent;
 import yep.greenFire.greenfirebackend.inquiry.site.domain.repository.SiteInquiryRepository;
@@ -17,14 +18,16 @@ import yep.greenFire.greenfirebackend.inquiry.site.dto.request.InquiryCreateRequ
 import yep.greenFire.greenfirebackend.inquiry.site.dto.response.InquiryResponse;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class SiteInquiryService {
+
     private final SiteInquiryRepository siteInquiryRepository;
     private Pageable getPageable(final Integer page) {
         return PageRequest.of(page - 1, 10, Sort.by("inquiryCode").descending());
     }
 
-    @Transactional
+
     public Page<InquiryResponse> getInquiryContent(Long memberCode, Integer page) {
 
         Page<InquiryContent> inquiryContents = siteInquiryRepository.findByMemberCode(memberCode, getPageable(page));

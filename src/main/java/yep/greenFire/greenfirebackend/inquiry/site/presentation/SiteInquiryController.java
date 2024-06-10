@@ -2,7 +2,6 @@ package yep.greenFire.greenfirebackend.inquiry.site.presentation;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,9 +21,8 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class SiteInquiryController {
 
-
     private final SiteInquiryService siteInquiryService;
-    @GetMapping("/view")
+    @GetMapping("/inquiry/view")
     public ResponseEntity<PagingResponse> getInquiryContent(
             @RequestParam(defaultValue = "1") final Integer page
 
@@ -47,7 +45,7 @@ public class SiteInquiryController {
 
     @PostMapping("/members/regist")
     public ResponseEntity<InquiryResponse> save (
-            @RequestBody  final InquiryCreateRequest inquiryCreateRequest,
+            @RequestBody @Valid final InquiryCreateRequest inquiryCreateRequest,
             @AuthenticationPrincipal CustomUser customUser
     ) {
 
