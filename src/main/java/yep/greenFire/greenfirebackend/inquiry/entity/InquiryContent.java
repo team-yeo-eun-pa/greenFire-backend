@@ -28,7 +28,7 @@ public class InquiryContent {
     @CreatedDate
     private Date inquiryWriteDate;
     private String inquiryStatus;
-    @NotBlank
+
     private String inquiryDetail;
     private String inquiryTitle;
     @LastModifiedDate
@@ -90,7 +90,10 @@ public class InquiryContent {
     }
 
     public static InquiryContent of(
-          final int memberCode, final String inquiryTitle, final String inquiryDetail
+            final int inquiryCode,   final int memberCode, final Date inquiryWriteDate,
+            final String inquiryStatus, final String inquiryDetail, final String inquiryTitle,
+            final Date inquiryModifyDate, final Date inquiryDeleteDate, final String inquiryReply,
+            final String inquiryReplyStatus
             ) {
 
         return new InquiryContent ();

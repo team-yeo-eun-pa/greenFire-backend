@@ -17,6 +17,8 @@ import yep.greenFire.greenfirebackend.inquiry.site.domain.repository.SiteInquiry
 import yep.greenFire.greenfirebackend.inquiry.site.dto.request.InquiryCreateRequest;
 import yep.greenFire.greenfirebackend.inquiry.site.dto.response.InquiryResponse;
 
+import java.util.Date;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -40,14 +42,21 @@ public class SiteInquiryService {
 
 
         public int save(
-            @RequestBody @Valid final InquiryCreateRequest inquiryCreateRequest,
-            @AuthenticationPrincipal CustomUser customUser
+            InquiryCreateRequest inquiryCreateRequest,
+            CustomUser customUser
     ) {
 
         final InquiryContent newInquiryContent = InquiryContent.of(
+                inquiryCreateRequest.getInquiryCode(),
                 inquiryCreateRequest.getMemberCode(),
+                inquiryCreateRequest.getInquiryWriteDate(),
+                inquiryCreateRequest.getInquiryStatus(),
+                inquiryCreateRequest.getInquiryDetail(),
                 inquiryCreateRequest.getInquiryTitle(),
-                inquiryCreateRequest.getInquiryDetail()
+                inquiryCreateRequest.getInquiryModifyDate(),
+                inquiryCreateRequest.getInquiryDeleteDate(),
+                inquiryCreateRequest.getInquiryReply(),
+                inquiryCreateRequest.getInquiryReplyStatus()
 
 
         );

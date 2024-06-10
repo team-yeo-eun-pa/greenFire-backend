@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
@@ -19,10 +20,11 @@ import java.net.URI;
 @RestController
 @RequestMapping("/inquiry")
 @RequiredArgsConstructor
+@Validated
 public class SiteInquiryController {
 
     private final SiteInquiryService siteInquiryService;
-    @GetMapping("/inquiry/view")
+    @GetMapping("/view")
     public ResponseEntity<PagingResponse> getInquiryContent(
             @RequestParam(defaultValue = "1") final Integer page
 
