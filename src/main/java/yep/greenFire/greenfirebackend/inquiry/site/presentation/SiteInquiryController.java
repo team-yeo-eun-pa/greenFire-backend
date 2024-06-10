@@ -27,7 +27,8 @@ public class SiteInquiryController {
     private final SiteInquiryService siteInquiryService;
     @GetMapping("/view")
     public ResponseEntity<PagingResponse> getInquiryContent(
-            @RequestParam(defaultValue = "1") final Integer page
+            @RequestParam(defaultValue = "1") final Integer page,
+            @AuthenticationPrincipal Long memberCode
 
     ) {
         //엑세스 토큰에 유저롤에 대한 정보가 있을 경우에
@@ -39,7 +40,7 @@ public class SiteInquiryController {
 //                sdfsdf
 //            }
 
-        final Page<InquiryResponse> inquiryResponse = siteInquiryService.getInquiryContent(1L, page);
+        final Page<InquiryResponse> inquiryResponse = siteInquiryService.getInquiryContent(memberCode, page);
         final PagingButtonInfo pagingButtonInfo = Pagination.getPagingButtonInfo(inquiryResponse);
         final PagingResponse pagingResponse = PagingResponse.of(inquiryResponse.getContent(), pagingButtonInfo);
 
@@ -55,7 +56,7 @@ public class SiteInquiryController {
 
         final int inquiryCode = siteInquiryService.save(inquiryCreateRequest, customUser.getMemberCode());
 
-        return ResponseEntity.created(URI.create("/view" +inquiryCode)).build();
+        return ResponseEntity.created(URI.create("/inquiry/view" +inquiryCode)).build();
 
 
     }
