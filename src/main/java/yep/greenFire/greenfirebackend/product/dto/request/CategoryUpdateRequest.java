@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CategoryUpdateRequest {
 
-    @NotBlank
     private final String categoryTitle;
 
     private final Long refCategoryCode;
