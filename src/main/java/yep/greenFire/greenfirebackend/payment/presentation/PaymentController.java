@@ -3,7 +3,10 @@ package yep.greenFire.greenfirebackend.payment.presentation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import yep.greenFire.greenfirebackend.auth.type.CustomUser;
+import yep.greenFire.greenfirebackend.payment.dto.request.PaymentCancelRequest;
 import yep.greenFire.greenfirebackend.payment.dto.request.PaymentCreateRequest;
 import yep.greenFire.greenfirebackend.payment.dto.request.PaymentRequest;
 import yep.greenFire.greenfirebackend.payment.service.PaymentService;
@@ -29,4 +32,11 @@ public class PaymentController {
 
         return ResponseEntity.ok(paymentRequest);
     }
+
+//    @PostMapping("/cancel")
+//    public ResponseEntity<PaymentCancelRequest> save(
+//            @AuthenticationPrincipal final CustomUser customUser,
+//            @RequestBody PaymentCancelRequest paymentCancelRequest) {
+//
+//    }
 }
