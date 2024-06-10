@@ -1,0 +1,9 @@
+POST https://api.tosspayments.com/v1/payments
+Content-Type: application/json
+Access-Token: Bearer eyJkYXRlIjoxNzE3MzI1NzEzNDUyLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6IjIxc29sIiwibWVtYmVyUm9sZSI6IlJPTEVfTUVNQkVSIiwiZXhwIjoxNzE3MzI5MzEzfQ.dP-GolNGoUxsxWe6Wj-XTdnjVsy8dreBGvnZe8PGgfA8iO0GagFqLSyksXUr2UNVSRmllSkpI7McCeOU7FYPUQ
+
+{
+  "orderCode": 1,
+  "paymentAmount": 10000,
+  "paymentWay": "CARD"
+}

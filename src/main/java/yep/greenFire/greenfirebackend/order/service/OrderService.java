@@ -1,22 +1,29 @@
 package yep.greenFire.greenfirebackend.order.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import yep.greenFire.greenfirebackend.order.domain.entity.DeliveryAddress;
+import yep.greenFire.greenfirebackend.delivery.domain.entity.DeliveryAddress;
 import yep.greenFire.greenfirebackend.order.domain.entity.Order;
 import yep.greenFire.greenfirebackend.order.domain.entity.OrderDetail;
 import yep.greenFire.greenfirebackend.order.domain.entity.StoreOrder;
-import yep.greenFire.greenfirebackend.order.domain.repository.DeliveryAddressRepository;
+import yep.greenFire.greenfirebackend.delivery.domain.repository.DeliveryAddressRepository;
 import yep.greenFire.greenfirebackend.order.domain.repository.OrderRepository;
+import yep.greenFire.greenfirebackend.order.domain.type.OrderStatus;
+import yep.greenFire.greenfirebackend.order.dto.request.OrderApprovalRequest;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderCreateRequest;
-import yep.greenFire.greenfirebackend.product.domain.entity.Product;
+import yep.greenFire.greenfirebackend.order.dto.response.OrderResponse;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
-import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
 import yep.greenFire.greenfirebackend.product.service.ProductOptionService;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +43,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
 
+    // 주문 등록
     public void save(OrderCreateRequest orderCreateRequest, Long memberCode) {
 
         Long totalOrderAmount = 0L;
@@ -143,8 +151,56 @@ public class OrderService {
     }
 
 
+    /* 주문시 상품 재고 수량 */
     private void updateStock(Long productOptionCode, Long optionStock) {
         productOptionService.updateStock(productOptionCode, optionStock);
     }
-    /* 장바구니 제거 */
+
+    /* 주문시 장바구니에서 상품 제거 */
+
+
+    private Pageable getPageable(Integer page) {
+        return PageRequest.of(page - 1, 10, Sort.by("orderCode").descending());
+    }
+
+    // 회원 - 주문 조회
+    @Transactional
+    public Page<OrderResponse> getOrders(Long memberCode, Integer page) {
+
+        return orderRepository.findByMemberCode(memberCode, getPageable(page));
+    }
+
+    // 스토어 - 주문 조회
+    @Transactional
+    public Page<OrderResponse> getStoreOrders(Long storeCode, Integer page) {
+
+        return orderRepository.findByStoreCode(storeCode, getPageable(page));
+    }
+
+
+    // 스토어 - 주문 상태 변경
+    public void modifyOrderStatus(OrderApprovalRequest orderApprovalRequest) {
+        Optional<Order> orderOptional = orderRepository.findByOrderCode(orderApprovalRequest.getOrderCode());
+
+        if (orderOptional.isPresent()) {
+            List<StoreOrder> storeOrders = orderOptional.get().getStoreOrders();
+
+            for (StoreOrder storeOrder : storeOrders) {
+
+                if (storeOrder.getStoreCode().equals(orderApprovalRequest.getStoreCode())) {
+
+                    // 만약 orderStatus가 SHIPPED 배송 중으로 바뀌면 운송장 정보도 테이블에 등록할 수 있게 해야한다.
+                    OrderStatus orderStatus = OrderStatus.fromValue(orderApprovalRequest.getOrderStatus());
+
+                    storeOrder.modifyOrderApply(
+                            orderStatus,
+                            LocalDateTime.now(),
+                            orderApprovalRequest.getRejectionReason());
+                }
+            }
+
+        } else {
+            throw new EntityNotFoundException("Order not found with code: " + orderApprovalRequest.getOrderCode());
+        }
+    }
 }

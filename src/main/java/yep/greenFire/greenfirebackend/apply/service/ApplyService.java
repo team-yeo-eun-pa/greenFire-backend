@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,11 +49,24 @@ public class ApplyService {
         return applyRepository.findByMemberCode(getPageable(page), memberCode);
     }
 
+    @Transactional(readOnly = true)
+    public ApplyResponse getApplyDetail(Long memberCode, Long sellerCode) {
+
+        ApplyResponse apply = applyRepository.findByMemberCodeAndSellerCode(memberCode, sellerCode)
+//                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_SELLER_CODE));
+                .orElseThrow(() -> new UsernameNotFoundException("하 진짜"));
+
+        return apply;
+    }
+
     private String getRandomName() { return UUID.randomUUID().toString().replace("-", ""); }
 
     public Long save(final ApplyCreateRequest applyCreateRequest, final MultipartFile businessImg, Long memberCode) {
+        log.info("Saving apply request with memberCode: {}", memberCode);
+        log.info("Saving businessImg: {}", businessImg.getOriginalFilename());
 
         String replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, getRandomName(), businessImg);
+        log.info("Saved businessImg with new filename: {}", replaceFileName);
 
         final Seller newSeller = Seller.of(
                 memberCode,

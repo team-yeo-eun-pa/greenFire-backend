@@ -8,7 +8,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.order.domain.type.OrderStatus;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,6 +34,8 @@ public class StoreOrder {
     private Long realPayment;
 
     private LocalDateTime completionDate;
+    private LocalDateTime rejectionDate;
+    private String rejectionReason;
 
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "store_order_code")
@@ -61,5 +62,14 @@ public class StoreOrder {
 
     public static StoreOrder of(long storeCode, long orderAmount, long discountAmount, long deliveryAmount, long realPayment, List<OrderDetail> orderDetails) {
         return new StoreOrder(storeCode, orderAmount,discountAmount, deliveryAmount, realPayment, orderDetails);
+    }
+
+    public void modifyOrderApply(OrderStatus orderStatus, LocalDateTime rejectionDate, String rejectionReason) {
+        this.orderStatus = orderStatus;
+        if (orderStatus == OrderStatus.REJECTED) {
+            this.rejectionDate = rejectionDate;
+            this.rejectionReason = rejectionReason;
+        }
+
     }
 }

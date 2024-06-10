@@ -29,6 +29,7 @@ public class Product {
     private Date registDate;
     @Enumerated(value = EnumType.STRING)
     private SellableStatus sellableStatus = SellableStatus.Y;
+    private String productImg;
 
     public Product(String productName, Long categoryCode, Long storeCode,
                    Long price, Date registDate, SellableStatus sellableStatus) {
@@ -53,7 +54,5 @@ public class Product {
                 sellableStatus
         );
     }
-
-
 
 }
