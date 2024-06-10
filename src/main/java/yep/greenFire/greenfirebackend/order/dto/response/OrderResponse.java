@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import yep.greenFire.greenfirebackend.order.domain.entity.Order;
-import yep.greenFire.greenfirebackend.order.domain.type.OrderStatus;
 import yep.greenFire.greenfirebackend.payment.domain.entity.Payment;
 import yep.greenFire.greenfirebackend.payment.domain.type.PaymentWay;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
@@ -13,7 +12,6 @@ import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

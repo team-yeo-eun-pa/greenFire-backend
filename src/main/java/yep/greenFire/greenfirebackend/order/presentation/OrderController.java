@@ -63,7 +63,7 @@ public class OrderController {
 
         // 주문이 없는 경우 빈 페이지 객체를 반환
         if (storeOrders.isEmpty()) {
-            // PagingButtonInfo의 생성자가 필요로 하는 인자를 전달 (예: 0, 0, 1, 1)
+            // PagingButtonInfo의 생성자가 필요로 하는 인자를 전달
             PagingButtonInfo emptyPagingButtonInfo = new PagingButtonInfo(0, 0, 1, 1);
             return ResponseEntity.ok(new PagingResponse(Collections.emptyList(), emptyPagingButtonInfo));
         }

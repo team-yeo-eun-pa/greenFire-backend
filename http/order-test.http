@@ -25,22 +25,45 @@ Access-Token: Bearer eyJkYXRlIjoxNzE3OTgzODU0NjQ5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
     ]
 }
 
-### 주문 승인, 거절
+### 회원 배송지 등록
+POST http://localhost:8001/delivery-addresses
+Content-Type: application/json
+Access-Token: Bearer eyJkYXRlIjoxNzE4MDMyNTMxMjY3LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9TRUxMRVIiLCJtZW1iZXJJZCI6IjEyMyIsImV4cCI6MTcxODAzNjEzMX0.SmvrIMf0UCf32ND1GEdLB7SOudKYCmA70gJLt7-hVKJcgbTivtjkU0u7LcrUW_w26DaAZwHwohykhhvlOquj2Q
+
+{
+  "deliveryAddressName": "한솔이네",
+  "isOrdinaryAddress": true,
+  "receiverName": "21솔",
+  "contactNumber": "01012345678",
+  "addressZonecode": 12345,
+  "addressType" : "r",
+  "address": "서울특별시 도봉구",
+  "addressDetail": "코딩아파트",
+  "deliveryRequest": "천천히 빠르게 배송 부탁드립니다."
+}
+
+### 판매자 주문 상태 변경 (주문 승인or거절or배송 중)
 POST http://localhost:8001/orders/apply
 Content-Type: application/json
-Access-Token: Bearer eyJkYXRlIjoxNzE4MDAxNDgzMTIzLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9TRUxMRVIiLCJtZW1iZXJJZCI6IjEyMyIsImV4cCI6MTcxODAwNTA4M30.bRRGWR6hxPeDQq5Rq-oft0ulFbUKTaue2MinipCfgWTrsyFNEB3mfMUzwAabzSW1kMuhqqUGUsl1nULMs_faIw
+Access-Token: Bearer eyJkYXRlIjoxNzE4MDExMDIxNTExLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6IjEyMyIsIm1lbWJlclJvbGUiOiJST0xFX1NFTExFUiIsImV4cCI6MTcxODAxNDYyMX0.x70AZzkOSHFyYbHmcU4CqLwkYNA-efljXeojpK8qVd7XprJsldknDySMyUDLduk_BHNJNPnskL-iKMl2gWNaKQ
 
 {
   "orderCode":26,
-  "storeCode":8,
-  "orderStatus":"주문 거절",
-  "rejectionReason": "거절이다"
+  "storeOrderCode":23,
+  "orderStatus":"배송 중",
+  "deliveryCompany": "우체국",
+  "transportNumber": 123456789,
+  "deliveryType": "일반 배송"
 }
-
 
 ### 회원 주문 조회
 GET http://localhost:8001/members/123/orders?page=1
 Access-Token: Bearer eyJkYXRlIjoxNzE3OTgzODU0NjQ5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6IjEyMyIsIm1lbWJlclJvbGUiOiJST0xFX01FTUJFUiIsImV4cCI6MTcxNzk4NzQ1NH0.wAa8EeMkw1jIkSUdaL9kZf_TBCn-2GZqy-J8N6EsWKio_h58WPZ0CeCSEKGV317Jo6kM0IX5hNTTWUqrRjK6Fg
-### 회원 주문 상세 조회
-GET http://localhost:8001/members/21sol/orders/10
-Access-Token: Bearer  eyJkYXRlIjoxNzE3OTA4ODg1NDcwLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6IjIxc29sIiwiZXhwIjoxNzE3OTEyNDg1fQ.GHUOcf8IR3gIXhxkVqIfz62R1DYoPZ4c559kJy0RugTnrhTlGioNUIIchXzBIGipH_t4l0QQ8Ppm2Kyo9Qbv4A
+
+### 회원 배송지 조회
+GET http://localhost:8001/members/123/delivery-addresses
+Access-Token: Bearer eyJkYXRlIjoxNzE4MDMyNTMxMjY3LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9TRUxMRVIiLCJtZW1iZXJJZCI6IjEyMyIsImV4cCI6MTcxODAzNjEzMX0.SmvrIMf0UCf32ND1GEdLB7SOudKYCmA70gJLt7-hVKJcgbTivtjkU0u7LcrUW_w26DaAZwHwohykhhvlOquj2Q
+
+### 배송지 삭제
+DELETE http://localhost:8001/delivery-addresses/13
+Access-Token: Bearer eyJkYXRlIjoxNzE4MDM2MTU5NDUzLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6IjEyMyIsIm1lbWJlclJvbGUiOiJST0xFX1NFTExFUiIsImV4cCI6MTcxODAzOTc1OX0.AAbXNZcl7Qitm_RRasYhUPI9GoK7WXSOyX4in0kIrAY0doY3eTRk4HHzyqvSHWy8ytTy4ZTr4KyjaXNDuRtJUw
