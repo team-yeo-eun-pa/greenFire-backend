@@ -1,15 +1,17 @@
 package yep.greenFire.greenfirebackend.order.domain.type;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum OrderStatus {
 
-    RECEIVED("received"),           // 주문 접수
-    REJECTED("rejected"),           // 주문 거절
-    PROCESSING("processing"),       // 상품 준비
-    SHIPPED("shipped"),             // 배송 중
-    DELIVERED("delivered"),         // 배송 완료
-    RETURN_REQUESTED("return_requested"), // 반품 요청
-    REFUNDED("refunded"),           // 환불 완료
-    COMPLETED("completed");         // 주문 완료
+    RECEIVED("주문 접수"),           // 주문 접수
+    REJECTED("주문 거절"),           // 주문 거절
+    PROCESSING("상품 준비"),       // 상품 준비
+    SHIPPED("배송 중"),             // 배송 중
+    DELIVERED("배송 완료"),         // 배송 완료
+    RETURN_REQUESTED("반품 요청"), // 반품 요청
+    REFUNDED("반품 완료"),           // 환불 완료
+    COMPLETED("주문 확정");         // 주문 완료
 
     private final String orderStatus;
 
@@ -17,6 +19,7 @@ public enum OrderStatus {
         this.orderStatus = orderStatus;
     }
 
+    @JsonValue
     public String getOrderStatus() {
         return orderStatus;
     }

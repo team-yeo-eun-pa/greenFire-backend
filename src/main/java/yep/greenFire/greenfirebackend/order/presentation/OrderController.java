@@ -33,6 +33,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+
     // 회원 - 주문 목록 조회
     @GetMapping("/members/{memberId}/orders")
 //    @PreAuthorize("#memberId == authentication.principal.memberCode.toString()")
@@ -48,15 +49,15 @@ public class OrderController {
     }
 
     // 회원 - 주문 상세 조회
-    @GetMapping("/members/{memberId}/orders/{orderCode}")
-    public ResponseEntity<OrderResponse> getOrderDetail(
-            @PathVariable String memberId,
-            @PathVariable Long orderCode,
-            @AuthenticationPrincipal CustomUser customUser
-    ) {
-
-        OrderResponse orderResponse = orderService.getOrderDetail(customUser.getMemberCode(), orderCode);
-
-        return ResponseEntity.ok(orderResponse);
-    }
+//    @GetMapping("/members/{memberId}/orders/{orderCode}")
+//    public ResponseEntity<OrderResponse> getOrderDetail(
+//            @PathVariable String memberId,
+//            @PathVariable Long orderCode,
+//            @AuthenticationPrincipal CustomUser customUser
+//    ) {
+//
+//        OrderResponse orderResponse = orderService.getOrderDetail(customUser.getMemberCode(), orderCode);
+//
+//        return ResponseEntity.ok(orderResponse);
+//    }
 }

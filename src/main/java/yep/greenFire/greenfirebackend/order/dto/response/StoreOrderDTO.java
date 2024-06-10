@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class StoreOrderDTO {
 
     private final Long storeOrderCode;
-//    private final String storeName;
+    private final String storeName;
     private final String orderStatus;
 
     private final List<OrderDetailDTO> orderDetails;

@@ -172,20 +172,4 @@ public class OrderService {
         return orderRepository.findByMemberCode(memberCode, getPageable(page));
     }
 
-
-    @Transactional
-    public OrderResponse getOrderDetail(Long memberCode, Long orderCode) {
-
-        List<OrderResponse> orderResponses = orderRepository.findByMemberCodeAndOrderCode(memberCode, orderCode);
-
-        if (orderResponses.isEmpty()) {
-            // 예외를 던지거나 기본값을 반환하는 등의 처리
-            throw new UsernameNotFoundException("Order not found for memberCode: " + memberCode + ", orderCode: " + orderCode);
-        }
-
-        OrderResponse orderResponse = orderResponses.get(0);
-
-        return orderResponse;
-    }
-
 }

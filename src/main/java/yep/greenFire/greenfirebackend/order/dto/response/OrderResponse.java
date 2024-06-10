@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import yep.greenFire.greenfirebackend.order.domain.entity.Order;
+import yep.greenFire.greenfirebackend.order.domain.type.OrderStatus;
+import yep.greenFire.greenfirebackend.payment.domain.entity.Payment;
+import yep.greenFire.greenfirebackend.payment.domain.type.PaymentWay;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
@@ -40,12 +43,14 @@ public class OrderResponse {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private final LocalDateTime orderDate;
 
+    private final PaymentWay paymentWay;
+
     private final List<StoreOrderDTO> storeOrders;
 
 
 
     public OrderResponse(Order order,
-                         ProductOption productOption, Product product) {
+                         ProductOption productOption, Product product, Store store, Payment payment) {
         this.orderCode = order.getOrderCode();
         this.memberCode = order.getMemberCode();
         this.orderName = order.getOrderName();
@@ -61,11 +66,13 @@ public class OrderResponse {
         this.totalRealPayment = order.getTotalRealPayment();
         this.orderDate = order.getOrderDate();
 
+        this.paymentWay = payment.getPaymentWay();
+
         // StoreOrder -> StoreOrderDTO 변환
         this.storeOrders = order.getStoreOrders().stream()
                 .map(storeOrder -> new StoreOrderDTO(
                         storeOrder.getStoreOrderCode(),
-//                        store.getStoreName(),
+                        store.getStoreName(),
                         storeOrder.getOrderStatus().getOrderStatus(),
                         storeOrder.getOrderDetails().stream()
                                 .map(orderDetail -> new OrderDetailDTO(
@@ -78,6 +85,7 @@ public class OrderResponse {
                                         product.getProductImg()
                                         ))
                                 .collect(Collectors.toList())))
+                .distinct() // 중복 제거
                 .collect(Collectors.toList());
 
     }
