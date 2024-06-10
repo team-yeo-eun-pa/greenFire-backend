@@ -26,7 +26,8 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
             "FROM Seller s " +
             "LEFT JOIN Store st ON s.sellerCode = st.sellerCode " +
             "LEFT JOIN Member m ON s.memberCode = m.memberCode " +
-            "WHERE m.memberCode = :memberCode AND s.applyStatus = yep.greenFire.greenfirebackend.apply.domain.type.ApplyStatus.APPLY")
+            "WHERE m.memberCode = :memberCode AND s.applyStatus = yep.greenFire.greenfirebackend.apply.domain.type.ApplyStatus.APPLY " +
+            "ORDER BY CASE WHEN st.storeStatus = 'PRE_OPEN' THEN 0 ELSE 1 END, st.storeName ASC")
     List<StoreListResponse> findByMemberCode(@Param("memberCode") Long memberCode);
 
     // 특정 스토어 프로필 조회
