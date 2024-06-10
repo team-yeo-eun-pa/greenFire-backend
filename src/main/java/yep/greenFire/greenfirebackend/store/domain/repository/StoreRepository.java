@@ -33,7 +33,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
             "(st.storeCode, st.sellerCode, st.storeName, st.storeInfo, st.addressZonecode, st.addressType, st.address, st.addressDetail, st.deliveryAmount, st.freeDeliveryCondition, st.reportCount, st.suspendedEndDate, st.storeStatus) " +
             "FROM Store st " +
             "LEFT JOIN Seller s ON s.sellerCode = st.sellerCode " +
-            "WHERE st.sellerCode = :sellerCode AND st.storeStatus != yep.greenFire.greenfirebackend.store.domain.type.StoreStatus.QUIT")
+            "WHERE st.sellerCode = :sellerCode")
     Optional<StoreProfileResponse> findBySellerCode(@Param("sellerCode") Long sellerCode);
 
     // 스토어 프로필 수정

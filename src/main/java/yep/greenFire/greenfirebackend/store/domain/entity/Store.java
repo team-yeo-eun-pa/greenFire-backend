@@ -1,6 +1,7 @@
 package yep.greenFire.greenfirebackend.store.domain.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,9 +23,8 @@ public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long storeCode;
-
     private Long sellerCode;
-
+    @NotBlank
     private String storeName;
     private String storeInfo;
 
@@ -42,6 +42,20 @@ public class Store {
     private LocalDateTime suspendedEndDate;
     @Enumerated(EnumType.STRING)
     private StoreStatus storeStatus;
+
+    public Store(Long sellerCode, String storeName, StoreStatus storeStatus) {
+        this.sellerCode = sellerCode;
+        this.storeName = storeName;
+        this.storeStatus = storeStatus;
+    }
+
+    public static Store of(final Long sellerCode, final String storeName, final StoreStatus storeStatus) {
+        return new Store(
+                sellerCode,
+                storeName,
+                storeStatus
+        );
+    }
 
     public void increaseStoreReportCount(long reportCount) {
         this.reportCount=reportCount;

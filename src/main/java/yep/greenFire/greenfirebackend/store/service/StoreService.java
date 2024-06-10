@@ -3,6 +3,7 @@ package yep.greenFire.greenfirebackend.store.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yep.greenFire.greenfirebackend.apply.dto.request.ApplyUpdateRequest;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 import yep.greenFire.greenfirebackend.seller.domain.entity.Seller;
@@ -15,6 +16,7 @@ import yep.greenFire.greenfirebackend.store.dto.response.StoreListResponse;
 import yep.greenFire.greenfirebackend.store.dto.response.StoreProfileResponse;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +24,18 @@ public class StoreService {
 
     private final StoreRepository storeRepository;
     private final SellerRepository sellerRepository;
+
+    @Transactional
+    public void createNewStore(Long sellerCode, ApplyUpdateRequest applyRequest) {
+
+        final Store newStore = Store.of(
+            sellerCode,
+            applyRequest.getStoreName(),
+            StoreStatus.OPEN
+        );
+
+        storeRepository.save(newStore);
+    }
 
     @Transactional(readOnly = true)
     public List<StoreListResponse> getStoreList(Long memberCode) {
@@ -58,5 +72,7 @@ public class StoreService {
                 profileRequest.getFreeDeliveryCondition()
         );
     }
+
+
 }
 

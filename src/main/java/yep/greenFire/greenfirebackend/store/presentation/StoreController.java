@@ -30,14 +30,14 @@ public class StoreController {
     }
 
     // 스토어 프로필 조회
-    @GetMapping("/seller/mystore/profile/{sellerCode}")
+    @GetMapping("/seller/mystore/{sellerCode}")
     public ResponseEntity<StoreProfileResponse> getStoreProfile(@PathVariable Long sellerCode) {
         StoreProfileResponse storeProfile = storeService.getStoreProfile(sellerCode);
         return ResponseEntity.ok(storeProfile);
     }
 
     // 스토어 프로필 수정
-    @PutMapping("/seller/mystore/profile/{sellerCode}")
+    @PutMapping("/seller/mystore/{sellerCode}")
     public ResponseEntity<Void> modifyStore(
             @PathVariable final Long sellerCode,
             @RequestBody @Valid final StoreProfileUpdateRequest profileRequest,
