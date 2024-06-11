@@ -9,7 +9,6 @@ import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 import yep.greenFire.greenfirebackend.seller.domain.entity.Seller;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -26,7 +25,7 @@ public class ProductsResponse {
     private final Date registDate;
     private final SellableStatus sellableStatus;
 
-    public static ProductsResponse from(final Product product, Category category, Store store, Seller seller) {
+    public static ProductsResponse from(final Product product, Category category, Store store) {
         return new ProductsResponse(
                 product.getProductCode(),
                 product.getProductName(),
@@ -40,16 +39,28 @@ public class ProductsResponse {
         );
     }
 
-//    public ProductsResponse(Product product, Category category, Store store) {
-//        this.productCode = product.getProductCode();
-//        this.productName = product.getProductName();
-//        this.categoryCode = product.getCategoryCode();
-//        this.categoryTitle = category.getCategoryTitle();
-//        this.storeCode = product.getStoreCode();
-//        this.storeName = store.getStoreName();
-//        this.price = product.getPrice();
-//        this.registDate = product.getRegistDate();
-//        this.sellableStatus = product.getSellableStatus();
-//    }
+    public ProductsResponse(Product product, Category category, Store store) {
+        this.productCode = product.getProductCode();
+        this.productName = product.getProductName();
+        this.categoryCode = product.getCategoryCode();
+        this.categoryTitle = category.getCategoryTitle();
+        this.storeCode = product.getStoreCode();
+        this.storeName = store.getStoreName();
+        this.price = product.getPrice();
+        this.registDate = product.getRegistDate();
+        this.sellableStatus = product.getSellableStatus();
+    }
+
+    public SellerProductsResponse toSellerProductsResponse() {
+        return new SellerProductsResponse(
+            this.productCode,
+            this.productName,
+            this.categoryCode,
+            this.storeCode,
+            this.price,
+            this.registDate,
+            this.sellableStatus
+        );
+    }
 
 }

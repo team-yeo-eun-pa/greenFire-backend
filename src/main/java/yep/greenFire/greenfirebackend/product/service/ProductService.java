@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
+import yep.greenFire.greenfirebackend.product.domain.repository.CategoryRepository;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductOptionRepository;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductRepository;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
+import yep.greenFire.greenfirebackend.product.dto.response.AdminCategoryResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.SellerProductsResponse;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
@@ -62,11 +64,11 @@ public class ProductService {
 //        Long storeCode = storeRepository.findStoreByMemberCode(memberCode);
 
         /* 스토어 코드와 일치하는 상품 목록 찾기 */
-        Page<Product> sellerProducts = productRepository.findByMemberCode(getPageable(page), memberCode);
+        Page<ProductsResponse> sellerProducts = productRepository.findByMemberCode(getPageable(page), memberCode);
+//        Optional<AdminCategoryResponse> categories = CategoryRepository.
 
+        return sellerProducts.map(ProductsResponse::toSellerProductsResponse);
 
-//        return sellerProducts.map(SellerProductsResponse::from);
-        return null;
     }
 
 }
