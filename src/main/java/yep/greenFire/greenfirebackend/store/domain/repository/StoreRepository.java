@@ -18,7 +18,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     Optional<Store> findByStoreCode(Long storeCode);
 
     // 스토어 승인 후 신규 등록
-    Optional<Store> findBySellerCodeAndStoreStatus(Long sellerCode, StoreStatus storeStatus);
+    Optional<Store> findStoreForPreOpenUpdateBySellerCodeAndStoreStatus(Long sellerCode, StoreStatus storeStatus);
 
     // 판매자 보유 스토어 목록 조회
     @Query("SELECT new yep.greenFire.greenfirebackend.store.dto.response.StoreListResponse" +
@@ -32,13 +32,16 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 
     // 특정 스토어 프로필 조회
     @Query("SELECT new yep.greenFire.greenfirebackend.store.dto.response.StoreProfileResponse" +
-            "(st.storeCode, st.sellerCode, st.storeName, st.storeInfo, st.addressZonecode, st.addressType, st.address, st.addressDetail, st.deliveryAmount, st.freeDeliveryCondition, st.reportCount, st.suspendedEndDate, st.storeStatus) " +
+            "(st.storeCode, st.sellerCode, st.storeName, st.storeInfo, st.addressZonecode, st.addressType, st.address, " +
+            "st.addressDetail, st.deliveryAmount, st.freeDeliveryCondition, st.reportCount, st.suspendedEndDate, st.storeStatus, " +
+            "s.storeRepresentativeName, s.businessNumber, s.mosNumber, s.businessImg, s.applyContent, s.storeType, s.applyDatetime, " +
+            "s.applyProcessingDate, s.applyCancelDate, s.rejectReason, s.applyStatus) " +
             "FROM Store st " +
             "LEFT JOIN Seller s ON s.sellerCode = st.sellerCode " +
-            "WHERE st.sellerCode = :sellerCode")
+            "WHERE st.sellerCode = :sellerCode AND s.applyStatus = 'APPLY'")
     Optional<StoreProfileResponse> findBySellerCode(@Param("sellerCode") Long sellerCode);
 
     // 스토어 프로필 수정
-    Optional<Store> findByStoreCodeAndStoreStatus(Long storeCode, StoreStatus storeStatus);
+    Optional<Store> findStoreForOpenUpdateBySellerCodeAndStoreStatus(@Param("sellerCode")Long sellerCode, StoreStatus storeStatus);
 
 }
