@@ -20,13 +20,13 @@ public class ProductDTO {
 
     public ProductDTO toEntity() {
         ProductDTO product = new ProductDTO(productCode, productName, categoryCode, categoryTitle, storeCode, storeName, sellableStatus);
-        product.setProductCode(this.productCode);
-        product.setProductName(this.productName);
-        product.setCategoryCode(this.categoryCode);
-        product.setCategoryTitle(this.categoryTitle);
-        product.setStoreCode(this.storeCode);
-        product.setStoreName(this.storeName);
-        product.setSellableStatus(this.sellableStatus);
+//        product.setProductCode(this.productCode);
+//        product.setProductName(this.productName);
+//        product.setCategoryCode(this.categoryCode);
+//        product.setCategoryTitle(this.categoryTitle);
+//        product.setStoreCode(this.storeCode);
+//        product.setStoreName(this.storeName);
+//        product.setSellableStatus(this.sellableStatus);
         return product;
     }
 
