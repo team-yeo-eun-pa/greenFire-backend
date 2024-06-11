@@ -22,7 +22,7 @@ public class InquiryContent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int inquiryCode;
+    private Integer inquiryCode;
 
     private Long memberCode;
 
