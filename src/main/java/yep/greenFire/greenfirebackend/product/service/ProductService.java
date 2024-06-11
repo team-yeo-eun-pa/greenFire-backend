@@ -9,12 +9,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
+import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.repository.CategoryRepository;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductOptionRepository;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductRepository;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 import yep.greenFire.greenfirebackend.product.dto.response.AdminCategoryResponse;
+import yep.greenFire.greenfirebackend.product.dto.response.ProductResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.SellerProductsResponse;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
@@ -56,6 +59,17 @@ public class ProductService {
         }
     }
 
+    /* 상품 상세 조회 */
+
+    @Transactional(readOnly = true)
+    public ProductResponse getProduct(final Long productCode) {
+
+        ProductResponse productResponse = productRepository.findByProductCodeAndSellableStatus(productCode, SellableStatus.Y)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+
+        return productResponse;
+    }
+
     /* 마이스토어 상품 목록 조회 */
     @Transactional(readOnly = true)
     public Page<SellerProductsResponse> getSellerProducts(final Integer page, final Long memberCode) {
@@ -71,6 +85,7 @@ public class ProductService {
         return sellerProducts;
 
     }
+
 
 }
 

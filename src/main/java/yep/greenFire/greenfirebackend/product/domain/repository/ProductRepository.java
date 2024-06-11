@@ -54,6 +54,18 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<ProductsResponse> findByProductNameContainsAndSellableStatus(Pageable pageable, String productName, SellableStatus sellableStatus);
 
 
+    /* 상품 상세 조회 */
+    @Query(
+            "select new yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse(p, c, s) " +
+                    "from Product p join Category c on c.categoryCode = p.categoryCode " +
+                    "join Store s on s.storeCode = p.storeCode " +
+                    "where p.productCode = :productCode " +
+                    "and p.sellableStatus = :sellableStatus"
+    )
+    Optional<ProductResponse> findByProductCodeAndSellableStatus(Long productCode, SellableStatus sellableStatus);
+
+
+
     /* 판매자 상품 목록 */
     @Query(
             "select new yep.greenFire.greenfirebackend.product.dto.response.SellerProductsResponse(p) " +

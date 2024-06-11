@@ -12,10 +12,6 @@ public class OrderApprovalRequest {
 
     private Long storeCode;
 
-    private String orderStatus;
-    
-    private String rejectionReason;
-
     private Long storeOrderCode;
 
     // -- 판매자 주문 승인, 거절
