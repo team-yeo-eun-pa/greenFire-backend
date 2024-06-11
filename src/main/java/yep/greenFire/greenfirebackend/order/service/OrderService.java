@@ -1,6 +1,5 @@
 package yep.greenFire.greenfirebackend.order.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,12 +11,12 @@ import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 import yep.greenFire.greenfirebackend.delivery.domain.entity.Delivery;
 import yep.greenFire.greenfirebackend.delivery.domain.entity.DeliveryAddress;
+import yep.greenFire.greenfirebackend.delivery.domain.repository.DeliveryAddressRepository;
 import yep.greenFire.greenfirebackend.delivery.domain.repository.DeliveryRepository;
 import yep.greenFire.greenfirebackend.delivery.domain.type.DeliveryType;
 import yep.greenFire.greenfirebackend.order.domain.entity.Order;
 import yep.greenFire.greenfirebackend.order.domain.entity.OrderDetail;
 import yep.greenFire.greenfirebackend.order.domain.entity.StoreOrder;
-import yep.greenFire.greenfirebackend.order.domain.repository.DeliveryAddressRepository;
 import yep.greenFire.greenfirebackend.order.domain.repository.OrderRepository;
 import yep.greenFire.greenfirebackend.order.domain.type.OrderStatus;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderApprovalRequest;
