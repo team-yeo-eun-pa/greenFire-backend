@@ -56,7 +56,6 @@ public class NoticeService {
         final Notice newNotice = Notice.of(
                 noticeCreateRequest.getNoticeTitle(),
                 noticeCreateRequest.getNoticeContent(),
-                noticeCreateRequest.getNoticeFixable(),
                 memberCode
         );
         Notice notice = noticeRepository.save(newNotice);

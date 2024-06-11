@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import yep.greenFire.greenfirebackend.order.domain.type.AddressType;
+import yep.greenFire.greenfirebackend.delivery.domain.type.AddressType;
 import yep.greenFire.greenfirebackend.store.domain.type.StoreStatus;
 
 import java.time.LocalDateTime;

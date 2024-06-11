@@ -17,7 +17,9 @@ import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
 
+
 import java.net.URI;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -25,6 +27,7 @@ import java.net.URI;
 public class NoticeController {
 
     private final NoticeService noticeService;
+
 
     @GetMapping("/notices")
     public ResponseEntity<PagingResponse> getAdminNotices(
@@ -49,9 +52,10 @@ public class NoticeController {
 
     @PostMapping("/notice-create")
     public ResponseEntity<Void> save(
-            @RequestPart(value="file",required = false)  @Valid final NoticeCreateRequest noticeCreateRequest,
+            @RequestPart @Valid final NoticeCreateRequest noticeCreateRequest,
             @AuthenticationPrincipal final CustomUser customUser
             ){
+
        noticeService.save(noticeCreateRequest, customUser.getMemberCode());
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
