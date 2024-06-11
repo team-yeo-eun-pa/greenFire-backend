@@ -2,8 +2,6 @@ package yep.greenFire.greenfirebackend.store.dto.response;
 
 import lombok.Getter;
 import yep.greenFire.greenfirebackend.order.domain.type.AddressType;
-import yep.greenFire.greenfirebackend.seller.domain.entity.Seller;
-import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 import yep.greenFire.greenfirebackend.store.domain.type.StoreStatus;
 
 import java.time.LocalDateTime;

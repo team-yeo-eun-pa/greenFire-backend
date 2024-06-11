@@ -6,17 +6,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import yep.greenFire.greenfirebackend.auth.handler.LoginSuccessHandler;
-import yep.greenFire.greenfirebackend.auth.type.CustomUser;
+import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductOptionRepository;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductRepository;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
-import yep.greenFire.greenfirebackend.product.dto.response.ProductResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
+import yep.greenFire.greenfirebackend.product.dto.response.SellerProductsResponse;
+import yep.greenFire.greenfirebackend.store.domain.entity.Store;
+import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
+
+import java.util.Optional;
 
 
 @Service
@@ -26,12 +28,8 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductOptionRepository productOptionRepository;
+    private final StoreRepository storeRepository;
 
-
-//    @Value("${image.image-url}")
-//    private String IMG_URL;
-//    @Value("src/main/resources/static/productimg")
-//    private String IMG_DIR;
 
 
 
@@ -56,13 +54,28 @@ public class ProductService {
         }
     }
 
-
-    /* 판매자 상품 조회 */
+    /* 마이스토어 상품 목록 조회 */
     @Transactional(readOnly = true)
-    public Page<ProductsResponse> getMystoreProducts(Integer page, CustomUser customUser) {
+    public Page<SellerProductsResponse> getSellerProducts(final Integer page, final Long memberCode) {
 
-        Long storeCode = customUser.getMemberCode();
+        /* 현재 로그인한 memberCode와 일치하는 storeCode 찾기 */
+//        Long storeCode = storeRepository.findStoreByMemberCode(memberCode);
 
-        return productRepository.findByStoreCode(getPageable(page), storeCode);
+        /* 스토어 코드와 일치하는 상품 목록 찾기 */
+        Page<Product> sellerProducts = productRepository.findByMemberCode(getPageable(page), memberCode);
+
+
+//        return sellerProducts.map(SellerProductsResponse::from);
+        return null;
     }
+
 }
+
+
+
+
+
+
+
+
+

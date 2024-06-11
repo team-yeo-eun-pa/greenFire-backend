@@ -38,4 +38,12 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 
     // 스토어 프로필 수정
     Optional<Store> findByStoreCodeAndStoreStatus(Long storeCode, StoreStatus storeStatus);
+
+
+    //MemberCode로 스토어 찾기
+    @Query("SELECT s.storeCode FROM Store s " +
+            "JOIN Seller sl ON s.sellerCode = sl.sellerCode " +
+            "JOIN Member m ON sl.memberCode = m.memberCode " +
+            "WHERE m.memberCode = :memberCode")
+    Long findStoreByMemberCode(Long memberCode);
 }

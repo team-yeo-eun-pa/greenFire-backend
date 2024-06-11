@@ -10,6 +10,7 @@ import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
+import yep.greenFire.greenfirebackend.product.presentation.ProductController;
 
 import java.util.Optional;
 
@@ -52,6 +53,17 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<ProductsResponse> findByProductNameContainsAndSellableStatus(Pageable pageable, String productName, SellableStatus sellableStatus);
 
 
-    /* 판매자 상품 리스트 */
-    Page<ProductsResponse> findByStoreCode(Pageable pageable, Long storeCode);
+    /* 판매자 상품 목록 */
+    @Query(
+            "select new yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse(p, c, st, sl) " +
+                    "from Product p " +
+                    "join Category c on c.categoryCode = p.categoryCode " +
+                    "join Store st on st.storeCode = p.storeCode " +
+                    "join Seller sl on sl.sellerCode = st.sellerCode " +
+                    "where sl.memberCode = :memberCode"
+    )
+    Page<Product> findByMemberCode(Pageable pageable, Long memberCode);
+
+
+
 }
