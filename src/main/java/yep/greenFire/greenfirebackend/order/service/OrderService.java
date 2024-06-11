@@ -17,7 +17,7 @@ import yep.greenFire.greenfirebackend.delivery.domain.type.DeliveryType;
 import yep.greenFire.greenfirebackend.order.domain.entity.Order;
 import yep.greenFire.greenfirebackend.order.domain.entity.OrderDetail;
 import yep.greenFire.greenfirebackend.order.domain.entity.StoreOrder;
-import yep.greenFire.greenfirebackend.delivery.domain.repository.DeliveryAddressRepository;
+import yep.greenFire.greenfirebackend.order.domain.repository.DeliveryAddressRepository;
 import yep.greenFire.greenfirebackend.order.domain.repository.OrderRepository;
 import yep.greenFire.greenfirebackend.order.domain.type.OrderStatus;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderApprovalRequest;

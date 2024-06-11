@@ -21,8 +21,8 @@ public class MemberProductInquiryResponse {
     private Date inquiryWriteDate;
     private String inquiryReplyStatus;
 
-    public MemberProductInquiryResponse(int productCode, String inquiryTitle, String inquiryDetail, Date inquiryWriteDate, String inquiryReplyStatus) {
-        this.productCode = productCode;
+    public MemberProductInquiryResponse(String inquiryTitle, String inquiryDetail, Date inquiryWriteDate, String inquiryReplyStatus) {
+//        this.productCode = productCode;
         this.inquiryTitle = inquiryTitle;
         this.inquiryDetail = inquiryDetail;
         this.inquiryWriteDate = inquiryWriteDate;

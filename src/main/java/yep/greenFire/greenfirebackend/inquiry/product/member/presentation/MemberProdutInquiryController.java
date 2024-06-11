@@ -11,7 +11,7 @@ import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
 import yep.greenFire.greenfirebackend.inquiry.product.member.dto.request.MemberProductInquiryCreatRequest;
 import yep.greenFire.greenfirebackend.inquiry.product.member.dto.response.MemberProductInquiryResponse;
 import yep.greenFire.greenfirebackend.inquiry.product.member.service.MemberProductInquiryService;
-import yep.greenFire.greenfirebackend.inquiry.site.member.dto.request.InquiryCreateRequest;
+
 
 import java.lang.reflect.Member;
 import java.net.URI;
