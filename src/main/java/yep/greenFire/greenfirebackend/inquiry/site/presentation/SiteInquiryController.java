@@ -2,6 +2,7 @@ package yep.greenFire.greenfirebackend.inquiry.site.presentation;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,6 +26,7 @@ import java.net.URI;
 public class SiteInquiryController {
 
     private final SiteInquiryService siteInquiryService;
+
     @GetMapping("/view")
     public ResponseEntity<PagingResponse> getInquiryContent(
             @RequestParam(defaultValue = "1") final Integer page,
@@ -61,6 +63,19 @@ public class SiteInquiryController {
 
     }
 
+
+
+    @GetMapping("members/detail")
+    public ResponseEntity<InquiryResponse> getInquiryDetail(
+            @PathVariable final Long inquiryCode
+    ) {
+
+        InquiryResponse inquiryResponse = siteInquiryService.getInquiryDetail(inquiryCode);
+
+
+
+        return ResponseEntity.ok(inquiryResponse);
+    }
 
     //사이트 문의 답변 등록
 //    @GetMapping("/admin/regist")
