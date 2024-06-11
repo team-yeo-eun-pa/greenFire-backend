@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import yep.greenFire.greenfirebackend.inquiry.entity.InquiryContent;
 
 @Repository
-public interface SiteInquiryRepository  extends JpaRepository <InquiryContent, Integer> {
+public interface SiteInquiryRepository extends JpaRepository<InquiryContent, Integer> {
+    Page<InquiryContent> findByMemberCode(Long memberCode, Pageable pageable);
 
-        Page<InquiryContent> findByMemberCode(Long memberCode, Pageable pageable);
 }

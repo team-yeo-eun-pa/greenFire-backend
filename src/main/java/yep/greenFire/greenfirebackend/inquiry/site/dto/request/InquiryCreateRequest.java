@@ -4,15 +4,23 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Date;
+
+
 @Getter
 @RequiredArgsConstructor
 public class InquiryCreateRequest {
+   private int inquiryCode;
 
     private int memberCode;
 
-    @NotBlank
     private String inquiryTitle;
 
-    @NotBlank
     private String inquiryDetail;
+
+
+
+
+
+
 }
