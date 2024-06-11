@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import yep.greenFire.greenfirebackend.product.domain.entity.Category;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
-import yep.greenFire.greenfirebackend.seller.domain.entity.Seller;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 
 import java.util.Date;
@@ -51,16 +50,16 @@ public class ProductsResponse {
         this.sellableStatus = product.getSellableStatus();
     }
 
-    public SellerProductsResponse toSellerProductsResponse() {
-        return new SellerProductsResponse(
-            this.productCode,
-            this.productName,
-            this.categoryCode,
-            this.storeCode,
-            this.price,
-            this.registDate,
-            this.sellableStatus
-        );
-    }
+//    public SellerProductsResponse toSellerProductsResponse() {
+//        return new SellerProductsResponse(
+//            this.productCode,
+//            this.productName,
+//            this.categoryCode,
+//            this.storeCode,
+//            this.price,
+//            this.registDate,
+//            this.sellableStatus
+//        );
+//    }
 
 }

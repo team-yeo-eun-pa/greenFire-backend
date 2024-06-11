@@ -64,10 +64,11 @@ public class ProductService {
 //        Long storeCode = storeRepository.findStoreByMemberCode(memberCode);
 
         /* 스토어 코드와 일치하는 상품 목록 찾기 */
-        Page<ProductsResponse> sellerProducts = productRepository.findByMemberCode(getPageable(page), memberCode);
+        Page<SellerProductsResponse> sellerProducts = productRepository.findByMemberCode(getPageable(page), memberCode);
 //        Optional<AdminCategoryResponse> categories = CategoryRepository.
 
-        return sellerProducts.map(ProductsResponse::toSellerProductsResponse);
+//        return sellerProducts.map(ProductsResponse::toSellerProductsResponse);
+        return sellerProducts;
 
     }
 

@@ -4,7 +4,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import yep.greenFire.greenfirebackend.product.domain.entity.Category;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 import java.util.Date;
