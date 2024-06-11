@@ -10,6 +10,7 @@ import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
+import yep.greenFire.greenfirebackend.product.dto.response.ProductOptionResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.SellerProductsResponse;
@@ -40,6 +41,7 @@ public class ProductController {
 
     /* 상품 상세 조회 */
     @GetMapping("/product/{productCode}")
+    @ResponseBody
     public ResponseEntity<ProductResponse> getProduct(@PathVariable final Long productCode) {
 
         final ProductResponse productResponse = productService.getProduct(productCode);

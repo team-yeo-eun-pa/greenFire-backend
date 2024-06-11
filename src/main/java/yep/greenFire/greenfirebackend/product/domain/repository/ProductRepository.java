@@ -56,9 +56,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     /* 상품 상세 조회 */
     @Query(
-            "select new yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse(p, c, s) " +
+            "select new yep.greenFire.greenfirebackend.product.dto.response.ProductResponse(p, c, s, po) " +
                     "from Product p join Category c on c.categoryCode = p.categoryCode " +
                     "join Store s on s.storeCode = p.storeCode " +
+                    "join ProductOption po on p.productCode = po.productCode " +
                     "where p.productCode = :productCode " +
                     "and p.sellableStatus = :sellableStatus"
     )
