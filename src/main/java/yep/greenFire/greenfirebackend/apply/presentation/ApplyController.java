@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import yep.greenFire.greenfirebackend.apply.dto.request.ApplyCreateRequest;
 import yep.greenFire.greenfirebackend.apply.dto.request.ApplyUpdateRequest;
+import yep.greenFire.greenfirebackend.apply.dto.response.AdminApplyResponse;
 import yep.greenFire.greenfirebackend.apply.dto.response.ApplyResponse;
 import yep.greenFire.greenfirebackend.apply.service.ApplyService;
 import yep.greenFire.greenfirebackend.auth.type.CustomUser;
@@ -22,7 +23,7 @@ import java.net.URI;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/members")
+@RequestMapping("/members/mypage/apply")
 public class ApplyController {
 
     private final ApplyService applyService;
@@ -41,7 +42,18 @@ public class ApplyController {
         return ResponseEntity.ok(pagingResponse);
     }
 
-    @PostMapping("/applies")
+    @GetMapping("/{memberId}/{sellerCode}")
+    public ResponseEntity<ApplyResponse> getApplyDetail(
+            @PathVariable Long sellerCode,
+            @PathVariable String memberId,
+            @AuthenticationPrincipal CustomUser customUser
+    ) {
+        final ApplyResponse applyResponse = applyService.getApplyDetail(customUser.getMemberCode(), sellerCode);
+
+        return ResponseEntity.ok(applyResponse);
+    }
+
+    @PostMapping("/regist")
     public ResponseEntity<Void> save(
             @RequestPart @Valid final ApplyCreateRequest applyCreateRequest,
             @AuthenticationPrincipal final CustomUser customUser,
@@ -54,7 +66,7 @@ public class ApplyController {
         return ResponseEntity.created(URI.create("/admin/applies/" + applyCode)).build();
     }
 
-    @PutMapping("/applies/{sellerCode}")
+    @PutMapping("/modify/{sellerCode}")
     public ResponseEntity<Void> modify(
             @PathVariable final Long sellerCode,
             @RequestPart @Valid final ApplyUpdateRequest applyRequest,
@@ -74,7 +86,7 @@ public class ApplyController {
         return ResponseEntity.created(URI.create("/admin/applies/" + sellerCode)).build();
     }
 
-    @PostMapping("/applies/{sellerCode}/cancel")
+    @PostMapping("/modify/{sellerCode}/cancel")
     public ResponseEntity<Void> cancel(
             @PathVariable final Long sellerCode,
             @RequestPart @Valid final ApplyUpdateRequest applyRequest,

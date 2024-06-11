@@ -1,6 +1,5 @@
 package yep.greenFire.greenfirebackend.order.dto.response;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

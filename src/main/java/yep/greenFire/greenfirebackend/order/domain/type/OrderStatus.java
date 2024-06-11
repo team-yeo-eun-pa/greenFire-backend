@@ -28,4 +28,13 @@ public enum OrderStatus {
     public String toString() {
         return this.orderStatus;
     }
+
+    public static OrderStatus fromValue(String value) {
+        for (OrderStatus orderStatus : OrderStatus.values()) {
+            if (orderStatus.getOrderStatus().equals(value)) {
+                return orderStatus;
+            }
+        }
+        throw new IllegalArgumentException("Unknown orderStatus: " + value);
+    }
 }
