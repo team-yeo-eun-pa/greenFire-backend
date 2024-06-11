@@ -7,11 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.auth.type.CustomUser;
+import yep.greenFire.greenfirebackend.store.dto.request.StoreCloseRequest;
 import yep.greenFire.greenfirebackend.store.dto.request.StoreProfileUpdateRequest;
 import yep.greenFire.greenfirebackend.store.dto.response.StoreListResponse;
 import yep.greenFire.greenfirebackend.store.dto.response.StoreProfileResponse;
 import yep.greenFire.greenfirebackend.store.service.StoreService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -56,6 +58,19 @@ public class StoreController {
     ) {
 
         storeService.modifyProfile(sellerCode, profileRequest, customUser.getMemberCode());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    // 스토어 정지
+    @PutMapping("/seller/mystore/{sellerCode}/pause")
+    public ResponseEntity<Void> pauseStore(
+            @PathVariable final Long sellerCode,
+            @RequestBody @Valid final StoreCloseRequest closeRequest,
+            @AuthenticationPrincipal final CustomUser customUser
+    ) {
+
+        storeService.pauseStore(sellerCode, closeRequest, customUser.getMemberCode());
 
         return ResponseEntity.noContent().build();
     }

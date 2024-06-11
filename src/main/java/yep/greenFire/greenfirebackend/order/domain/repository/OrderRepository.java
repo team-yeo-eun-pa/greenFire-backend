@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import yep.greenFire.greenfirebackend.order.domain.entity.Order;
+import yep.greenFire.greenfirebackend.order.domain.type.OrderStatus;
 import yep.greenFire.greenfirebackend.order.dto.response.OrderResponse;
 
 import java.util.List;
@@ -23,6 +24,11 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "join Payment pm on pm.orderCode = o.orderCode " +
             "where o.memberCode = :memberCode")
     Page<OrderResponse> findByMemberCode(@Param("memberCode") Long memberCode, Pageable pageable);
+//
+//    @Query("SELECT o FROM Order o JOIN OrderDetail od ON o.orderCode = od.storeOrderCode " +
+//            "WHERE od.storeOrderCode = :storeCode AND od.isOrderCancel = false AND o.orderStatus IN :statuses")
+//    List<Order> findActiveOrders(@Param("storeCode") Long storeCode, @Param("statuses") List<OrderStatus> statuses);
+
 
     /* 특정 회원 코드 주문 목록 상세 조회 */
 //    @Query("select distinct new yep.greenFire.greenfirebackend.order.dto.response.OrderResponse(o, po, p) " +

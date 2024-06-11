@@ -72,4 +72,10 @@ public class Store {
         this.deliveryAmount = deliveryAmount;
         this.freeDeliveryCondition = freeDeliveryCondition;
     }
+
+    public void closeStore(Long sellerCode, LocalDateTime suspendedEndDate) {
+        this.sellerCode = sellerCode;
+        this.storeStatus = StoreStatus.CLOSED;
+        this.suspendedEndDate = suspendedEndDate;
+    }
 }
