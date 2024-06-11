@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -21,14 +22,14 @@ public class InquiryContent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int inquiryCode;
+    private Integer inquiryCode;
 
-    private int memberCode;
+    private Long memberCode;
 
     @CreatedDate
     private Date inquiryWriteDate;
     private String inquiryStatus;
-    @NotBlank
+
     private String inquiryDetail;
     private String inquiryTitle;
     @LastModifiedDate
@@ -75,25 +76,36 @@ public class InquiryContent {
 //    }
 
 
-    public void inquiryContent(int inquiryCode, int memberCode, Date inquiryWriteDate, String inquiryStatus, String inquiryDetail, String inquiryTitle, Date inquiryModifyDate, Date inquiryDeleteDate, String inquiryReply, String inquiryReplyStatus, String memberId, String memberName, String memberEmail) {
-        this.inquiryCode = inquiryCode;
+//    public void inquiryContent(int inquiryCode, int memberCode, Date inquiryWriteDate, String inquiryStatus, String inquiryDetail, String inquiryTitle, Date inquiryModifyDate, Date inquiryDeleteDate, String inquiryReply, String inquiryReplyStatus, String memberId, String memberName, String memberEmail) {
+//        this.inquiryCode = inquiryCode;
+//        this.memberCode = memberCode;
+//        this.inquiryWriteDate = inquiryWriteDate;
+//        this.inquiryStatus = inquiryStatus;
+//        this.inquiryDetail = inquiryDetail;
+//        this.inquiryTitle = inquiryTitle;
+//        this.inquiryModifyDate = inquiryModifyDate;
+//        this.inquiryDeleteDate = inquiryDeleteDate;
+//        this.inquiryReply = inquiryReply;
+//        this.inquiryReplyStatus = inquiryReplyStatus;
+//
+//    }
+
+
+    public InquiryContent(Long memberCode, String inquiryDetail, String inquiryTitle) {
         this.memberCode = memberCode;
-        this.inquiryWriteDate = inquiryWriteDate;
-        this.inquiryStatus = inquiryStatus;
         this.inquiryDetail = inquiryDetail;
         this.inquiryTitle = inquiryTitle;
-        this.inquiryModifyDate = inquiryModifyDate;
-        this.inquiryDeleteDate = inquiryDeleteDate;
-        this.inquiryReply = inquiryReply;
-        this.inquiryReplyStatus = inquiryReplyStatus;
-
     }
 
     public static InquiryContent of(
-          final int memberCode, final String inquiryTitle, final String inquiryDetail
-            ) {
+            final Long memberCode, final String inquiryTitle, final String inquiryDetail
+                      ) {
 
-        return new InquiryContent ();
+        return new InquiryContent (
+                memberCode,
+                inquiryDetail,
+                inquiryTitle
+        );
     }
 
 

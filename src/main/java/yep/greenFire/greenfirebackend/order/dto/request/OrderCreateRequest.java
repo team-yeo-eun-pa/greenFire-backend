@@ -27,8 +27,13 @@ public class OrderCreateRequest {
     @Getter
     public static class OrderDetailRequest {
 
+        // 상품 옵션 테이블에서 - 상품 옵션 코드, 판매가,
+        // 수량은 장바구니, 상품 상세 페이지에서
+
         @Min(value = 1)
         private Long optionCode;
+
+        private Long optionPrice;
         private Long orderQuantity;
 
     }

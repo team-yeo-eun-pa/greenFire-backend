@@ -1,19 +1,21 @@
 package yep.greenFire.greenfirebackend.inquiry.site.dto.response;
 
+import lombok.Getter;
 import yep.greenFire.greenfirebackend.inquiry.entity.InquiryContent;
 
+@Getter
 public class InquiryResponse {
 
     //문의 등록 전 문의 목록 조회
 
-    private int inquiryCode;
+    private Integer inquiryCode;
     private String inquiryStatus;
     private String inquiryReply;
     private String inquiryReplyStatus;
-    private int memberCode;
+    private Long memberCode;
 
 
-    public InquiryResponse(int inquiryCode, String inquiryStatus, String inquiryReply, String inquiryReplyStatus, int memberCode) {
+    public InquiryResponse(Integer inquiryCode, String inquiryStatus, String inquiryReply, String inquiryReplyStatus, Long memberCode) {
         this.inquiryCode = inquiryCode;
         this.inquiryStatus = inquiryStatus;
         this.inquiryReply = inquiryReply;
