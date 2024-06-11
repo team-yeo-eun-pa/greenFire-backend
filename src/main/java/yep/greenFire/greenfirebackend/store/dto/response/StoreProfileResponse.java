@@ -3,7 +3,6 @@ package yep.greenFire.greenfirebackend.store.dto.response;
 import lombok.Getter;
 import yep.greenFire.greenfirebackend.delivery.domain.type.AddressType;
 import yep.greenFire.greenfirebackend.store.domain.type.StoreStatus;
-
 import java.time.LocalDateTime;
 
 @Getter

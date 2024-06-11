@@ -1,5 +1,6 @@
 package yep.greenFire.greenfirebackend.order.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -192,6 +193,7 @@ public class OrderService {
             List<StoreOrder> storeOrders = orderOptional.get().getStoreOrders();
 
             for (StoreOrder storeOrder : storeOrders) {
+
 
                 if (storeOrder.getStoreOrderCode().equals(orderApprovalRequest.getStoreOrderCode())) {
 
