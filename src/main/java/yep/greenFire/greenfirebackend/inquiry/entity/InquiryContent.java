@@ -1,15 +1,17 @@
 package yep.greenFire.greenfirebackend.inquiry.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.aspectj.apache.bcel.classfile.Code;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import yep.greenFire.greenfirebackend.inquiry.site.admin.dto.response.AdminInquiryResponse;
 
-import java.time.LocalDateTime;
+
 import java.util.Date;
 
 @Entity
@@ -21,47 +23,50 @@ public class InquiryContent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int inquiryCode;
+    private Integer inquiryCode;
 
-    private int memberCode;
+    private Long memberCode;
 
     @CreatedDate
-    private LocalDateTime inquiryWriteDate;
+    private Date inquiryWriteDate;
 
- //   private String inquiryStatus;
+    @ColumnDefault("미응답")
+    private String inquiryStatus;
+
     private String inquiryDetail;
     private String inquiryTitle;
- //   @LastModifiedDate
- //   private Date inquiryModifyDate;
-  //  private Date inquiryDeleteDate;
-  //  private int replyMemberCode;
- //   private String inquiryReply;
- //   private String inquiryReplyStatus;
+    @LastModifiedDate
+    private Date inquiryModifyDate;
+    private Date inquiryDeleteDate;
 
- //   private int inquiryCateCode;
+    private String inquiryReply;
+    private String inquiryReplyStatus;
 
- //   private int inquiryProduct;
- //   private int inquiryChallenge;
-
-
-    public InquiryContent(int memberCode, String inquiryTitle, String inquiryDetail) {
+    public InquiryContent(Integer inquiryCode, Long memberCode, Date inquiryWriteDate, String inquiryStatus, String inquiryDetail, String inquiryTitle, Date inquiryModifyDate, Date inquiryDeleteDate, String inquiryReply, String inquiryReplyStatus) {
+        this.inquiryCode = inquiryCode;
         this.memberCode = memberCode;
-        this.inquiryTitle = inquiryTitle;
+        this.inquiryWriteDate = inquiryWriteDate;
+        this.inquiryStatus = inquiryStatus;
         this.inquiryDetail = inquiryDetail;
-
+        this.inquiryTitle = inquiryTitle;
+        this.inquiryModifyDate = inquiryModifyDate;
+        this.inquiryDeleteDate = inquiryDeleteDate;
+        this.inquiryReply = inquiryReply;
+        this.inquiryReplyStatus = inquiryReplyStatus;
     }
 
-    public static InquiryContent of(
-          final int memberCode, final String inquiryTitle, final String inquiryDetail
-            ) {
 
-        return new InquiryContent (
-                memberCode,
-                inquiryTitle,
-                inquiryDetail
-        );
-    }
+    //    private int inquiryProduct;
+//    private int inquiryChallenge;
 
+
+
+//    public static InquiryContent of(
+//            final int inquiryCode, final int memberCode, final Date inquiryWriteDate,
+//            final String inquiryTitle, final String inquiryDetail, final String inquiryStatus) {
+//        return new InquiryContent();
+//    }
+//
 //    public static InquiryContent of2(
 //            final int inquiryCode, final String inquiryWriteDate,
 //            final String inquiryTitle, final String inquiryDetail) {
@@ -84,7 +89,41 @@ public class InquiryContent {
 //
 //
 //    }
+
+
+//    public void inquiryContent(int inquiryCode, int memberCode, Date inquiryWriteDate, String inquiryStatus, String inquiryDetail, String inquiryTitle, Date inquiryModifyDate, Date inquiryDeleteDate, String inquiryReply, String inquiryReplyStatus, String memberId, String memberName, String memberEmail) {
+//        this.inquiryCode = inquiryCode;
+//        this.memberCode = memberCode;
+//        this.inquiryWriteDate = inquiryWriteDate;
+//        this.inquiryStatus = inquiryStatus;
+//        this.inquiryDetail = inquiryDetail;
+//        this.inquiryTitle = inquiryTitle;
+//        this.inquiryModifyDate = inquiryModifyDate;
+//        this.inquiryDeleteDate = inquiryDeleteDate;
+//        this.inquiryReply = inquiryReply;
+//        this.inquiryReplyStatus = inquiryReplyStatus;
 //
+//    }
+
+
+    public InquiryContent(Long memberCode, String inquiryDetail, String inquiryTitle) {
+        this.memberCode = memberCode;
+        this.inquiryDetail = inquiryDetail;
+        this.inquiryTitle = inquiryTitle;
+    }
+
+    public static InquiryContent of(
+            final Long memberCode, final String inquiryTitle, final String inquiryDetail
+                      ) {
+
+        return new InquiryContent (
+                memberCode,
+                inquiryDetail,
+                inquiryTitle
+        );
+    }
+
+
 //
 //    public void inquiryContent(int inquiryCode, int memberCode, Date inquiryWriteDate, String inquiryStatus, String inquiryDetail, String inquiryTitle, Date inquiryModifyDate, Date inquiryDeleteDate, String inquiryReply, String inquiryReplyStatus, String memberId, String memberName, String memberEmail) {
 //        this.inquiryCode = inquiryCode;

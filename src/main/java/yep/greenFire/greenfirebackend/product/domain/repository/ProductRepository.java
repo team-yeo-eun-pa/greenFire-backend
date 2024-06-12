@@ -9,8 +9,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
+
 import yep.greenFire.greenfirebackend.product.dto.response.ProductResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
+import yep.greenFire.greenfirebackend.product.presentation.ProductController;
 
 import java.util.Optional;
 
@@ -53,5 +55,28 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<ProductsResponse> findByProductNameContainsAndSellableStatus(Pageable pageable, String productName, SellableStatus sellableStatus);
 
 
+    /* 상품 상세 조회 */
+    @Query(
+            "select new yep.greenFire.greenfirebackend.product.dto.ProductDTO(p, c, s) " +
+                    "from Product p join Category c on c.categoryCode = p.categoryCode " +
+                    "join Store s on s.storeCode = p.storeCode " +
+                    "where p.productCode = :productCode " +
+                    "and p.sellableStatus = :sellableStatus"
+    )
+    Optional<ProductDTO> findByProductCodeAndSellableStatus(Long productCode, SellableStatus sellableStatus);
+
+
+
+    /* 판매자 상품 목록 */
+    @Query(
+            "select new yep.greenFire.greenfirebackend.product.dto.response.SellerProductsResponse(p) " +
+                    "from Product p " +
+                    "join Store st on st.storeCode = p.storeCode " +
+                    "join Seller sl on sl.sellerCode = st.sellerCode " +
+                    "where sl.memberCode = :memberCode"
+    )
+    Page<SellerProductsResponse> findByMemberCode(Pageable pageable, Long memberCode);
+
     boolean existsByProductCode (Long productCode);
+
 }

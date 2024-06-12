@@ -1,5 +1,6 @@
 package yep.greenFire.greenfirebackend.report.dto.response;
 
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,6 +25,7 @@ public class ReportsVO {
 
     private MemberStatus memberStatus;
 
+    @Enumerated
     private MemberRole memberRole;
 
     private Long reportCount;

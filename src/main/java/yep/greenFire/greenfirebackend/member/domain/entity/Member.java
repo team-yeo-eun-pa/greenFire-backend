@@ -1,5 +1,6 @@
 package yep.greenFire.greenfirebackend.member.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -33,33 +34,40 @@ public class Member {
     private MemberStatus memberStatus = MemberStatus.ACTIVE;
     @Enumerated(value = EnumType.STRING)
     private MemberRole memberRole = MemberRole.MEMBER;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @CreatedDate
     private LocalDateTime registDate;
-//    @LastModifiedDate
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime quitDate;
     private String refreshToken;
     private Long reportCount;
     private LocalDateTime suspendedEndDate;
 
 
-    private Member(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone) {
+    private Member(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone, MemberStatus memberStatus) {
         this.memberId = memberId;
         this.memberPassword = memberPassword;
         this.memberName = memberName;
         this.memberNickname = memberNickname == null || memberNickname.trim().isEmpty() ? memberId : memberNickname;
         this.memberEmail = memberEmail;
         this.memberPhone = memberPhone;
+        this.memberStatus = memberStatus;
     }
 
-    public static Member of(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone) {
+    public static Member of(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone, MemberStatus memberStatus) {
         return new Member(
                 memberId,
                 memberPassword,
                 memberName,
                 memberNickname,
                 memberEmail,
-                memberPhone
+                memberPhone,
+                memberStatus
         );
+    }
+
+    public void activate() {
+        this.memberStatus = MemberStatus.ACTIVE;
     }
 
     public void updateRefreshToken(String refreshToken) {

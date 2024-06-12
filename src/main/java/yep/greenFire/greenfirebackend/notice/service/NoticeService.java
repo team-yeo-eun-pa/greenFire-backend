@@ -50,13 +50,12 @@ public class NoticeService {
 //        return AdminNoticeResponse.from(notice);
     }
 
-    public Long save(NoticeCreateRequest noticeRequest, Long memberCode) {
+    public Long save(NoticeCreateRequest noticeCreateRequest, Long memberCode) {
 
 
         final Notice newNotice = Notice.of(
-                noticeRequest.getNoticeTitle(),
-                noticeRequest.getNoticeContent(),
-                noticeRequest.getNoticeFixable(),
+                noticeCreateRequest.getNoticeTitle(),
+                noticeCreateRequest.getNoticeContent(),
                 memberCode
         );
         Notice notice = noticeRepository.save(newNotice);

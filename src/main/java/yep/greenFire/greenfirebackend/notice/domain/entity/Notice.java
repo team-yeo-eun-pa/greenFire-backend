@@ -34,18 +34,16 @@ public class Notice {
 //    @JoinColumn(name = "noticeWriter", referencedColumnName = "memberCode")
     private Long noticeWriter;
 
-    public Notice(String noticeTitle, String noticeContent,String noticeFixable,Long noticeWriter) {
+    public Notice(String noticeTitle, String noticeContent,Long noticeWriter) {
         this.noticeTitle = noticeTitle;
         this.noticeContent = noticeContent;
-        this.noticeFixable=noticeFixable;
         this.noticeWriter=noticeWriter;
     }
 
-    public static Notice of(final String noticeTitle, final String noticeContent, final String noticeFixable, Long noticeWriter) {
+    public static Notice of(final String noticeTitle, final String noticeContent, Long noticeWriter) {
         return new Notice(
                 noticeTitle,
                 noticeContent,
-                noticeFixable,
                 noticeWriter
         );
     }

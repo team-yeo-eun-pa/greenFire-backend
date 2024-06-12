@@ -32,9 +32,10 @@ public class Product {
     private SellableStatus sellableStatus = SellableStatus.Y;
     private String productImageUrl;
 
-    public Product(String productName, Long categoryCode, Long storeCode,
+    public Product(Long productCode, String productName, Long categoryCode, Long storeCode,
                    Long price, String productDescription, Date registDate,
                    SellableStatus sellableStatus, String productImageUrl) {
+        this.productCode = productCode;
         this.productName = productName;
         this.categoryCode = categoryCode;
         this.storeCode = storeCode;
@@ -46,11 +47,12 @@ public class Product {
     }
 
     public static Product of(
-            final String productName, final Long categoryCode, final Long storeCode,
+            final Long productCode, final String productName, final Long categoryCode, final Long storeCode,
             final Long price, final String productDescription, final Date registDate,
             final SellableStatus sellableStatus, final String productImageUrl
     ) {
         return new Product(
+                productCode,
                 productName,
                 categoryCode,
                 storeCode,
@@ -61,7 +63,5 @@ public class Product {
                 productImageUrl
         );
     }
-
-
 
 }

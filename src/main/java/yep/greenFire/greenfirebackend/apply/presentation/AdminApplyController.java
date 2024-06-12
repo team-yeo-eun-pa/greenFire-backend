@@ -12,16 +12,18 @@ import yep.greenFire.greenfirebackend.apply.service.ApplyService;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
+import yep.greenFire.greenfirebackend.store.service.StoreService;
 
 import java.net.URI;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin")
+@RequestMapping("/admin/dashboard")
 public class AdminApplyController {
 
     private final ApplyService applyService;
+    private final StoreService storeService;
 
     @GetMapping("/applies")
     public ResponseEntity<PagingResponse> getAdminApplies(
@@ -50,6 +52,8 @@ public class AdminApplyController {
             @RequestBody @Valid final ApplyUpdateRequest applyRequest
     ) {
         applyService.applyAccept(sellerCode, applyRequest);
+        storeService.createNewStore(sellerCode, applyRequest);
+
         return ResponseEntity.created(URI.create("/admin/applies/" + sellerCode)).build();
     }
 

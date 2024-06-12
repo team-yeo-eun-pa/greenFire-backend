@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import yep.greenFire.greenfirebackend.member.domain.repository.MemberRepository;
+import yep.greenFire.greenfirebackend.member.domain.type.MemberRole;
 import yep.greenFire.greenfirebackend.member.domain.type.MemberStatus;
 import yep.greenFire.greenfirebackend.report.dto.response.ReportsVO;
 
@@ -24,10 +25,11 @@ public class ReportMembersService {
         return PageRequest.of(page - 1, 10, Sort.by("memberCode").descending());
     }
 
+
     @Transactional(readOnly = true)
-    public Page<ReportsVO> getMembersByStatus(Integer page) {
+    public Page<ReportsVO> getMembersByRoleAndStatus(MemberRole role, Integer page) {
         Pageable pageable = getPageable(page);
         List<MemberStatus> statuses = Arrays.asList(MemberStatus.STOP, MemberStatus.PERMANENTLY_SUSPENDED);
-        return memberRepository.findReportVOByMemberStatusIn(statuses, pageable);
+        return memberRepository.findReportVOByMemberStatusInAndRole(statuses, role, pageable);
     }
 }
