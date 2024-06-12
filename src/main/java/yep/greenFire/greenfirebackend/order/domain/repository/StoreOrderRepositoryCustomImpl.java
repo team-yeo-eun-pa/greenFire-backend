@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
-import org.springframework.stereotype.Repository;
 import yep.greenFire.greenfirebackend.order.dto.response.OrderResponse;
 import yep.greenFire.greenfirebackend.order.dto.response.StoreOrderDTO;
 
@@ -20,7 +19,6 @@ import static yep.greenFire.greenfirebackend.order.domain.entity.QStoreOrder.sto
 import static yep.greenFire.greenfirebackend.payment.domain.entity.QPayment.payment;
 import static yep.greenFire.greenfirebackend.store.domain.entity.QStore.store;
 
-@Repository
 @RequiredArgsConstructor
 public class StoreOrderRepositoryCustomImpl implements StoreOrderRepositoryCustom {
 

@@ -4,7 +4,6 @@ import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import yep.greenFire.greenfirebackend.order.dto.response.OrderDetailDTO;
 
 import java.util.List;
@@ -13,7 +12,6 @@ import static yep.greenFire.greenfirebackend.order.domain.entity.QOrderDetail.or
 import static yep.greenFire.greenfirebackend.product.domain.entity.QProduct.product;
 import static yep.greenFire.greenfirebackend.product.domain.entity.QProductOption.productOption;
 
-@Repository
 @RequiredArgsConstructor
 public class OrderDetailRepositoryCustomImpl implements OrderDetailRepositoryCustom {
 
