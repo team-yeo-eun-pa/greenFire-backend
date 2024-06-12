@@ -1,37 +1,37 @@
 package yep.greenFire.greenfirebackend.inquiry.site.dto.response;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import yep.greenFire.greenfirebackend.inquiry.entity.InquiryContent;
 
+import java.util.Date;
+
 @Getter
+
+
 public class InquiryResponse {
 
-    //문의 등록 전 문의 목록 조회
+    //문의 목록 조회
 
-    private Integer inquiryCode;
-    private String inquiryStatus;
-    private String inquiryReply;
-    private String inquiryReplyStatus;
-    private Long memberCode;
+    private final Date inquiryWriteDate;
+    private final String inquiryTitle;
+    private final String inquiryDetail;
+  //  private String inquiryReplyStatus;
 
-
-    public InquiryResponse(Integer inquiryCode, String inquiryStatus, String inquiryReply, String inquiryReplyStatus, Long memberCode) {
-        this.inquiryCode = inquiryCode;
-        this.inquiryStatus = inquiryStatus;
-        this.inquiryReply = inquiryReply;
-        this.inquiryReplyStatus = inquiryReplyStatus;
-        this.memberCode = memberCode;
+    public InquiryResponse(Date inquiryWriteDate, String inquiryTitle, String inquiryDetail) {
+        this.inquiryWriteDate = inquiryWriteDate;
+        this.inquiryTitle = inquiryTitle;
+        this.inquiryDetail = inquiryDetail;
+    //    this.inquiryReplyStatus = inquiryReplyStatus;
     }
-
-
 
     public static InquiryResponse from(InquiryContent inquiryContent) {
         return new InquiryResponse(
-                inquiryContent.getInquiryCode(),
-                inquiryContent.getInquiryStatus(),
-                inquiryContent.getInquiryReply(),
-                inquiryContent.getInquiryReplyStatus(),
-                inquiryContent.getMemberCode()
+                inquiryContent.getInquiryWriteDate(),
+                inquiryContent.getInquiryTitle(),
+                inquiryContent.getInquiryDetail()
+         //       inquiryContent.getInquiryReplyStatus()
+
 
         );
 

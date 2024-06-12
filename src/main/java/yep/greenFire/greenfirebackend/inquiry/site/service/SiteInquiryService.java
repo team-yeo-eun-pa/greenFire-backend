@@ -60,6 +60,13 @@ public class SiteInquiryService {
         return newContent.getInquiryCode();
     }
 
+    @Transactional(readOnly = true)
+    public InquiryResponse getInquiryDetail(Long inquiryCode) {
+        InquiryResponse inquiryDetail = siteInquiryRepository.getInquiryDetail(inquiryCode);
+
+        return inquiryDetail;
+    }
+
 
 //    public int Replysave(
 //            @RequestBody @Valid ReplyInquiryCreateRequest replyInquiryCreateRequest,
