@@ -1,17 +1,21 @@
 ### 주문 등록
 POST http://localhost:8001/orders
 Content-Type: application/json
-Access-Token: Bearer eyJkYXRlIjoxNzE3OTgzODU0NjQ5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6IjEyMyIsIm1lbWJlclJvbGUiOiJST0xFX01FTUJFUiIsImV4cCI6MTcxNzk4NzQ1NH0.wAa8EeMkw1jIkSUdaL9kZf_TBCn-2GZqy-J8N6EsWKio_h58WPZ0CeCSEKGV317Jo6kM0IX5hNTTWUqrRjK6Fg
+Access-Token: Bearer eyJkYXRlIjoxNzE4MTc3MjM1MzQ3LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6IjEyIiwiZXhwIjoxNzE4MTgwODM1fQ.TZsSLOSwD2EJmlHSgv-_Cy7xGdkCdtQuTPp4R7J3gCeKhIcyMcOC7nmKw4n7c2xfMofA46pCUZQNJrDGc5bk1g
 
 {
-    "deliveryAddressCode": 1,
+    "deliveryAddressCode": 14,
     "storeOrders": [
         {
             "orderDetails": [
                 {
                     "optionCode": 5,
                     "orderQuantity": 1
-                }
+                },
+              {
+                "optionCode": 7,
+                "orderQuantity": 1
+              }
             ]
         },
         {
@@ -28,7 +32,7 @@ Access-Token: Bearer eyJkYXRlIjoxNzE3OTgzODU0NjQ5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
 ### 회원 배송지 등록
 POST http://localhost:8001/delivery-addresses
 Content-Type: application/json
-Access-Token: Bearer eyJkYXRlIjoxNzE4MDMyNTMxMjY3LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9TRUxMRVIiLCJtZW1iZXJJZCI6IjEyMyIsImV4cCI6MTcxODAzNjEzMX0.SmvrIMf0UCf32ND1GEdLB7SOudKYCmA70gJLt7-hVKJcgbTivtjkU0u7LcrUW_w26DaAZwHwohykhhvlOquj2Q
+Access-Token: Bearer eyJkYXRlIjoxNzE4MTAyOTExMDUxLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6IjEyIiwiZXhwIjoxNzE4MTA2NTExfQ.JIjlqv2Bh9G1RxDd-QiwW2DQVrcu-vvHZs40nNun-oOE8d7UVP9AlbH7peodysVCOsdRSz3MrMrIaNxF2H9XJg
 
 {
   "deliveryAddressName": "한솔이네",
@@ -57,8 +61,8 @@ Access-Token: Bearer eyJkYXRlIjoxNzE4MDExMDIxNTExLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
 }
 
 ### 회원 주문 조회
-GET http://localhost:8001/members/123/orders?page=1
-Access-Token: Bearer eyJkYXRlIjoxNzE3OTgzODU0NjQ5LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6IjEyMyIsIm1lbWJlclJvbGUiOiJST0xFX01FTUJFUiIsImV4cCI6MTcxNzk4NzQ1NH0.wAa8EeMkw1jIkSUdaL9kZf_TBCn-2GZqy-J8N6EsWKio_h58WPZ0CeCSEKGV317Jo6kM0IX5hNTTWUqrRjK6Fg
+GET http://localhost:8001/members/orders?page=1
+Access-Token: Bearer eyJkYXRlIjoxNzE4MTgyNTA5NjQ1LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6IjEyIiwiZXhwIjoxNzE4MTg2MTA5fQ.93E1G4N_DdUl9sHPcs-q0syq30Nc8OL_tKgQ5VElaDWRCCz0cUFXf2v0qY2E_QTnh7XHbt47MzZEBy_SGxqF9Q
 
 ### 회원 배송지 조회
 GET http://localhost:8001/members/123/delivery-addresses
