@@ -27,4 +27,18 @@ public class EmailVerification {
 
     private boolean isVerified = false;
 
+    private EmailVerification(Long memberCode, String verificationCode, LocalDateTime expirationTime) {
+        this.memberCode = memberCode;
+        this.verificationCode = verificationCode;
+        this.expirationTime = expirationTime;
+        this.isVerified = false;
+    }
+
+    public static EmailVerification of(Long memberCode, String verificationCode, LocalDateTime expirationTime) {
+        return new EmailVerification(memberCode, verificationCode, expirationTime);
+    }
+
+    public void verify() {
+        this.isVerified = true;
+    }
 }
