@@ -1,65 +1,46 @@
 package yep.greenFire.greenfirebackend.product.dto.response;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import yep.greenFire.greenfirebackend.product.domain.entity.Category;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
-import yep.greenFire.greenfirebackend.store.domain.entity.Store;
-
 import java.util.Date;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class ProductsResponse {
+public class SellerProductsResponse {
 
     private final Long productCode;
     private final String productName;
     private final Long categoryCode;
-    private final String categoryTitle;
     private final Long storeCode;
-    private final String storeName;
     private final Long price;
     private final Date registDate;
     private final SellableStatus sellableStatus;
 
-    public static ProductsResponse from(final Product product, Category category, Store store) {
-        return new ProductsResponse(
+
+    public static SellerProductsResponse from(final Product product) {
+        return new SellerProductsResponse(
                 product.getProductCode(),
                 product.getProductName(),
                 product.getCategoryCode(),
-                category.getCategoryTitle(),
                 product.getStoreCode(),
-                store.getStoreName(),
                 product.getPrice(),
                 product.getRegistDate(),
                 product.getSellableStatus()
         );
+
     }
 
-    public ProductsResponse(Product product, Category category, Store store) {
+    public SellerProductsResponse(Product product) {
         this.productCode = product.getProductCode();
         this.productName = product.getProductName();
         this.categoryCode = product.getCategoryCode();
-        this.categoryTitle = category.getCategoryTitle();
         this.storeCode = product.getStoreCode();
-        this.storeName = store.getStoreName();
         this.price = product.getPrice();
         this.registDate = product.getRegistDate();
         this.sellableStatus = product.getSellableStatus();
     }
-
-//    public SellerProductsResponse toSellerProductsResponse() {
-//        return new SellerProductsResponse(
-//            this.productCode,
-//            this.productName,
-//            this.categoryCode,
-//            this.storeCode,
-//            this.price,
-//            this.registDate,
-//            this.sellableStatus
-//        );
-//    }
-
 }

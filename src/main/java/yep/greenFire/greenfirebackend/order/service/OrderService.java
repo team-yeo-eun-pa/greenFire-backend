@@ -8,11 +8,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import yep.greenFire.greenfirebackend.order.domain.entity.DeliveryAddress;
+import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
+import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
+import yep.greenFire.greenfirebackend.delivery.domain.entity.Delivery;
+import yep.greenFire.greenfirebackend.delivery.domain.entity.DeliveryAddress;
+import yep.greenFire.greenfirebackend.delivery.domain.repository.DeliveryAddressRepository;
+import yep.greenFire.greenfirebackend.delivery.domain.repository.DeliveryRepository;
+import yep.greenFire.greenfirebackend.delivery.domain.type.DeliveryType;
 import yep.greenFire.greenfirebackend.order.domain.entity.Order;
 import yep.greenFire.greenfirebackend.order.domain.entity.OrderDetail;
 import yep.greenFire.greenfirebackend.order.domain.entity.StoreOrder;
-import yep.greenFire.greenfirebackend.order.domain.repository.DeliveryAddressRepository;
 import yep.greenFire.greenfirebackend.order.domain.repository.OrderRepository;
 import yep.greenFire.greenfirebackend.order.domain.type.OrderStatus;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderApprovalRequest;
@@ -41,6 +46,8 @@ public class OrderService {
     private final StoreRepository storeRepository;
 
     private final OrderRepository orderRepository;
+
+    private final DeliveryRepository deliveryRepository;
 
 
     // 주문 등록
@@ -122,7 +129,7 @@ public class OrderService {
 
         // 배송지 테이블에서 불러옴
         Optional<DeliveryAddress> addressOptional = deliveryAddressRepository.findByDeliveryAddressCodeAndMemberCode(orderCreateRequest.getDeliveryAddressCode(), memberCode);
-        DeliveryAddress address = addressOptional.orElseThrow(() -> new IllegalArgumentException("Invalid delivery address"));
+        DeliveryAddress address = addressOptional.orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_DELIVERY_CODE));
 //        if (!addressOptional.isPresent()) {
 //        }
 
@@ -187,20 +194,45 @@ public class OrderService {
 
             for (StoreOrder storeOrder : storeOrders) {
 
-                if (storeOrder.getStoreCode().equals(orderApprovalRequest.getStoreCode())) {
 
-                    // 만약 orderStatus가 SHIPPED 배송 중으로 바뀌면 운송장 정보도 테이블에 등록할 수 있게 해야한다.
+                if (storeOrder.getStoreOrderCode().equals(orderApprovalRequest.getStoreOrderCode())) {
+
+                    // orderStatus가 RECEIVED에서 REJECTED 또는 PROCESSING으로 바뀔 수 있다.
+
                     OrderStatus orderStatus = OrderStatus.fromValue(orderApprovalRequest.getOrderStatus());
 
-                    storeOrder.modifyOrderApply(
-                            orderStatus,
-                            LocalDateTime.now(),
-                            orderApprovalRequest.getRejectionReason());
+                    if (orderStatus == OrderStatus.REJECTED || orderStatus == OrderStatus.PROCESSING) {
+
+                        storeOrder.modifyOrderApply(
+                                orderStatus,
+                                LocalDateTime.now(),
+                                orderApprovalRequest.getRejectionReason());
+
+                    }
+                    System.out.println("storeorder : " + storeOrder);
+
+                    // orderStatus가 PROCESSING에서 SHIPPED으로 바뀌면 운송장 정보도 테이블에 등록할 수 있게 해야한다.
+
+                    if (orderStatus == OrderStatus.SHIPPED && storeOrder.getRejectionReason().isEmpty()) {
+
+                        DeliveryType deliveryType = DeliveryType.fromValue(orderApprovalRequest.getDeliveryType());
+
+                        final Delivery newDelivery = Delivery.of(
+                                orderApprovalRequest.getStoreOrderCode(),
+                                orderApprovalRequest.getDeliveryCompany(),
+                                orderApprovalRequest.getTransportNumber(),
+                                deliveryType
+                        );
+
+                        deliveryRepository.save(newDelivery);
+
+                    } else {
+                        throw new NotFoundException(ExceptionCode.ORDER_ALREADY_REJECTED);
+                    }
                 }
             }
-
         } else {
-            throw new EntityNotFoundException("Order not found with code: " + orderApprovalRequest.getOrderCode());
+            throw new NotFoundException(ExceptionCode.NOT_FOUND_VALID_ORDER);
         }
     }
 }

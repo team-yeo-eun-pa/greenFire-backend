@@ -9,11 +9,25 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
+import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
+import yep.greenFire.greenfirebackend.product.domain.entity.Category;
+import yep.greenFire.greenfirebackend.product.domain.entity.Product;
+import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
+import yep.greenFire.greenfirebackend.product.domain.repository.CategoryRepository;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductOptionRepository;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductRepository;
+import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
-import yep.greenFire.greenfirebackend.product.dto.response.ProductResponse;
-import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
+import yep.greenFire.greenfirebackend.product.dto.ProductDTO;
+import yep.greenFire.greenfirebackend.product.dto.ProductOptionDTO;
+import yep.greenFire.greenfirebackend.product.dto.response.*;
+import yep.greenFire.greenfirebackend.store.domain.entity.Store;
+import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -23,12 +37,8 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductOptionRepository productOptionRepository;
+    private final StoreRepository storeRepository;
 
-
-//    @Value("${image.image-url}")
-//    private String IMG_URL;
-//    @Value("src/main/resources/static/productimg")
-//    private String IMG_DIR;
 
 
 
@@ -53,13 +63,55 @@ public class ProductService {
         }
     }
 
+    /* 상품 상세 조회 */
+
+    @Transactional(readOnly = true)
+    public ProductResponse getProduct(final Long productCode) {
+
+        ProductDTO product = productRepository.findByProductCodeAndSellableStatus(productCode, SellableStatus.Y)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+
+        List<ProductOption> productOptions = productOptionRepository.findByProductCodeAndOptionAppearActivate(productCode, ProductOptionAppearActivate.Y);
 
 
+        return ProductResponse.of(product, productOptions.stream().map(productOption -> ProductOptionDTO.from(productOption)).collect(Collectors.toList()));
+
+    }
+
+//    @Transactional(readOnly = true)
+//    public ProductOptionResponse getProductOption(final Long productCode) {
+//
+//        ProductOptionResponse productOptionResponse = productOptionRepository.findByProductCodeAndOptionAppearActivate(productCode, ProductOptionAppearActivate.Y)
+//                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+//
+//        return productOptionResponse;
+//    }
 
 
+    /* 마이스토어 상품 목록 조회 */
+    @Transactional(readOnly = true)
+    public Page<SellerProductsResponse> getSellerProducts(final Integer page, final Long memberCode) {
 
+        /* 현재 로그인한 memberCode와 일치하는 storeCode 찾기 */
+//        Long storeCode = storeRepository.findStoreByMemberCode(memberCode);
 
+        /* 스토어 코드와 일치하는 상품 목록 찾기 */
+        Page<SellerProductsResponse> sellerProducts = productRepository.findByMemberCode(getPageable(page), memberCode);
+//        Optional<AdminCategoryResponse> categories = CategoryRepository.
 
+//        return sellerProducts.map(ProductsResponse::toSellerProductsResponse);
+        return sellerProducts;
+
+    }
 
 
 }
+
+
+
+
+
+
+
+
+
