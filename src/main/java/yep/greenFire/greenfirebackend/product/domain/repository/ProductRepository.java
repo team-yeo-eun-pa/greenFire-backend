@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
+import yep.greenFire.greenfirebackend.product.dto.ProductDTO;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.SellerProductsResponse;
@@ -56,14 +57,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     /* 상품 상세 조회 */
     @Query(
-            "select new yep.greenFire.greenfirebackend.product.dto.response.ProductResponse(p, c, s, po) " +
+            "select new yep.greenFire.greenfirebackend.product.dto.ProductDTO(p, c, s) " +
                     "from Product p join Category c on c.categoryCode = p.categoryCode " +
                     "join Store s on s.storeCode = p.storeCode " +
-                    "join ProductOption po on p.productCode = po.productCode " +
                     "where p.productCode = :productCode " +
                     "and p.sellableStatus = :sellableStatus"
     )
-    Optional<Product> findByProductCodeAndSellableStatus(Long productCode, SellableStatus sellableStatus);
+    Optional<ProductDTO> findByProductCodeAndSellableStatus(Long productCode, SellableStatus sellableStatus);
 
 
 

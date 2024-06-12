@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
+import yep.greenFire.greenfirebackend.product.domain.entity.Category;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
 import yep.greenFire.greenfirebackend.product.domain.repository.CategoryRepository;
@@ -67,14 +68,14 @@ public class ProductService {
     @Transactional(readOnly = true)
     public ProductResponse getProduct(final Long productCode) {
 
-        Product product = productRepository.findByProductCodeAndSellableStatus(productCode, SellableStatus.Y)
+        ProductDTO product = productRepository.findByProductCodeAndSellableStatus(productCode, SellableStatus.Y)
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
 
         List<ProductOption> productOptions = productOptionRepository.findByProductCodeAndOptionAppearActivate(productCode, ProductOptionAppearActivate.Y);
 
 
+        return ProductResponse.of(product, productOptions.stream().map(productOption -> ProductOptionDTO.from(productOption)).collect(Collectors.toList()));
 
-        return ProductResponse.of(ProductDTO.from(product), productOptions.stream().map(productOption -> ProductOptionDTO.from(productOption)).collect(Collectors.toList()));
     }
 
 //    @Transactional(readOnly = true)

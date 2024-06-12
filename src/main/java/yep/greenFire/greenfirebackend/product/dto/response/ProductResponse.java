@@ -23,9 +23,11 @@ public class ProductResponse {
     private ProductDTO productInfo;
     private List<ProductOptionDTO> productOptions;
 
+
     public ProductResponse(ProductDTO productInfo, List<ProductOptionDTO> productOptions) {
         this.productInfo = productInfo;
         this.productOptions = productOptions;
+
     }
 
     public static ProductResponse of(final ProductDTO productInfo, List<ProductOptionDTO> productOptions) {

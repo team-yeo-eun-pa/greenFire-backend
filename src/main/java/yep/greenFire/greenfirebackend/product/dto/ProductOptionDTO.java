@@ -19,6 +19,11 @@ public class ProductOptionDTO {
     private Long optionStock;
 
     public ProductOptionDTO(Long optionCode, Long productCode, String optionName, Long optionPrice, Long optionStock) {
+        this.optionCode = optionCode;
+        this.productCode = productCode;
+        this.optionName = optionName;
+        this.optionPrice = optionPrice;
+        this.optionStock = optionStock;
     }
 
     public static ProductOptionDTO from(final ProductOption option) {
