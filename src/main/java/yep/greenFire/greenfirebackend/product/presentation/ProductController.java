@@ -64,6 +64,15 @@ public class ProductController {
     }
 
 
+    /* 판매자 상품 삭제 */
+    @DeleteMapping("/product/{productCode}")
+    public ResponseEntity<Void> remove(@PathVariable final Long productCode) {
+        productService.remove(productCode);
+
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 
 }
