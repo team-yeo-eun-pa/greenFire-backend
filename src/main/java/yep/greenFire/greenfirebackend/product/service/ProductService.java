@@ -19,12 +19,14 @@ import yep.greenFire.greenfirebackend.product.domain.repository.ProductRepositor
 import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 import yep.greenFire.greenfirebackend.product.dto.ProductDTO;
+import yep.greenFire.greenfirebackend.product.dto.ProductOptionDTO;
 import yep.greenFire.greenfirebackend.product.dto.response.*;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -65,12 +67,14 @@ public class ProductService {
     @Transactional(readOnly = true)
     public ProductResponse getProduct(final Long productCode) {
 
-//        ProductDTO product = productRepository.findByProductCodeAndSellableStatus(productCode, SellableStatus.Y)
-//                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+        Product product = productRepository.findByProductCodeAndSellableStatus(productCode, SellableStatus.Y)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
 
         List<ProductOption> productOptions = productOptionRepository.findByProductCodeAndOptionAppearActivate(productCode, ProductOptionAppearActivate.Y);
 
-        return null;
+
+
+        return ProductResponse.of(ProductDTO.from(product), productOptions.stream().map(productOption -> ProductOptionDTO.from(productOption)).collect(Collectors.toList()));
     }
 
 //    @Transactional(readOnly = true)

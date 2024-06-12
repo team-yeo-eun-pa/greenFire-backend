@@ -63,7 +63,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                     "where p.productCode = :productCode " +
                     "and p.sellableStatus = :sellableStatus"
     )
-    Optional<ProductResponse> findByProductCodeAndSellableStatus(Long productCode, SellableStatus sellableStatus);
+    Optional<Product> findByProductCodeAndSellableStatus(Long productCode, SellableStatus sellableStatus);
 
 
 

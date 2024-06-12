@@ -3,6 +3,7 @@ package yep.greenFire.greenfirebackend.product.domain.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
 import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
+import yep.greenFire.greenfirebackend.product.dto.ProductOptionDTO;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductOptionResponse;
 
 import java.util.List;
