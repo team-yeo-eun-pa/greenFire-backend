@@ -29,7 +29,7 @@ public class Order {
     private String receiverName;
     private String contactNumber;
 
-    private String addressZonecode;
+    private Long addressZonecode;
     @Enumerated(value = EnumType.STRING)
     private AddressType addressType;
     private String address;
@@ -55,10 +55,10 @@ public class Order {
     private LocalDateTime cancelDate;
 
     @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "orderCode")
+    @JoinColumn(name = "order_code")
     private List<StoreOrder> storeOrders;
 
-    private Order(Long memberCode,String orderName, String receiverName, String contactNumber, String addressZonecode, AddressType addressType, String address, String addressDetail, String deliveryRequest,
+    private Order(Long memberCode,String orderName, String receiverName, String contactNumber, Long addressZonecode, AddressType addressType, String address, String addressDetail, String deliveryRequest,
                  Long totalOrderAmount, Long totalDiscountAmount, Long totalDeliveryAmount, Long totalRealPayment,
                   List<StoreOrder> storeOrders) {
         this.memberCode = memberCode;
@@ -78,7 +78,7 @@ public class Order {
     }
 
 
-    public static Order of(Long memberCode, String orderName, String receiverName, String contactNumber, String addressZonecode, AddressType addressType, String address,String addressDetail, String deliveryRequest, Long totalOrderAmount, Long totalDiscountAmount, Long totalDeliveryAmount, Long totalRealPayment,  List<StoreOrder> storeOrders) {
+    public static Order of(Long memberCode, String orderName, String receiverName, String contactNumber, Long addressZonecode, AddressType addressType, String address,String addressDetail, String deliveryRequest, Long totalOrderAmount, Long totalDiscountAmount, Long totalDeliveryAmount, Long totalRealPayment,  List<StoreOrder> storeOrders) {
         return new Order(memberCode, orderName,
                 receiverName, contactNumber,
                 addressZonecode,addressType, address, addressDetail, deliveryRequest,

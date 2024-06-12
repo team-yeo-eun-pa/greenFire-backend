@@ -1,5 +1,6 @@
 package yep.greenFire.greenfirebackend.order.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -9,28 +10,28 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
+import yep.greenFire.greenfirebackend.delivery.domain.entity.Delivery;
 import yep.greenFire.greenfirebackend.delivery.domain.entity.DeliveryAddress;
 import yep.greenFire.greenfirebackend.delivery.domain.repository.DeliveryAddressRepository;
 import yep.greenFire.greenfirebackend.delivery.domain.repository.DeliveryRepository;
+import yep.greenFire.greenfirebackend.delivery.domain.type.DeliveryType;
 import yep.greenFire.greenfirebackend.order.domain.entity.Order;
 import yep.greenFire.greenfirebackend.order.domain.entity.OrderDetail;
 import yep.greenFire.greenfirebackend.order.domain.entity.StoreOrder;
-import yep.greenFire.greenfirebackend.order.domain.repository.OrderDetailRepository;
 import yep.greenFire.greenfirebackend.order.domain.repository.OrderRepository;
-import yep.greenFire.greenfirebackend.order.domain.repository.StoreOrderRepository;
 import yep.greenFire.greenfirebackend.order.domain.type.OrderStatus;
+import yep.greenFire.greenfirebackend.order.dto.request.OrderApprovalRequest;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderCreateRequest;
-import yep.greenFire.greenfirebackend.order.dto.response.OrderDetailDTO;
 import yep.greenFire.greenfirebackend.order.dto.response.OrderResponse;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
 import yep.greenFire.greenfirebackend.product.service.ProductOptionService;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -47,10 +48,6 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     private final DeliveryRepository deliveryRepository;
-
-    private final StoreOrderRepository storeOrderRepository;
-
-    private final OrderDetailRepository orderDetailRepository;
 
 
     // 주문 등록
@@ -144,7 +141,7 @@ public class OrderService {
                 address.getReceiverName(),
                 address.getContactNumber(),
 
-                "우편번호 다시 넣어라",
+                address.getAddressZonecode(),
                 address.getAddressType(),
                 address.getAddress(),
                 address.getAddressDetail(),
@@ -175,104 +172,67 @@ public class OrderService {
 
     // 회원 - 주문 조회
     @Transactional
-    public Page<OrderResponse> getOrderByMemberCode(Long memberCode, Integer page) {
+    public Page<OrderResponse> getOrders(Long memberCode, Integer page) {
 
-        Page<OrderResponse> orderResponses = orderRepository.findByMemberCode(memberCode, getPageable(page));
-
-        orderResponses.forEach(orderResponse -> {
-            orderResponse.getStoreOrders().forEach(storeOrderDTO -> {
-                List<OrderDetailDTO> orderDetailDTOs = orderDetailRepository.findByStoreOrderCode(storeOrderDTO.getStoreOrderCode());
-
-
-                storeOrderDTO.setOrderDetails(orderDetailDTOs);
-            });
-        });
-        return orderResponses;
+        return orderRepository.findByMemberCode(memberCode, getPageable(page));
     }
 
     // 스토어 - 주문 조회
     @Transactional
-    public Page<OrderResponse> getOrderByStoreCode(Long storeCode, Integer page) {
+    public Page<OrderResponse> getStoreOrders(Long storeCode, Integer page) {
 
-        Page<OrderResponse> orderResponses = storeOrderRepository.findByStoreCode(storeCode, getPageable(page));
-
-        orderResponses.forEach(orderResponse -> {
-            orderResponse.getStoreOrders().forEach(storeOrderDTO -> {
-                List<OrderDetailDTO> orderDetailDTOs = orderDetailRepository.findByStoreOrderCode(storeOrderDTO.getStoreOrderCode());
-
-
-                storeOrderDTO.setOrderDetails(orderDetailDTOs);
-            });
-        });
-        return orderResponses;
-    }
-
-    // 스토어 & 주문 상태에 따른 - 주문 조회
-    @Transactional
-    public Page<OrderResponse> getStoreOrderStatus(Long storeCode, List<String> storeOrderStatus, Integer page) {
-
-
-//        OrderStatus orderStatus = OrderStatus.fromValue(storeOrderStatus);
-        List<OrderStatus> orderStatuses = storeOrderStatus.stream()
-                .map(OrderStatus::fromValue)
-                .collect(Collectors.toList());
-
-//        return orderRepository.findByStoreCodeAndOrderStatus(storeCode, orderStatuses, getPageable(page));
-        return null;
-
+        return orderRepository.findByStoreCode(storeCode, getPageable(page));
     }
 
 
-//    // 스토어 - 주문 상태 변경
-//    public void modifyOrderStatus(OrderApprovalRequest orderApprovalRequest) {
-//        Optional<Order> orderOptional = orderRepository.findByOrderCode(orderApprovalRequest.getOrderCode());
-//
-//        if (orderOptional.isPresent()) {
-//            List<StoreOrder> storeOrders = orderOptional.get().getStoreOrders();
-//
-//            for (StoreOrder storeOrder : storeOrders) {
-//
-//                if (storeOrder.getStoreOrderCode().equals(orderApprovalRequest.getStoreOrderCode())) {
-//
-//                    // orderStatus가 RECEIVED에서 REJECTED 또는 PROCESSING으로 바뀔 수 있다.
-//
-//                    OrderStatus orderStatus = OrderStatus.fromValue(orderApprovalRequest.getOrderStatus());
-//
-//                    if (orderStatus == OrderStatus.REJECTED || orderStatus == OrderStatus.PROCESSING) {
-//
-//                        storeOrder.modifyOrderApply(
-//                                orderStatus,
-//                                LocalDateTime.now(),
-//                                orderApprovalRequest.getRejectionReason());
-//
-//                    }
-//                    System.out.println("storeorder : " + storeOrder);
-//
-//                    // orderStatus가 PROCESSING에서 SHIPPED으로 바뀌면 운송장 정보도 테이블에 등록할 수 있게 해야한다.
-//
-//                    if (orderStatus == OrderStatus.SHIPPED && storeOrder.getRejectionReason().isEmpty()) {
-//
-//                        DeliveryType deliveryType = DeliveryType.fromValue(orderApprovalRequest.getDeliveryType());
-//
-//                        final Delivery newDelivery = Delivery.of(
-//                                orderApprovalRequest.getStoreOrderCode(),
-//                                orderApprovalRequest.getDeliveryCompany(),
-//                                orderApprovalRequest.getTransportNumber(),
-//                                deliveryType
-//                        );
-//
-//                        deliveryRepository.save(newDelivery);
-//
-//                    } else {
-//                        throw new NotFoundException(ExceptionCode.ORDER_ALREADY_REJECTED);
-//                    }
-//                }
-//            }
-//        } else {
-//            throw new NotFoundException(ExceptionCode.NOT_FOUND_VALID_ORDER);
-//        }
-//    }
-//
-//    public Page<OrderResponse> getOrders(Long memberCode, Integer page) {
-//    }
+    // 스토어 - 주문 상태 변경
+    public void modifyOrderStatus(OrderApprovalRequest orderApprovalRequest) {
+        Optional<Order> orderOptional = orderRepository.findByOrderCode(orderApprovalRequest.getOrderCode());
+
+        if (orderOptional.isPresent()) {
+            List<StoreOrder> storeOrders = orderOptional.get().getStoreOrders();
+
+            for (StoreOrder storeOrder : storeOrders) {
+
+
+                if (storeOrder.getStoreOrderCode().equals(orderApprovalRequest.getStoreOrderCode())) {
+
+                    // orderStatus가 RECEIVED에서 REJECTED 또는 PROCESSING으로 바뀔 수 있다.
+
+                    OrderStatus orderStatus = OrderStatus.fromValue(orderApprovalRequest.getOrderStatus());
+
+                    if (orderStatus == OrderStatus.REJECTED || orderStatus == OrderStatus.PROCESSING) {
+
+                        storeOrder.modifyOrderApply(
+                                orderStatus,
+                                LocalDateTime.now(),
+                                orderApprovalRequest.getRejectionReason());
+
+                    }
+                    System.out.println("storeorder : " + storeOrder);
+
+                    // orderStatus가 PROCESSING에서 SHIPPED으로 바뀌면 운송장 정보도 테이블에 등록할 수 있게 해야한다.
+
+                    if (orderStatus == OrderStatus.SHIPPED && storeOrder.getRejectionReason().isEmpty()) {
+
+                        DeliveryType deliveryType = DeliveryType.fromValue(orderApprovalRequest.getDeliveryType());
+
+                        final Delivery newDelivery = Delivery.of(
+                                orderApprovalRequest.getStoreOrderCode(),
+                                orderApprovalRequest.getDeliveryCompany(),
+                                orderApprovalRequest.getTransportNumber(),
+                                deliveryType
+                        );
+
+                        deliveryRepository.save(newDelivery);
+
+                    } else {
+                        throw new NotFoundException(ExceptionCode.ORDER_ALREADY_REJECTED);
+                    }
+                }
+            }
+        } else {
+            throw new NotFoundException(ExceptionCode.NOT_FOUND_VALID_ORDER);
+        }
+    }
 }

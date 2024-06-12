@@ -30,14 +30,14 @@ public class DeliveryAddress {
     private String receiverName;
     private String contactNumber;
 
-    private String addressZonecode;
+    private Long addressZonecode;
     @Enumerated(value = EnumType.STRING)
     private AddressType addressType;
     private String address;
     private String addressDetail;
     private String deliveryRequest;
 
-    private DeliveryAddress(Long memberCode, String deliveryAddressName, Boolean isOrdinaryAddress, String receiverName, String contactNumber, String addressZonecode, AddressType addressType, String address, String addressDetail, String deliveryRequest) {
+    private DeliveryAddress(Long memberCode, String deliveryAddressName, Boolean isOrdinaryAddress, String receiverName, String contactNumber, Long addressZonecode, AddressType addressType, String address, String addressDetail, String deliveryRequest) {
         this.memberCode = memberCode;
         this.deliveryAddressName = deliveryAddressName;
         this.isOrdinaryAddress = isOrdinaryAddress;
@@ -54,7 +54,7 @@ public class DeliveryAddress {
                                      String deliveryAddressName,
                                      Boolean isOrdinaryAddress,
                                      String receiverName, String contactNumber,
-                                     String addressZonecode, AddressType addressType, String address, String addressDetail, String deliveryRequest) {
+                                     Long addressZonecode, AddressType addressType, String address, String addressDetail, String deliveryRequest) {
 
     return new DeliveryAddress(memberCode,
             deliveryAddressName,

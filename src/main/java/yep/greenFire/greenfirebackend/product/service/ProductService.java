@@ -78,28 +78,14 @@ public class ProductService {
 
     }
 
-//    @Transactional(readOnly = true)
-//    public ProductOptionResponse getProductOption(final Long productCode) {
-//
-//        ProductOptionResponse productOptionResponse = productOptionRepository.findByProductCodeAndOptionAppearActivate(productCode, ProductOptionAppearActivate.Y)
-//                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
-//
-//        return productOptionResponse;
-//    }
-
 
     /* 마이스토어 상품 목록 조회 */
     @Transactional(readOnly = true)
     public Page<SellerProductsResponse> getSellerProducts(final Integer page, final Long memberCode) {
 
-        /* 현재 로그인한 memberCode와 일치하는 storeCode 찾기 */
-//        Long storeCode = storeRepository.findStoreByMemberCode(memberCode);
-
         /* 스토어 코드와 일치하는 상품 목록 찾기 */
         Page<SellerProductsResponse> sellerProducts = productRepository.findByMemberCode(getPageable(page), memberCode);
-//        Optional<AdminCategoryResponse> categories = CategoryRepository.
 
-//        return sellerProducts.map(ProductsResponse::toSellerProductsResponse);
         return sellerProducts;
 
     }

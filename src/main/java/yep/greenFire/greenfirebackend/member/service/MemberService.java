@@ -25,7 +25,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Long signup(MemberSignupRequest memberRequest) {
+    public void signup(MemberSignupRequest memberRequest) {
 
         final Member newMember = Member.of(
                 memberRequest.getMemberId(),
@@ -33,13 +33,10 @@ public class MemberService {
                 memberRequest.getMemberName(),
                 memberRequest.getMemberNickname(),
                 memberRequest.getMemberEmail(),
-                memberRequest.getMemberPhone(),
-                memberRequest.getMemberStatus()
+                memberRequest.getMemberPhone()
         );
 
         memberRepository.save(newMember);
-
-        return newMember.getMemberCode();
     }
 
     @Transactional(readOnly = true)
