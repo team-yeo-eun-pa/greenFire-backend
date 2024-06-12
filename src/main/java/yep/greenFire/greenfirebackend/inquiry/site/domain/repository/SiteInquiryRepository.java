@@ -12,5 +12,5 @@ import yep.greenFire.greenfirebackend.inquiry.site.dto.response.InquiryResponse;
 public interface SiteInquiryRepository extends JpaRepository<InquiryContent, Integer> {
     Page<InquiryContent> findByMemberCode(Long memberCode, Pageable pageable);
 
-    InquiryResponse getInquiryDetail(Long inquiryCode);
+    InquiryResponse findByInquiryCode (Long inquiryCode);
 }

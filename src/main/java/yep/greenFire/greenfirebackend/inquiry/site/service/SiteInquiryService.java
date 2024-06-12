@@ -61,8 +61,8 @@ public class SiteInquiryService {
     }
 
     @Transactional(readOnly = true)
-    public InquiryResponse getInquiryDetail(Long inquiryCode) {
-        InquiryResponse inquiryDetail = siteInquiryRepository.getInquiryDetail(inquiryCode);
+    public InquiryResponse findByInquiryCode(Long inquiryCode) {
+        InquiryResponse inquiryDetail = siteInquiryRepository.findByInquiryCode(inquiryCode);
 
         return inquiryDetail;
     }

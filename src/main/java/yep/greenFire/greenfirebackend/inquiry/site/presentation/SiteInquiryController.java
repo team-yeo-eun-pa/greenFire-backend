@@ -66,11 +66,11 @@ public class SiteInquiryController {
 
 
     @GetMapping("members/detail")
-    public ResponseEntity<InquiryResponse> getInquiryDetail(
+    public ResponseEntity<InquiryResponse> findInquiryDetail(
             @PathVariable final Long inquiryCode
     ) {
 
-        InquiryResponse inquiryResponse = siteInquiryService.getInquiryDetail(inquiryCode);
+        InquiryResponse inquiryResponse = siteInquiryService.findByInquiryCode(inquiryCode);
 
 
 
