@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.aspectj.apache.bcel.classfile.Code;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,6 +29,8 @@ public class InquiryContent {
 
     @CreatedDate
     private Date inquiryWriteDate;
+
+    @ColumnDefault("미응답")
     private String inquiryStatus;
 
     private String inquiryDetail;
@@ -39,9 +42,21 @@ public class InquiryContent {
     private String inquiryReply;
     private String inquiryReplyStatus;
 
+    public InquiryContent(Integer inquiryCode, Long memberCode, Date inquiryWriteDate, String inquiryStatus, String inquiryDetail, String inquiryTitle, Date inquiryModifyDate, Date inquiryDeleteDate, String inquiryReply, String inquiryReplyStatus) {
+        this.inquiryCode = inquiryCode;
+        this.memberCode = memberCode;
+        this.inquiryWriteDate = inquiryWriteDate;
+        this.inquiryStatus = inquiryStatus;
+        this.inquiryDetail = inquiryDetail;
+        this.inquiryTitle = inquiryTitle;
+        this.inquiryModifyDate = inquiryModifyDate;
+        this.inquiryDeleteDate = inquiryDeleteDate;
+        this.inquiryReply = inquiryReply;
+        this.inquiryReplyStatus = inquiryReplyStatus;
+    }
 
 
-//    private int inquiryProduct;
+    //    private int inquiryProduct;
 //    private int inquiryChallenge;
 
 

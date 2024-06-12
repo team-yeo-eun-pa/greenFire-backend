@@ -23,8 +23,9 @@ public class ProductOption {
     private Long optionStock;
 
 
-    public ProductOption(Long productCode, String optionName, Long optionPrice,
+    public ProductOption(Long optionCode, Long productCode, String optionName, Long optionPrice,
                          Long optionStock, ProductOptionAppearActivate optionAppearActivate) {
+        this.optionCode = optionCode;
         this.productCode = productCode;
         this.optionName = optionName;
         this.optionPrice = optionPrice;
