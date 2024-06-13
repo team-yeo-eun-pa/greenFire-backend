@@ -52,16 +52,6 @@ public class ProductsResponse {
         this.productImageUrl = product.getProductImageUrl();
     }
 
-//    public SellerProductsResponse toSellerProductsResponse() {
-//        return new SellerProductsResponse(
-//            this.productCode,
-//            this.productName,
-//            this.categoryCode,
-//            this.storeCode,
-//            this.price,
-//            this.registDate,
-//            this.sellableStatus
-//        );
-//    }
+
 
 }

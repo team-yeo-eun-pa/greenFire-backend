@@ -8,11 +8,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.auth.type.CustomUser;
-import yep.greenFire.greenfirebackend.email.service.EmailVerificationService;
 import yep.greenFire.greenfirebackend.member.dto.request.MemberSignupRequest;
 import yep.greenFire.greenfirebackend.member.dto.request.ProfileUpdateRequest;
 import yep.greenFire.greenfirebackend.member.service.MemberService;
 import yep.greenFire.greenfirebackend.member.dto.response.ProfileResponse;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/members")
@@ -20,16 +21,12 @@ import yep.greenFire.greenfirebackend.member.dto.response.ProfileResponse;
 public class MemberController {
 
     private final MemberService memberService;
-    private final EmailVerificationService emailVerificationService;
 
     // 회원 가입
     @PostMapping("/signup")
     public ResponseEntity<Void> signup(@RequestBody @Valid MemberSignupRequest memberRequest) {
 
-        Long memberCode = memberService.signup(memberRequest);
-
-        // 이메일 인증 코드 발송
-        emailVerificationService.generateAndSendVerificationCode(memberCode, memberRequest.getMemberEmail());
+        memberService.signup(memberRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.web.bind.annotation.PutMapping;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 import yep.greenFire.greenfirebackend.product.domain.entity.Category;
@@ -19,6 +20,10 @@ import yep.greenFire.greenfirebackend.product.domain.repository.ProductOptionRep
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductRepository;
 import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
+import yep.greenFire.greenfirebackend.product.dto.ProductDTO;
+import yep.greenFire.greenfirebackend.product.dto.ProductOptionDTO;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductDeleteRequest;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionDeleteRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.*;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
@@ -26,6 +31,8 @@ import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static yep.greenFire.greenfirebackend.product.domain.type.SellableStatus.D;
 
 
 @Service
@@ -82,15 +89,6 @@ public class ProductService {
 
     }
 
-    //    @Transactional(readOnly = true)
-//    public ProductOptionResponse getProductOption(final Long productCode) {
-//
-//        ProductOptionResponse productOptionResponse = productOptionRepository.findByProductCodeAndOptionAppearActivate(productCode, ProductOptionAppearActivate.Y)
-//                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
-//
-//        return productOptionResponse;
-//    }
-
 
     /* 마이스토어 상품 목록 조회 */
     @Transactional(readOnly = true)
@@ -100,13 +98,30 @@ public class ProductService {
 //        Long storeCode = storeRepository.findStoreByMemberCode(memberCode);
 
         /* 스토어 코드와 일치하는 상품 목록 찾기 */
-        Page<SellerProductsResponse> sellerProducts = productRepository.findByMemberCode(getPageable(page), memberCode);
-//        Optional<AdminCategoryResponse> categories = CategoryRepository.
+        Page<SellerProductsResponse> sellerProducts = productRepository.findByMemberCodeAndSellableStatusNot(getPageable(page), memberCode, D);
 
-//        return sellerProducts.map(ProductsResponse::toSellerProductsResponse);
         return sellerProducts;
 
     }
+
+
+    /* 상품 삭제 */
+
+    public void modifyStatus(Long productCode, ProductDeleteRequest productDeleteRequest) {
+
+        Product product = productRepository.findByProductCodeAndSellableStatusNot(productCode, D)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+
+        List<ProductOption> productOptions = productOptionRepository.findByProductCode(productCode);
+
+        productOptions.forEach(productOption -> productOption.modifyStatus(ProductOptionAppearActivate.D));
+
+        product.modifyStatus(
+                productDeleteRequest.getSellablestatus()
+        );
+    }
+
+
 
 
 }
@@ -131,24 +146,22 @@ public class ProductService {
 //                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
 
 
-        final Product newProduct = Product.of(
-                productCreateRequest.getProductName(),
-                category.getCategoryCode(),
-                productCreateRequest.getStoreCode(),
-                productCreateRequest.getPrice(),
-                productCreateRequest.getProductDescription(),
-                productCreateRequest.getRegistDate(),
-                productCreateRequest.getSellableStatus(),
-                IMG_URL + replaceFileName
-
-        );
+//        final Product newProduct = Product.of(
+//                productCreateRequest.getProductName(),
+//                category.getCategoryCode(),
+//                productCreateRequest.getStoreCode(),
+//                productCreateRequest.getPrice(),
+//                productCreateRequest.getProductDescription(),
+//                productCreateRequest.getRegistDate(),
+//                productCreateRequest.getSellableStatus(),
+//                IMG_URL + replaceFileName
+//
+//        );
 
         final Product product = productRepository.save(newProduct);
 
         return product.getProductCode();
-
-    }
-
+        }
 
 
 
@@ -156,6 +169,3 @@ public class ProductService {
 
 
 
-
-
-}

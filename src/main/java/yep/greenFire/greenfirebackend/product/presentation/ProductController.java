@@ -2,7 +2,6 @@ package yep.greenFire.greenfirebackend.product.presentation;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,8 @@ import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
-import yep.greenFire.greenfirebackend.product.dto.response.ProductOptionResponse;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionDeleteRequest;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductDeleteRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductResponse;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionCreateRequest;
@@ -89,6 +89,19 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
+    }
+
+
+    /* 판매자 상품 삭제 -> 상태 변경 */
+    /* 상품 상태 변경 이전에 옵션 먼저 변경 필요 */
+    @PutMapping("/seller/mystore/product/{productCode}")
+    public ResponseEntity<Void> modifyStatus(
+            @PathVariable final Long productCode,
+            @RequestBody @Valid final ProductDeleteRequest productDeleteRequest
+    ) {
+        productService.modifyStatus(productCode, productDeleteRequest);
+
+        return ResponseEntity.created(URI.create("seller/mystore/product/" + productCode)).build();
     }
 
 

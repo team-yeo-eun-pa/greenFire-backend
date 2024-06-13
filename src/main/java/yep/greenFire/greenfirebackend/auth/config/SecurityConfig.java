@@ -52,11 +52,12 @@ public class SecurityConfig {
                     /* 클라이언트가 외부 도메인을 요청하는 경우 웹 브라우저에서 자체적으로 사전 요청(preflight)이 일어난다.
                      * 이 때 OPTIONS 메소드로 서버에 사전 요청을 보내 확인한다. */
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/members/signup", "/members/login", "/api/auth/verify-email").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/members/signup", "/members/login").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/admin/notices/**").permitAll();
                     auth.requestMatchers("/admin/**").hasRole(MemberRole.ADMIN.toString());
                     auth.requestMatchers("/seller/mystore/**").hasRole(MemberRole.SELLER.toString());
                     auth.requestMatchers(HttpMethod.GET,"/product/**").permitAll();
+                    auth.requestMatchers("/cart/**").hasRole(MemberRole.MEMBER.toString());
                     auth.requestMatchers(HttpMethod.GET,"/Member/notices/**").permitAll();
                     auth.anyRequest().authenticated();
 
