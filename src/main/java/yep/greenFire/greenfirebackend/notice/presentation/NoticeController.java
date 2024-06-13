@@ -56,6 +56,7 @@ public class NoticeController {
             @AuthenticationPrincipal final CustomUser customUser
             ){
 
+        System.out.println("dfdfdfd" + customUser.getMemberCode());
        noticeService.save(noticeCreateRequest, customUser.getMemberCode());
 
         return ResponseEntity.status(HttpStatus.CREATED).build();

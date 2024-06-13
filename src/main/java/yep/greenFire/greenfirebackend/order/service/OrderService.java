@@ -222,6 +222,11 @@ public class OrderService {
 
     }
 
+    public void verifyOrdered(Long orderDetailCode, Long memberCode) {
+        if(!orderRepository.existsByOrderCodeAndMemberCode(orderDetailCode, memberCode));
+
+    }
+
 
 //    // 스토어 - 주문 상태 변경
 //    public void modifyOrderStatus(OrderApprovalRequest orderApprovalRequest) {

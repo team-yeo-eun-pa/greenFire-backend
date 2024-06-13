@@ -10,6 +10,7 @@ import yep.greenFire.greenfirebackend.review.domain.entity.Review;
 import yep.greenFire.greenfirebackend.review.domain.type.ReviewStatus;
 import yep.greenFire.greenfirebackend.review.dto.response.ReviewResponse;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
@@ -32,7 +33,13 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 //            "WHERE r.productCode = :productCode " +
 //            "AND r.memberCode = :memberCode " +
 //            "AND r.orderStatus = :orderStatus")
-//    Optional<ReviewResponse> findByMemberCodeAndProductCodeAndOrderStatus(@Param("memberCode")Long memberCode, @Param("productCode") Long productCode, @Param("orderStatus")OrderStatus orderStatus);
+//    Optional<ReviewResponse> existsByOrderCodeAndOrderStatus(@Param("memberCode")Long memberCode, @Param("productCode") Long productCode, @Param("orderStatus")OrderStatus orderStatus);
 
+
+//    List<Review> findByOrderStatus(String orderStatus);
+
+//    Optional<Object> findByProductCodeAndOrderStatus(Long productCode, String orderStatus);
+
+    boolean existsByOrderDetailCode(Long getOrderDetailCode);
 }
 
