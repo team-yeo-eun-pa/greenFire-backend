@@ -150,7 +150,13 @@ public class ProductService {
 
         final Product product = productRepository.save(newProduct);
 
-        productOptionService.save(productOptionCreateRequests, product.getProductCode());
+        //productOptionService.save(productOptionCreateRequests, product.getProductCode());
+
+        for (ProductOptionCreateRequest request : productOptionCreateRequests) {
+            ProductOption productOption = ProductOption.of(product.getProductCode(), request.getOptionName(),
+                    request.getOptionPrice(), request.getOptionStock());
+            productOptionRepository.save(productOption);
+        }
 
 
         return product.getProductCode();
