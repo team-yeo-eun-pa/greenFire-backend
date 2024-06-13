@@ -1,12 +1,10 @@
 package yep.greenFire.greenfirebackend.product.domain.repository;
 
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
@@ -75,17 +73,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                     "from Product p " +
                     "join Store st on st.storeCode = p.storeCode " +
                     "join Seller sl on sl.sellerCode = st.sellerCode " +
-                    "where sl.memberCode = :memberCode " +
-                    "and p.sellableStatus != :sellableStatus"
+                    "where sl.memberCode = :memberCode"
     )
-    Page<SellerProductsResponse> findByMemberCodeAndSellableStatusNot(Pageable pageable, Long memberCode, SellableStatus sellableStatus);
+    Page<SellerProductsResponse> findByMemberCode(Pageable pageable, Long memberCode);
 
 
-    /* 판매자 상품 삭제 */
-
-    Optional<Product> findByProductCodeAndSellableStatusNot(Long productCode, SellableStatus sellableStatus);
-
-
-    boolean existsByProductCode (Long productCode);
 
 }

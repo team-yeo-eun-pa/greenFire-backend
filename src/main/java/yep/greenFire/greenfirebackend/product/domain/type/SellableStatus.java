@@ -5,16 +5,13 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum SellableStatus {
 
-    Y("Y"),
-    N("N"),
-    D("D");
+    Y("sellable"),
+    N("blocked");
 
-    private final String sellablestatus;
+    private final String value;
 
-    SellableStatus(String sellablestatus) { this.sellablestatus = sellablestatus; }
+    SellableStatus(String value) { this.value = value; }
 
     @JsonValue
-    public String getSellablestatus() { return sellablestatus; }
-
-
+    public String getValue() { return value; }
 }
