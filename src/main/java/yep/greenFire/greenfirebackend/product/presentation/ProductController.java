@@ -81,17 +81,19 @@ public class ProductController {
     public ResponseEntity<Void> save(
             @RequestPart @Valid final ProductCreateRequest productCreateRequest,
             @RequestPart @Valid final List<ProductOptionCreateRequest> productOptionCreateRequest,
-            @RequestPart final MultipartFile productImg
+            @RequestPart final MultipartFile productImg,
+            @AuthenticationPrincipal final CustomUser customUser
             ) {
         try {
-            final Long productCode = productService.save(productCreateRequest, productImg);
-            productOptionService.save(productOptionCreateRequest, productCode);
+            final Long memberCode = customUser.getMemberCode();
+            final Long productCode = productService.save(productCreateRequest, productImg, productOptionCreateRequest, memberCode);
             return ResponseEntity.created(URI.create("/seller/mystore/regist/" + productCode)).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
     }
+
 
 
     /* 판매자 상품 삭제 -> 상태 변경 */

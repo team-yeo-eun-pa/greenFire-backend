@@ -24,12 +24,16 @@ import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearAct
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductDeleteRequest;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.*;
 import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 import yep.greenFire.greenfirebackend.product.dto.ProductDTO;
 import yep.greenFire.greenfirebackend.product.dto.ProductOptionDTO;
 
+import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -45,7 +49,7 @@ public class ProductService {
     private final ProductOptionRepository productOptionRepository;
     private final CategoryRepository categoryRepository;
     private final StoreRepository storeRepository;
-
+    private final ProductOptionService productOptionService;
 
     @Value("${image.image-url}")
     private String IMG_URL;
@@ -109,7 +113,9 @@ public class ProductService {
     private String getRandomName() { return UUID.randomUUID().toString().replace("-", ""); }
 
     public Long save(final ProductCreateRequest productCreateRequest,
-                     final MultipartFile productImg) {
+                     final MultipartFile productImg,
+                     final List<ProductOptionCreateRequest> productOptionCreateRequests,
+                     final Long memberCode) {
 
         // 이미지 파일 저장
         String replaceFileName = FileUploadUtils.saveFile(IMG_DIR, getRandomName(), productImg);
@@ -119,17 +125,23 @@ public class ProductService {
         Category category = categoryRepository.findById(productCreateRequest.getCategoryCode())
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_CATEGORY_CODE));
 
-        // store 로그인한 회원 슽토어 맞는지 확인 추가 +memberCode
+        // store 로그인한 회원 스토어 맞는지 확인 추가 +memberCode
 //        Store store = storeRepository.findById(productCreateRequest.getStoreCode())
 //                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
 
+        Long minOptionPrice = productOptionCreateRequests.stream()
+                .min(Comparator.comparing(ProductOptionCreateRequest::getOptionPrice))
+                .map(ProductOptionCreateRequest::getOptionPrice)
+                .orElse(0L);
 
 
+        Long storeCode = storeRepository.findStoreByMemberCode(memberCode);
 
         final Product newProduct = Product.of(
                 productCreateRequest.getProductName(),
                 category.getCategoryCode(),
-                productCreateRequest.getStoreCode(),
+                storeCode,
+                minOptionPrice,
                 productCreateRequest.getProductDescription(),
                 productCreateRequest.getSellableStatus(),
                 IMG_URL + replaceFileName
@@ -137,6 +149,9 @@ public class ProductService {
         );
 
         final Product product = productRepository.save(newProduct);
+
+        productOptionService.save(productOptionCreateRequests, product.getProductCode());
+
 
         return product.getProductCode();
     }

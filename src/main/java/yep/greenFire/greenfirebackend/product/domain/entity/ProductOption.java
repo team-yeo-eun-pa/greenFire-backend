@@ -25,14 +25,16 @@ public class ProductOption {
     private Long optionPrice;
     private Long optionStock;
 
+    /* 상품 옵션 조회 가능 여부 */
+    @Enumerated(value = EnumType.STRING)
+    private ProductOptionAppearActivate optionAppearActivate = ProductOptionAppearActivate.Y;
 
     public ProductOption(Long productCode, String optionName, Long optionPrice,
-                         Long optionStock, ProductOptionAppearActivate optionAppearActivate) {
+                         Long optionStock) {
         this.productCode = productCode;
         this.optionName = optionName;
         this.optionPrice = optionPrice;
         this.optionStock = optionStock;
-        this.optionAppearActivate = optionAppearActivate;
     }
 
     /* 옵션 삭제 */
@@ -42,20 +44,16 @@ public class ProductOption {
 
     public static ProductOption of(
             final Long productCode, final String optionName, final Long optionPrice,
-            final Long optionStock, final ProductOptionAppearActivate optionAppearActivate
+            final Long optionStock
     ) {
         return new ProductOption(
                 productCode,
                 optionName,
                 optionPrice,
-                optionStock,
-                optionAppearActivate
+                optionStock
         );
     }
 
-    /* 상품 옵션 조회 가능 여부 */
-    @Enumerated(value = EnumType.STRING)
-    private ProductOptionAppearActivate optionAppearActivate = ProductOptionAppearActivate.Y;
 
 
     /* 주문 시 재고 수량 수정 */

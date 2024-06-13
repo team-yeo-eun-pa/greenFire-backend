@@ -11,12 +11,12 @@ import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearAct
 @RequiredArgsConstructor
 public class ProductOptionCreateRequest {
 
-    @Min(value = 1)
-    private final Long productCode;
+//    @Min(value = 1)
+//    private final Long productCode;
     @NotBlank
     private final String optionName;
-    @NotNull
-    private final ProductOptionAppearActivate optionAppearActivate;
+//    @NotNull
+//    private final ProductOptionAppearActivate optionAppearActivate;
     @Min(value = 0)
     private final Long optionPrice;
     @Min(value = 0)

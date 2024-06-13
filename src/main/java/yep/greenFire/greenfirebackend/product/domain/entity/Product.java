@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -35,11 +36,12 @@ public class Product {
     private String productImage;
 
     public Product(String productName, Long categoryCode, Long storeCode,
-                   String productDescription,
+                   Long price, String productDescription,
                    SellableStatus sellableStatus, String productImage) {
         this.productName = productName;
         this.categoryCode = categoryCode;
         this.storeCode = storeCode;
+        this.price = price;
         this.productDescription = productDescription;
         this.sellableStatus = sellableStatus;
         this.productImage = productImage;
@@ -47,13 +49,14 @@ public class Product {
 
     public static Product of(
             final String productName, final Long categoryCode, final Long storeCode,
-            final String productDescription,
+            final Long price, final String productDescription,
             final SellableStatus sellableStatus, final String productImage
     ) {
         return new Product(
                 productName,
                 categoryCode,
                 storeCode,
+                price,
                 productDescription,
                 sellableStatus,
                 productImage

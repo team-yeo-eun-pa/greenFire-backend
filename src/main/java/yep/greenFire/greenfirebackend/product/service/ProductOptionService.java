@@ -44,8 +44,8 @@ public class ProductOptionService {
         verifyProductCreated(productCode);
 
         for (ProductOptionCreateRequest request : productOptionCreateRequest) {
-            ProductOption productOption = ProductOption.of(request.getProductCode(), request.getOptionName(),
-                    request.getOptionPrice(), request.getOptionStock(), request.getOptionAppearActivate());
+            ProductOption productOption = ProductOption.of(productCode, request.getOptionName(),
+                    request.getOptionPrice(), request.getOptionStock());
             productOptionRepository.save(productOption);
         }
     }
