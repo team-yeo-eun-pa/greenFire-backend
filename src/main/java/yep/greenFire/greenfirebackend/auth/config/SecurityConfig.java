@@ -58,6 +58,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/admin/**").hasRole(MemberRole.ADMIN.toString());
                     auth.requestMatchers("/seller/mystore/**").hasRole(MemberRole.SELLER.toString());
                     auth.requestMatchers(HttpMethod.GET,"/product/**").permitAll();
+                    auth.requestMatchers("/cart/**").hasRole(MemberRole.MEMBER.toString());
                     auth.requestMatchers(HttpMethod.GET,"/Member/notices/**").permitAll();
                     auth.anyRequest().authenticated();
 

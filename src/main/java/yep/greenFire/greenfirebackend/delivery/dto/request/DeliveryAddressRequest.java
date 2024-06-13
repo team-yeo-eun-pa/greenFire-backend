@@ -15,7 +15,7 @@ public class DeliveryAddressRequest {
     private String receiverName;
     private String contactNumber;
 
-    private String addressZonecode;
+    private Long addressZonecode;
     private String addressType;
     private String address;
     private String addressDetail;
