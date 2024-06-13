@@ -16,6 +16,7 @@ public class StoreOrderDTO {
 
     private final Long storeOrderCode;
     private final Long storeCode;
+    private final Long sellerCode;
     private final String storeName;
     private final OrderStatus orderStatus;
 

@@ -71,6 +71,9 @@ public class StoreOrder {
             this.rejectionDate = rejectionDate;
             this.rejectionReason = rejectionReason;
         }
+    }
 
+    public void modifyStoreOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

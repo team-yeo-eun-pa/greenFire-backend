@@ -11,6 +11,7 @@ import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
+import yep.greenFire.greenfirebackend.delivery.dto.request.DeliveryRequest;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderApprovalRequest;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderCreateRequest;
 import yep.greenFire.greenfirebackend.order.dto.response.OrderResponse;
@@ -40,13 +41,22 @@ public class OrderController {
 
     //-------------------------------------------------------------------------------------------------------
 
-    //  주문 상태 수정
-    @PostMapping("/orders/{orderCode}/modify")
-    public ResponseEntity<OrderApprovalRequest> modifyOrderStatus(@RequestBody OrderApprovalRequest orderRequest) {
+    //  주문 상태 수정 (판매자 승인, 거절)
+    @PutMapping("/orders/{orderCode}/modify")
+    public ResponseEntity<Void> modifyOrderStatus(@RequestBody OrderApprovalRequest orderRequest) {
 
         orderService.modifyOrderStatus(orderRequest);
 
-        return ResponseEntity.ok(orderRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    //  주문 상태 수정 (판매자 배송처리)
+    @PutMapping("/orders/{orderCode}/modify/delivery")
+    public ResponseEntity<Void> modifyOrderStatusAndRegistDelivery(@RequestBody DeliveryRequest deliveryRequest) {
+
+        orderService.modifyOrderStatusAndRegistDelivery(deliveryRequest);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     //-------------------------------------------------------------------------------------------------------
@@ -80,6 +90,7 @@ public class OrderController {
         OrderResponse orderResponse = orderService.getOrderByOrderCode(orderCode);
         return ResponseEntity.ok(orderResponse);
     }
+
 
     // storeCode 기준 조회 및 orderStatus 기준 조회
     @GetMapping("/stores/{storeCode}/orders")

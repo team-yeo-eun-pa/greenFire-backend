@@ -9,11 +9,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
-import yep.greenFire.greenfirebackend.delivery.domain.entity.Delivery;
 import yep.greenFire.greenfirebackend.delivery.domain.entity.DeliveryAddress;
 import yep.greenFire.greenfirebackend.delivery.domain.repository.DeliveryAddressRepository;
-import yep.greenFire.greenfirebackend.delivery.domain.repository.DeliveryRepository;
-import yep.greenFire.greenfirebackend.delivery.domain.type.DeliveryType;
+import yep.greenFire.greenfirebackend.delivery.dto.request.DeliveryRequest;
+import yep.greenFire.greenfirebackend.delivery.service.DeliveryService;
 import yep.greenFire.greenfirebackend.order.domain.entity.Order;
 import yep.greenFire.greenfirebackend.order.domain.entity.OrderDetail;
 import yep.greenFire.greenfirebackend.order.domain.entity.StoreOrder;
@@ -58,7 +57,7 @@ public class OrderService {
     // 주문 등록 - 재고 수량 업데이트
     private final ProductOptionService productOptionService;
     // 주문 수정 - 운송장 등록
-    private final DeliveryRepository deliveryRepository;
+    private final DeliveryService deliveryService;
 
 
     // 주문 등록
@@ -90,7 +89,7 @@ public class OrderService {
         orderRepository.save(newOrder);
     }
 
-   // 스토어별 주문
+    // 스토어별 주문
     private StoreOrderData processStoreOrder(OrderCreateRequest.StoreOrderRequest storeOrderRequest) {
         Long orderAmount = 0L;
         Long storeCode = storeOrderRequest.getStoreCode();
@@ -154,7 +153,7 @@ public class OrderService {
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_DELIVERY_CODE));
     }
 
-   // 주문 객체 생성
+    // 주문 객체 생성
     private Order createOrder(Long memberCode, String orderName, Long totalOrderAmount, Long totalDeliveryAmount, List<StoreOrder> storeOrders, DeliveryAddress address) {
         return Order.of(
                 memberCode,
@@ -173,7 +172,6 @@ public class OrderService {
                 storeOrders
         );
     }
-
 
 
     // 제고 수량 업데이트
@@ -239,7 +237,7 @@ public class OrderService {
 
     //-------------------------------------------------------------------------------------------------------
 
-    // 주문 상태 수정 - 스토어 주문 승인/거절/배송처리
+    // 주문 상태 수정 - 스토어 주문 승인/거절
     public void modifyOrderStatus(OrderApprovalRequest orderApprovalRequest) {
 
         Optional<Order> orderOptional = orderRepository.findByOrderCode(orderApprovalRequest.getOrderCode());
@@ -251,7 +249,7 @@ public class OrderService {
 
                 if (storeOrder.getStoreOrderCode().equals(orderApprovalRequest.getStoreOrderCode())) {
 
-                    OrderStatus orderStatus = OrderStatus.fromValue(orderApprovalRequest.getOrderStatus());
+                    OrderStatus orderStatus = orderApprovalRequest.getOrderStatus();
 
                     if (orderStatus == OrderStatus.REJECTED || orderStatus == OrderStatus.PROCESSING) {
 
@@ -268,29 +266,21 @@ public class OrderService {
                             }
                         }
                     }
-                    System.out.println("storeorder : " + storeOrder);
-
-                    if (orderStatus == OrderStatus.SHIPPED && storeOrder.getRejectionReason().isEmpty()) {
-
-                        DeliveryType deliveryType = DeliveryType.fromValue(orderApprovalRequest.getDeliveryType());
-
-                        final Delivery newDelivery = Delivery.of(
-                                orderApprovalRequest.getStoreOrderCode(),
-                                orderApprovalRequest.getDeliveryCompany(),
-                                orderApprovalRequest.getTransportNumber(),
-                                deliveryType
-                        );
-
-                        deliveryRepository.save(newDelivery);
-
-                    } else {
-                        throw new NotFoundException(ExceptionCode.ORDER_ALREADY_REJECTED);
-                    }
                 }
             }
         } else {
             throw new NotFoundException(ExceptionCode.NOT_FOUND_VALID_ORDER);
         }
+    }
+
+    //  주문 상태 수정 (판매자 배송처리)
+    public void modifyOrderStatusAndRegistDelivery(DeliveryRequest deliveryRequest) {
+
+        StoreOrder storeOrder = storeOrderRepository.findByStoreOrderCodeAndOrderStatus(deliveryRequest.getStoreOrderCode(), OrderStatus.PROCESSING)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_VALID_ORDER));
+
+        storeOrder.modifyStoreOrderStatus(OrderStatus.SHIPPED);
+        deliveryService.save(deliveryRequest);
     }
 
     //-------------------------------------------------------------------------------------------------------
