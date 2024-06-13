@@ -27,7 +27,15 @@ public class EmailVerificationService {
 
         EmailVerification emailVerification = EmailVerification.of(memberCode, verificationCode, expirationTime);
         emailVerificationRepository.save(emailVerification);
-        emailService.sendEmail(email, "초록불 회원가입 인증번호", "인증번호: " + verificationCode);
+
+        // 인증 링크 생성
+        String verificationLink = "http://localhost:8001/members/verify-email?memberCode=" + memberCode + "&verificationCode=" + verificationCode;
+
+        // 이메일 내용 생성
+        String emailContent = "<p>안녕하세요, 회원가입을 완료하려면 아래 링크를 클릭해주세요.</p>" +
+                "<p><a href=\"" + verificationLink + "\" style=\"display: inline-block; padding: 10px 20px; font-size: 16px; color: white; background-color: #28a745; text-align: center; text-decoration: none; border-radius: 5px;\">이메일 인증하기</a></p>";
+
+        emailService.sendEmail(email, "초록불 회원가입 인증번호", emailContent);
     }
 
     public String verifyEmail(Long memberCode, String verificationCode) {
@@ -40,9 +48,6 @@ public class EmailVerificationService {
             }
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime expirationTime = emailVerification.getExpirationTime();
-            // 완료된 인증번호 테스트
-            log.info("Current time: {}", now);
-            log.info("Expiration time: {}", expirationTime);
             if (expirationTime.isBefore(now)) {
                 return "expired";
             }
