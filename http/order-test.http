@@ -1,32 +1,34 @@
 ### 주문 등록
 POST http://localhost:8001/orders
 Content-Type: application/json
-Access-Token: Bearer eyJkYXRlIjoxNzE4MTc3MjM1MzQ3LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6IjEyIiwiZXhwIjoxNzE4MTgwODM1fQ.TZsSLOSwD2EJmlHSgv-_Cy7xGdkCdtQuTPp4R7J3gCeKhIcyMcOC7nmKw4n7c2xfMofA46pCUZQNJrDGc5bk1g
+Access-Token: Bearer eyJkYXRlIjoxNzE4MjQ1NjQ3MDk3LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6IjEyMyIsIm1lbWJlclJvbGUiOiJST0xFX1NFTExFUiIsImV4cCI6MTcxODI0OTI0N30.QaCI2eg_FNH9sUd6kniC9gnHzptMNOr8IT0MM_IgYF7jr0e8ZlM5KxU6Q9MVyjK1qxKUPagsXgd3N_tZdj07DA
 
 {
-    "deliveryAddressCode": 14,
-    "storeOrders": [
+  "deliveryAddressCode": 14,
+  "storeOrders": [
+    {
+      "storeCode": 1,
+      "orderDetails": [
         {
-            "orderDetails": [
-                {
-                    "optionCode": 5,
-                    "orderQuantity": 1
-                },
-              {
-                "optionCode": 7,
-                "orderQuantity": 1
-              }
-            ]
+          "optionCode": 1,
+          "orderQuantity": 2
         },
         {
-            "orderDetails": [
-                {
-                    "optionCode": 6,
-                    "orderQuantity": 1
-                }
-            ]
+          "optionCode": 2,
+          "orderQuantity": 1
         }
-    ]
+      ]
+    },
+    {
+      "storeCode": 3,
+      "orderDetails": [
+        {
+          "optionCode": 2,
+          "orderQuantity": 3
+        }
+      ]
+    }
+  ]
 }
 
 ### 회원 배송지 등록

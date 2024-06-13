@@ -42,12 +42,12 @@ public class StoreOrder {
     @JoinColumn(name = "storeOrderCode")
     private List<OrderDetail> orderDetails;
 
-    /* 주문금액 */
+    // 주문금액
     public void OrderAmount(Long optionPrice) {
         this.orderAmount += optionPrice;
     }
 
-    /* 배송비 */
+    // 배송비
     public void deliveryAmount(Long deliveryAmount) {
         this.deliveryAmount += deliveryAmount;
     }
@@ -65,7 +65,7 @@ public class StoreOrder {
         return new StoreOrder(storeCode, orderAmount,discountAmount, deliveryAmount, realPayment, orderDetails);
     }
 
-    public void modifyOrderApply(OrderStatus orderStatus, LocalDateTime rejectionDate, String rejectionReason) {
+    public void modifyStatusApply(OrderStatus orderStatus, LocalDateTime rejectionDate, String rejectionReason) {
         this.orderStatus = orderStatus;
         if (orderStatus == OrderStatus.REJECTED) {
             this.rejectionDate = rejectionDate;

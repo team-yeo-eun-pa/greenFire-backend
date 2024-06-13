@@ -9,9 +9,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
+import yep.greenFire.greenfirebackend.delivery.domain.entity.Delivery;
 import yep.greenFire.greenfirebackend.delivery.domain.entity.DeliveryAddress;
 import yep.greenFire.greenfirebackend.delivery.domain.repository.DeliveryAddressRepository;
 import yep.greenFire.greenfirebackend.delivery.domain.repository.DeliveryRepository;
+import yep.greenFire.greenfirebackend.delivery.domain.type.DeliveryType;
 import yep.greenFire.greenfirebackend.order.domain.entity.Order;
 import yep.greenFire.greenfirebackend.order.domain.entity.OrderDetail;
 import yep.greenFire.greenfirebackend.order.domain.entity.StoreOrder;
@@ -19,14 +21,19 @@ import yep.greenFire.greenfirebackend.order.domain.repository.OrderDetailReposit
 import yep.greenFire.greenfirebackend.order.domain.repository.OrderRepository;
 import yep.greenFire.greenfirebackend.order.domain.repository.StoreOrderRepository;
 import yep.greenFire.greenfirebackend.order.domain.type.OrderStatus;
+import yep.greenFire.greenfirebackend.order.dto.request.OrderApprovalRequest;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderCreateRequest;
 import yep.greenFire.greenfirebackend.order.dto.response.OrderDetailDTO;
 import yep.greenFire.greenfirebackend.order.dto.response.OrderResponse;
+import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
+import yep.greenFire.greenfirebackend.product.domain.repository.ProductOptionRepository;
+import yep.greenFire.greenfirebackend.product.domain.repository.ProductRepository;
 import yep.greenFire.greenfirebackend.product.service.ProductOptionService;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,143 +44,258 @@ import java.util.stream.Collectors;
 @Transactional
 public class OrderService {
 
-    /* 재고 수량 테이블에서 재고를 조절한다. */
-    private final ProductOptionService productOptionService;
-    /* 배송지 테이블에서 등록된 배송지를 받아온다. */
-    private final DeliveryAddressRepository deliveryAddressRepository;
-    /* 스토어 테이블에서 등록된 배송비,무료배송 조건을 받아온다. */
-    private final StoreRepository storeRepository;
-
     private final OrderRepository orderRepository;
-
-    private final DeliveryRepository deliveryRepository;
-
     private final StoreOrderRepository storeOrderRepository;
-
     private final OrderDetailRepository orderDetailRepository;
+
+    // 주문 등록 - 배송비 조회
+    private final StoreRepository storeRepository;
+    // 주문 등록 - 배송지 조회
+    private final DeliveryAddressRepository deliveryAddressRepository;
+    // 주문 등록 - 주문 이름, 가격
+    private final ProductOptionRepository productOptionRepository;
+    private final ProductRepository productRepository;
+    // 주문 등록 - 재고 수량 업데이트
+    private final ProductOptionService productOptionService;
+    // 주문 수정 - 운송장 등록
+    private final DeliveryRepository deliveryRepository;
 
 
     // 주문 등록
+    @Transactional
     public void save(OrderCreateRequest orderCreateRequest, Long memberCode) {
 
         Long totalOrderAmount = 0L;
         Long totalDeliveryAmount = 0L;
 
-        // 여러 스토어별 주문을 리스트 처리
         List<StoreOrder> storeOrders = new ArrayList<>();
+
         for (OrderCreateRequest.StoreOrderRequest storeOrderRequest : orderCreateRequest.getStoreOrders()) {
 
-            long storeCode = 0L;
-            long orderAmount = 0L;
-            long deliveryAmount = 0;
-
-            // 주문 상세를 리스트 처리(해당 스토어의 주문 상품 옵션 목록)
-            List<OrderDetail> orderDetails = new ArrayList<>();
-            for (OrderCreateRequest.OrderDetailRequest orderDetailRequest : storeOrderRequest.getOrderDetails()) {
-
-                /* 재고 수정 */
-                updateStock(orderDetailRequest.getOptionCode(), orderDetailRequest.getOrderQuantity());
-
-                /* !장바구니 제거 updateCart */
-
-
-                /* 옵션 가격 -> 상품 판매가 */
-                ProductOption productOption = productOptionService.findProductOption(orderDetailRequest.getOptionCode());
-
-                /* 상품 판매가 x 수량 = 주문 상세 테이블마다 총 주문금액 컬럼이 없으므로 변수로 따로 저장 */
-                Long optionPrice = productOption.getOptionPrice() * orderDetailRequest.getOrderQuantity();
-                orderAmount += optionPrice;
-
-                /* !쿠폰 사용시 쿠폰 발행 테이블 -> 쿠폰 정보 테이블 -> 쿠폰 적용상품 테이블
-                 * 2. 할인률 * 상품 판매가 < 최대할인액 확인
-                 * 3. true 주문 상세 테이블에 할인금액 컬럼에 (주문 금액 - 할인률 * 상품 판매가)를 저장
-                 * 4. false (주문 금액 - 최대할인액)를 저장  */
-
-                /* orderDetail 주문 상세 객체 생성 후 데이터 저장. */
-                final OrderDetail newOrderDetail = OrderDetail.of(
-                        orderDetailRequest.getOptionCode(),
-                        productOption.getOptionPrice(),
-                        orderDetailRequest.getOrderQuantity()
-                );
-                orderDetails.add(newOrderDetail);
-
-                /* 상품 테이블에서 스토어 코드를 가져온 후 넣기 */
-//                storeCode = Product.getProduct().getStoreCode();
-                storeCode = 1;
-            }
-
-            /* 스토어 테이블에 배송비 컬럼도 가져와서 변수에 넣는다. */
-            Optional<Store> optionalStore = storeRepository.findByStoreCode(storeCode);
-            if (optionalStore.isPresent()) {
-                Store store = optionalStore.get();
-                deliveryAmount = store.getDeliveryAmount();
-                if (totalOrderAmount >= store.getFreeDeliveryCondition()) {
-                    deliveryAmount = 0L;
-                }
-            }
-
-            /* 주문 테이블의 총 배송비에 각 판매자의 배송비를 합산해야 한다. */
-            totalOrderAmount += orderAmount;
-            totalDeliveryAmount += deliveryAmount;
-
-            /*storeOrder 스토어별 주문 객체 생성 후 데이터 저장.*/
-            final StoreOrder newStoreOrder = StoreOrder.of(
-                    storeCode,
-                    orderAmount,
-                    1000,// 할인금액,
-                    deliveryAmount,
-                    1000,//실결제금액,
-                    orderDetails
-            );
-
-            storeOrders.add(newStoreOrder);
+            StoreOrderData storeOrderData = processStoreOrder(storeOrderRequest);
+            totalOrderAmount += storeOrderData.getOrderAmount();
+            totalDeliveryAmount += storeOrderData.getDeliveryAmount();
+            storeOrders.add(storeOrderData.getStoreOrder());
 
         }
 
-        // 배송지 테이블에서 불러옴
-        Optional<DeliveryAddress> addressOptional = deliveryAddressRepository.findByDeliveryAddressCodeAndMemberCode(orderCreateRequest.getDeliveryAddressCode(), memberCode);
-        DeliveryAddress address = addressOptional.orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_DELIVERY_CODE));
-//        if (!addressOptional.isPresent()) {
-//        }
+        // 배송지 정보 조회
+        DeliveryAddress address = getDeliveryAddress(orderCreateRequest.getDeliveryAddressCode(), memberCode);
 
-        /*order 주문 객체 생성 후 데이터 저장.*/
-        final Order newOrder = Order.of(
+        // orderName 생성 (예: "두부과자 외 4건")
+        String orderName = generateOrderName(storeOrders);
+
+        // 주문 객체 생성 후 데이터 저장
+        final Order newOrder = createOrder(memberCode, orderName, totalOrderAmount, totalDeliveryAmount, storeOrders, address);
+        orderRepository.save(newOrder);
+    }
+
+   // 스토어별 주문
+    private StoreOrderData processStoreOrder(OrderCreateRequest.StoreOrderRequest storeOrderRequest) {
+        Long orderAmount = 0L;
+        Long storeCode = storeOrderRequest.getStoreCode();
+
+        // 주문 상세를 리스트로 처리
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        for (OrderCreateRequest.OrderDetailRequest orderDetailRequest : storeOrderRequest.getOrderDetails()) {
+
+            // 재고 수량 업데이트
+            updateStock(orderDetailRequest.getOptionCode(), orderDetailRequest.getOrderQuantity());
+
+            // 상품 옵션 정보 조회
+            ProductOption productOption = productOptionService.findProductOption(orderDetailRequest.getOptionCode());
+            Long optionPrice = productOption.getOptionPrice();
+            Long totalOptionPrice = optionPrice * orderDetailRequest.getOrderQuantity();
+            // 총 옵션 가격 계산
+            orderAmount += totalOptionPrice;
+
+            // 주문 상세 객체 생성 후 리스트에 추가
+            final OrderDetail newOrderDetail = OrderDetail.of(
+                    orderDetailRequest.getOptionCode(),
+                    optionPrice,
+                    orderDetailRequest.getOrderQuantity()
+            );
+            orderDetails.add(newOrderDetail);
+        }
+
+        // 배송비 계산
+        Long deliveryAmount = calculateDeliveryAmount(storeCode, orderAmount);
+
+        // 스토어 주문 객체 생성 후 데이터 저장
+        final StoreOrder newStoreOrder = StoreOrder.of(
+                storeCode,
+                orderAmount,
+                0,
+                deliveryAmount,
+                orderAmount + deliveryAmount,
+                orderDetails
+        );
+
+        return new StoreOrderData(newStoreOrder, orderAmount, deliveryAmount);
+    }
+
+    // 배송비 계산
+    private Long calculateDeliveryAmount(Long storeCode, Long orderAmount) {
+        Optional<Store> optionalStore = storeRepository.findByStoreCode(storeCode);
+        if (optionalStore.isPresent()) {
+            Store store = optionalStore.get();
+            Long deliveryAmount = store.getDeliveryAmount();
+            if (orderAmount >= store.getFreeDeliveryCondition()) {
+                return 0L;
+            }
+            return deliveryAmount;
+        }
+        throw new NotFoundException(ExceptionCode.NOT_FOUND_SELLERS_STORE_CODE);
+    }
+
+    // 배송지 조회
+    private DeliveryAddress getDeliveryAddress(Long deliveryAddressCode, Long memberCode) {
+        return deliveryAddressRepository.findByDeliveryAddressCodeAndMemberCode(deliveryAddressCode, memberCode)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_DELIVERY_CODE));
+    }
+
+   // 주문 객체 생성
+    private Order createOrder(Long memberCode, String orderName, Long totalOrderAmount, Long totalDeliveryAmount, List<StoreOrder> storeOrders, DeliveryAddress address) {
+        return Order.of(
                 memberCode,
-                "양말2개다시로직만들어랑", // 오더 네임 결제하면서 추가
-
+                orderName,
                 address.getReceiverName(),
                 address.getContactNumber(),
-
-                "우편번호 다시 넣어라",
+                address.getAddressZonecode(),
                 address.getAddressType(),
                 address.getAddress(),
                 address.getAddressDetail(),
                 address.getDeliveryRequest(),
-
-                /* 주문금액, 총할인, 배송비, 실결제금액 */
                 totalOrderAmount,
-                10000L,  //orderCreateRequest.getDiscountAmount(),
+                0L,
                 totalDeliveryAmount,
-                10000L,  //orderCreateRequest.getRealPayment(),
+                totalOrderAmount + totalDeliveryAmount,
                 storeOrders
         );
-        orderRepository.save(newOrder);
     }
 
 
-    /* 주문시 상품 재고 수량 */
+
+    // 제고 수량 업데이트
     private void updateStock(Long productOptionCode, Long optionStock) {
         productOptionService.updateStock(productOptionCode, optionStock);
     }
-
-    /* 주문시 장바구니에서 상품 제거 */
-
 
     private Pageable getPageable(Integer page) {
         return PageRequest.of(page - 1, 10, Sort.by("orderCode").descending());
     }
 
-    // 회원 - 주문 조회
+    // 주문명 생성
+    private String generateOrderName(List<StoreOrder> storeOrders) {
+        if (storeOrders.isEmpty()) {
+            return "";
+        }
+
+        // 전체 아이템 수 계산
+        int totalItemCount = storeOrders.stream()
+                .mapToInt(storeOrder -> storeOrder.getOrderDetails().size())
+                .sum();
+
+        // 첫 번째 아이템의 이름 가져오기
+        String firstItemName = storeOrders.stream()
+                .flatMap(storeOrder -> storeOrder.getOrderDetails().stream())
+                .map(orderDetail -> {
+                    ProductOption productOption = productOptionRepository.findById(orderDetail.getOptionCode())
+                            .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+                    Product product = productRepository.findById(productOption.getProductCode())
+                            .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+                    return product.getProductName();
+                })
+                .findFirst()
+                .orElse("");
+
+        return firstItemName + " 외 " + (totalItemCount - 1) + "건";
+    }
+
+    // 스토어 주문 데이터 클래스
+    private static class StoreOrderData {
+        private final StoreOrder storeOrder;
+        private final Long orderAmount;
+        private final Long deliveryAmount;
+
+        public StoreOrderData(StoreOrder storeOrder, Long orderAmount, Long deliveryAmount) {
+            this.storeOrder = storeOrder;
+            this.orderAmount = orderAmount;
+            this.deliveryAmount = deliveryAmount;
+        }
+
+        public StoreOrder getStoreOrder() {
+            return storeOrder;
+        }
+
+        public Long getOrderAmount() {
+            return orderAmount;
+        }
+
+        public Long getDeliveryAmount() {
+            return deliveryAmount;
+        }
+    }
+
+    //-------------------------------------------------------------------------------------------------------
+
+    // 주문 상태 수정 - 스토어 주문 승인/거절/배송처리
+    public void modifyOrderStatus(OrderApprovalRequest orderApprovalRequest) {
+
+        Optional<Order> orderOptional = orderRepository.findByOrderCode(orderApprovalRequest.getOrderCode());
+
+        if (orderOptional.isPresent()) {
+            List<StoreOrder> storeOrders = orderOptional.get().getStoreOrders();
+
+            for (StoreOrder storeOrder : storeOrders) {
+
+                if (storeOrder.getStoreOrderCode().equals(orderApprovalRequest.getStoreOrderCode())) {
+
+                    OrderStatus orderStatus = OrderStatus.fromValue(orderApprovalRequest.getOrderStatus());
+
+                    if (orderStatus == OrderStatus.REJECTED || orderStatus == OrderStatus.PROCESSING) {
+
+                        storeOrder.modifyStatusApply(
+                                orderStatus,
+                                LocalDateTime.now(),
+                                orderApprovalRequest.getRejectionReason());
+
+                        // 주문 거절 상태일 때 OrderDetail의 isOrderCancel을 true로 설정
+                        if (orderStatus == OrderStatus.REJECTED) {
+                            List<OrderDetail> orderDetails = storeOrder.getOrderDetails();
+                            for (OrderDetail orderDetail : orderDetails) {
+                                orderDetail.setOrderCancel(true);
+                            }
+                        }
+                    }
+                    System.out.println("storeorder : " + storeOrder);
+
+                    if (orderStatus == OrderStatus.SHIPPED && storeOrder.getRejectionReason().isEmpty()) {
+
+                        DeliveryType deliveryType = DeliveryType.fromValue(orderApprovalRequest.getDeliveryType());
+
+                        final Delivery newDelivery = Delivery.of(
+                                orderApprovalRequest.getStoreOrderCode(),
+                                orderApprovalRequest.getDeliveryCompany(),
+                                orderApprovalRequest.getTransportNumber(),
+                                deliveryType
+                        );
+
+                        deliveryRepository.save(newDelivery);
+
+                    } else {
+                        throw new NotFoundException(ExceptionCode.ORDER_ALREADY_REJECTED);
+                    }
+                }
+            }
+        } else {
+            throw new NotFoundException(ExceptionCode.NOT_FOUND_VALID_ORDER);
+        }
+    }
+
+    //-------------------------------------------------------------------------------------------------------
+
+    // memberCode 기준 조회
     @Transactional
     public Page<OrderResponse> getOrderByMemberCode(Long memberCode, Integer page) {
 
@@ -183,14 +305,26 @@ public class OrderService {
             orderResponse.getStoreOrders().forEach(storeOrderDTO -> {
                 List<OrderDetailDTO> orderDetailDTOs = orderDetailRepository.findByStoreOrderCode(storeOrderDTO.getStoreOrderCode());
 
-
                 storeOrderDTO.setOrderDetails(orderDetailDTOs);
             });
         });
         return orderResponses;
     }
 
-    // 스토어 - 주문 조회
+    // orderCode 기준 조회
+    @Transactional
+    public OrderResponse getOrderByOrderCode(Long orderCode) {
+        OrderResponse orderResponse = orderRepository.findOrderResponseByOrderCode(orderCode)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_VALID_ORDER));
+
+        orderResponse.getStoreOrders().forEach(storeOrderDTO -> {
+            List<OrderDetailDTO> orderDetailDTOs = orderDetailRepository.findByStoreOrderCode(storeOrderDTO.getStoreOrderCode());
+            storeOrderDTO.setOrderDetails(orderDetailDTOs);
+        });
+        return orderResponse;
+    }
+
+    // storeCode 기준 조회
     @Transactional
     public Page<OrderResponse> getOrderByStoreCode(Long storeCode, Integer page) {
 
@@ -200,79 +334,27 @@ public class OrderService {
             orderResponse.getStoreOrders().forEach(storeOrderDTO -> {
                 List<OrderDetailDTO> orderDetailDTOs = orderDetailRepository.findByStoreOrderCode(storeOrderDTO.getStoreOrderCode());
 
-
                 storeOrderDTO.setOrderDetails(orderDetailDTOs);
             });
         });
         return orderResponses;
     }
 
-    // 스토어 & 주문 상태에 따른 - 주문 조회
+    // storeCode & orderStatus 기준 조회
     @Transactional
-    public Page<OrderResponse> getStoreOrderStatus(Long storeCode, List<String> storeOrderStatus, Integer page) {
-
-
-//        OrderStatus orderStatus = OrderStatus.fromValue(storeOrderStatus);
+    public Page<OrderResponse> getOrderByStoreCodeAndOrderStatus(Long storeCode, List<String> storeOrderStatus, Integer page) {
         List<OrderStatus> orderStatuses = storeOrderStatus.stream()
                 .map(OrderStatus::fromValue)
                 .collect(Collectors.toList());
 
-//        return orderRepository.findByStoreCodeAndOrderStatus(storeCode, orderStatuses, getPageable(page));
-        return null;
+        Page<OrderResponse> orderResponses = storeOrderRepository.findByStoreCodeAndOrderStatus(storeCode, orderStatuses, getPageable(page));
 
+        orderResponses.forEach(orderResponse -> {
+            orderResponse.getStoreOrders().forEach(storeOrderDTO -> {
+                List<OrderDetailDTO> orderDetailDTOs = orderDetailRepository.findByStoreOrderCode(storeOrderDTO.getStoreOrderCode());
+                storeOrderDTO.setOrderDetails(orderDetailDTOs);
+            });
+        });
+        return orderResponses;
     }
-
-
-//    // 스토어 - 주문 상태 변경
-//    public void modifyOrderStatus(OrderApprovalRequest orderApprovalRequest) {
-//        Optional<Order> orderOptional = orderRepository.findByOrderCode(orderApprovalRequest.getOrderCode());
-//
-//        if (orderOptional.isPresent()) {
-//            List<StoreOrder> storeOrders = orderOptional.get().getStoreOrders();
-//
-//            for (StoreOrder storeOrder : storeOrders) {
-//
-//                if (storeOrder.getStoreOrderCode().equals(orderApprovalRequest.getStoreOrderCode())) {
-//
-//                    // orderStatus가 RECEIVED에서 REJECTED 또는 PROCESSING으로 바뀔 수 있다.
-//
-//                    OrderStatus orderStatus = OrderStatus.fromValue(orderApprovalRequest.getOrderStatus());
-//
-//                    if (orderStatus == OrderStatus.REJECTED || orderStatus == OrderStatus.PROCESSING) {
-//
-//                        storeOrder.modifyOrderApply(
-//                                orderStatus,
-//                                LocalDateTime.now(),
-//                                orderApprovalRequest.getRejectionReason());
-//
-//                    }
-//                    System.out.println("storeorder : " + storeOrder);
-//
-//                    // orderStatus가 PROCESSING에서 SHIPPED으로 바뀌면 운송장 정보도 테이블에 등록할 수 있게 해야한다.
-//
-//                    if (orderStatus == OrderStatus.SHIPPED && storeOrder.getRejectionReason().isEmpty()) {
-//
-//                        DeliveryType deliveryType = DeliveryType.fromValue(orderApprovalRequest.getDeliveryType());
-//
-//                        final Delivery newDelivery = Delivery.of(
-//                                orderApprovalRequest.getStoreOrderCode(),
-//                                orderApprovalRequest.getDeliveryCompany(),
-//                                orderApprovalRequest.getTransportNumber(),
-//                                deliveryType
-//                        );
-//
-//                        deliveryRepository.save(newDelivery);
-//
-//                    } else {
-//                        throw new NotFoundException(ExceptionCode.ORDER_ALREADY_REJECTED);
-//                    }
-//                }
-//            }
-//        } else {
-//            throw new NotFoundException(ExceptionCode.NOT_FOUND_VALID_ORDER);
-//        }
-//    }
-//
-//    public Page<OrderResponse> getOrders(Long memberCode, Integer page) {
-//    }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 public class StoreOrderDTO {
 
     private final Long storeOrderCode;
+    private final Long storeCode;
     private final String storeName;
     private final OrderStatus orderStatus;
 
@@ -22,6 +23,9 @@ public class StoreOrderDTO {
     private final String transportNumber;
     private final LocalDateTime deliveryDate;
     private final DeliveryStatus deliveryStatus;
+
+    private final LocalDateTime rejectionDate;
+    private final String rejectionReason;
 
     private List<OrderDetailDTO> orderDetails;
 
