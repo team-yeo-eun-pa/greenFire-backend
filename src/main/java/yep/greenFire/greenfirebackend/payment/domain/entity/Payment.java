@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.payment.domain.type.PaymentStatus;
 import yep.greenFire.greenfirebackend.payment.domain.type.PaymentWay;

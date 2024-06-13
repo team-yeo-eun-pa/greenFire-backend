@@ -18,6 +18,7 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderDetailCode;
 
+    private Long storeOrderCode;
     private Long optionCode;
 
     private Long optionPrice;
