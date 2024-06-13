@@ -23,15 +23,10 @@ public class Notice {
     private String noticeTitle;
     private String noticeContent;
     private String noticeFixable;
-
     @Enumerated(value = EnumType.STRING)
     private NoticeStatusType noticeStatus = NoticeStatusType.ACTIVE;
-
     @CreatedDate
     private Date noticeDate;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "noticeWriter", referencedColumnName = "memberCode")
     private Long noticeWriter;
 
     public Notice(String noticeTitle, String noticeContent,Long noticeWriter) {
