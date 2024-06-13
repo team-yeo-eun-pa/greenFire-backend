@@ -2,6 +2,7 @@ package yep.greenFire.greenfirebackend.product.dto.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
@@ -14,7 +15,7 @@ public class ProductOptionCreateRequest {
     private final Long productCode;
     @NotBlank
     private final String optionName;
-    @NotBlank
+    @NotNull
     private final ProductOptionAppearActivate optionAppearActivate;
     @Min(value = 0)
     private final Long optionPrice;

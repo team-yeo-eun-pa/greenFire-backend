@@ -8,6 +8,7 @@ import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -21,8 +22,10 @@ public class SellerProductResponse {
     private final Long storeCode;
     private final String storeName;
     private final Long price;
-    private final Date registDate;
+    private final LocalDateTime registDate;
+    private final String productDescription;
     private final SellableStatus sellableStatus;
+    private final String productImage;
 
     public SellerProductResponse(Product product, Category category, Store store) {
         this.productCode = product.getProductCode();
@@ -33,7 +36,9 @@ public class SellerProductResponse {
         this.storeName = store.getStoreName();
         this.price = product.getPrice();
         this.registDate = product.getRegistDate();
+        this.productDescription = product.getProductDescription();
         this.sellableStatus = product.getSellableStatus();
+        this.productImage = product.getProductImage();
     }
 
 }

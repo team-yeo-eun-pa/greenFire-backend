@@ -79,4 +79,3 @@ public class Store {
         this.suspendedEndDate = suspendedEndDate;
     }
 }
-

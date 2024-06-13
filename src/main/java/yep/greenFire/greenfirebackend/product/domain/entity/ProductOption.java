@@ -26,9 +26,8 @@ public class ProductOption {
     private Long optionStock;
 
 
-    public ProductOption(Long optionCode, Long productCode, String optionName, Long optionPrice,
+    public ProductOption(Long productCode, String optionName, Long optionPrice,
                          Long optionStock, ProductOptionAppearActivate optionAppearActivate) {
-        this.optionCode = optionCode;
         this.productCode = productCode;
         this.optionName = optionName;
         this.optionPrice = optionPrice;
@@ -41,18 +40,18 @@ public class ProductOption {
         this.optionAppearActivate = optionAppearActivate;
     }
 
-//    public static ProductOption of(
-//            final Long productCode, final String optionName, final Long optionPrice,
-//            final Long optionStock, final ProductOptionAppearActivate optionAppearActivate
-//    ) {
-//        return new ProductOption(
-//                productCode,
-//                optionName,
-//                optionPrice,
-//                optionStock,
-//                optionAppearActivate
-//        );
-//    }
+    public static ProductOption of(
+            final Long productCode, final String optionName, final Long optionPrice,
+            final Long optionStock, final ProductOptionAppearActivate optionAppearActivate
+    ) {
+        return new ProductOption(
+                productCode,
+                optionName,
+                optionPrice,
+                optionStock,
+                optionAppearActivate
+        );
+    }
 
     /* 상품 옵션 조회 가능 여부 */
     @Enumerated(value = EnumType.STRING)

@@ -15,4 +15,6 @@ public enum SellableStatus {
 
     @JsonValue
     public String getSellablestatus() { return sellablestatus; }
+
+
 }

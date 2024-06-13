@@ -15,6 +15,7 @@ import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearAct
 import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductOptionResponse;
 
+import java.util.List;
 import java.util.Optional;
 
 import static yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode.NOT_ENOUGH_STOCK;
@@ -35,30 +36,24 @@ public class ProductOptionService {
         }
     }
 
-    public void save(final ProductOptionCreateRequest productOptionCreateRequest,
+    @Transactional
+    public void save(final List<ProductOptionCreateRequest> productOptionCreateRequest,
                      Long productCode) {
 
         //상품 존재하는지 확인 후 저장
-        verifyProductCreated(productOptionCreateRequest.getProductCode());
+        verifyProductCreated(productCode);
 
-        Product product = productRepository.findById(productOptionCreateRequest.getProductCode())
-                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
-
-        ProductOption newOption = ProductOption.of(
-                product.getProductCode(),
-                productOptionCreateRequest.getOptionName(),
-                productOptionCreateRequest.getOptionPrice(),
-                productOptionCreateRequest.getOptionStock(),
-                productOptionCreateRequest.getOptionAppearActivate()
-        );
-
-        productOptionRepository.save(newOption);
+        for (ProductOptionCreateRequest request : productOptionCreateRequest) {
+            ProductOption productOption = ProductOption.of(request.getProductCode(), request.getOptionName(),
+                    request.getOptionPrice(), request.getOptionStock(), request.getOptionAppearActivate());
+            productOptionRepository.save(productOption);
+        }
     }
 
     /* 상품 옵션 조회 */
 
     @Transactional(readOnly = true)
-    public Optional<ProductOption> getOptions(Long productCode) {
+    public List<ProductOption> getOptions(Long productCode) {
 
         return productOptionRepository.findByProductCode(productCode);
     }

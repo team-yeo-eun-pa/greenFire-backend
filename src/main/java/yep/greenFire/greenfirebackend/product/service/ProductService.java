@@ -1,5 +1,6 @@
 package yep.greenFire.greenfirebackend.product.service;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -9,9 +10,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.multipart.MultipartFile;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
+import yep.greenFire.greenfirebackend.common.util.FileUploadUtils;
 import yep.greenFire.greenfirebackend.product.domain.entity.Category;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
@@ -20,16 +22,15 @@ import yep.greenFire.greenfirebackend.product.domain.repository.ProductOptionRep
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductRepository;
 import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductCreateRequest;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductDeleteRequest;
+import yep.greenFire.greenfirebackend.product.dto.response.*;
+import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 import yep.greenFire.greenfirebackend.product.dto.ProductDTO;
 import yep.greenFire.greenfirebackend.product.dto.ProductOptionDTO;
-import yep.greenFire.greenfirebackend.product.dto.request.ProductDeleteRequest;
-import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionDeleteRequest;
-import yep.greenFire.greenfirebackend.product.dto.response.*;
-import yep.greenFire.greenfirebackend.store.domain.entity.Store;
-import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static yep.greenFire.greenfirebackend.product.domain.type.SellableStatus.D;
@@ -104,6 +105,42 @@ public class ProductService {
 
     }
 
+    /* 판매자 상품 등록 */
+    private String getRandomName() { return UUID.randomUUID().toString().replace("-", ""); }
+
+    public Long save(final ProductCreateRequest productCreateRequest,
+                     final MultipartFile productImg) {
+
+        // 이미지 파일 저장
+        String replaceFileName = FileUploadUtils.saveFile(IMG_DIR, getRandomName(), productImg);
+
+
+        // category
+        Category category = categoryRepository.findById(productCreateRequest.getCategoryCode())
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_CATEGORY_CODE));
+
+        // store 로그인한 회원 슽토어 맞는지 확인 추가 +memberCode
+//        Store store = storeRepository.findById(productCreateRequest.getStoreCode())
+//                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+
+
+
+
+        final Product newProduct = Product.of(
+                productCreateRequest.getProductName(),
+                category.getCategoryCode(),
+                productCreateRequest.getStoreCode(),
+                productCreateRequest.getProductDescription(),
+                productCreateRequest.getSellableStatus(),
+                IMG_URL + replaceFileName
+
+        );
+
+        final Product product = productRepository.save(newProduct);
+
+        return product.getProductCode();
+    }
+
 
     /* 상품 삭제 */
 
@@ -124,47 +161,13 @@ public class ProductService {
 
 
 
+
+
+
+
+
+
 }
-
-
-    /* 판매자 상품 등록 */
-    private String getRandomName() { return UUID.randomUUID().toString().replace("-", ""); }
-
-    public Long save(final ProductCreateRequest productCreateRequest,
-                     final MultipartFile productImg) {
-
-        // 이미지 파일 저장
-        String replaceFileName = FileUploadUtils.saveFile(IMG_DIR, getRandomName(), productImg);
-
-
-        // category
-        Category category = categoryRepository.findById(productCreateRequest.getCategoryCode())
-                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_CATEGORY_CODE));
-
-        // store 로그인한 회원 슽토어 맞는지 확인 추가 +memberCode
-//        Store store = storeRepository.findById(productCreateRequest.getStoreCode())
-//                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
-
-
-//        final Product newProduct = Product.of(
-//                productCreateRequest.getProductName(),
-//                category.getCategoryCode(),
-//                productCreateRequest.getStoreCode(),
-//                productCreateRequest.getPrice(),
-//                productCreateRequest.getProductDescription(),
-//                productCreateRequest.getRegistDate(),
-//                productCreateRequest.getSellableStatus(),
-//                IMG_URL + replaceFileName
-//
-//        );
-
-        final Product product = productRepository.save(newProduct);
-
-        return product.getProductCode();
-        }
-
-
-
 
 
 

@@ -8,6 +8,7 @@ import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -21,23 +22,23 @@ public class ProductsResponse {
     private final Long storeCode;
     private final String storeName;
     private final Long price;
-    private final Date registDate;
+    private final LocalDateTime registDate;
     private final SellableStatus sellableStatus;
-    private final String productImageUrl;
+    private final String productImage;
 
-    public static ProductsResponse from(final Product product, Category category, Store store) {
-        return new ProductsResponse(
-                product.getProductCode(),
-                product.getProductName(),
-                product.getCategoryCode(),
-                category.getCategoryTitle(),
-                product.getStoreCode(),
-                store.getStoreName(),
-                product.getPrice(),
-                product.getRegistDate(),
-                product.getSellableStatus()
-        );
-    }
+//    public static ProductsResponse from(final Product product, Category category, Store store) {
+//        return new ProductsResponse(
+//                product.getProductCode(),
+//                product.getProductName(),
+//                product.getCategoryCode(),
+//                category.getCategoryTitle(),
+//                product.getStoreCode(),
+//                store.getStoreName(),
+//                product.getPrice(),
+//                product.getRegistDate(),
+//                product.getSellableStatus()
+//        );
+//    }
 
     public ProductsResponse(Product product, Category category, Store store) {
         this.productCode = product.getProductCode();
@@ -49,7 +50,7 @@ public class ProductsResponse {
         this.price = product.getPrice();
         this.registDate = product.getRegistDate();
         this.sellableStatus = product.getSellableStatus();
-        this.productImageUrl = product.getProductImageUrl();
+        this.productImage = product.getProductImage();
     }
 
 

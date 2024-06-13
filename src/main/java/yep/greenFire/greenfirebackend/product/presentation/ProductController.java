@@ -21,10 +21,12 @@ import yep.greenFire.greenfirebackend.product.dto.response.ProductResponse;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
+import yep.greenFire.greenfirebackend.product.dto.response.SellerProductsResponse;
 import yep.greenFire.greenfirebackend.product.service.ProductOptionService;
 import yep.greenFire.greenfirebackend.product.service.ProductService;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -78,7 +80,7 @@ public class ProductController {
     @PostMapping("seller/mystore/regist")
     public ResponseEntity<Void> save(
             @RequestPart @Valid final ProductCreateRequest productCreateRequest,
-            @RequestPart @Valid final ProductOptionCreateRequest productOptionCreateRequest,
+            @RequestPart @Valid final List<ProductOptionCreateRequest> productOptionCreateRequest,
             @RequestPart final MultipartFile productImg
             ) {
         try {

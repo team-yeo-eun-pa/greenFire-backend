@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -28,42 +29,37 @@ public class Product {
     private Long price;
     private String productDescription;
     @CreatedDate
-    private Date registDate;
+    private LocalDateTime registDate;
     @Enumerated(value = EnumType.STRING)
     private SellableStatus sellableStatus = SellableStatus.Y;
-    private String productImageUrl;
+    private String productImage;
 
-    public Product(Long productCode, String productName, Long categoryCode, Long storeCode,
-                   Long price, String productDescription, Date registDate,
-                   SellableStatus sellableStatus, String productImageUrl) {
-        this.productCode = productCode;
+    public Product(String productName, Long categoryCode, Long storeCode,
+                   String productDescription,
+                   SellableStatus sellableStatus, String productImage) {
         this.productName = productName;
         this.categoryCode = categoryCode;
         this.storeCode = storeCode;
-        this.price = price;
         this.productDescription = productDescription;
-        this.registDate = registDate;
         this.sellableStatus = sellableStatus;
-        this.productImageUrl = productImageUrl;
+        this.productImage = productImage;
     }
 
     public static Product of(
-            final Long productCode, final String productName, final Long categoryCode, final Long storeCode,
-            final Long price, final String productDescription, final Date registDate,
-            final SellableStatus sellableStatus, final String productImageUrl
+            final String productName, final Long categoryCode, final Long storeCode,
+            final String productDescription,
+            final SellableStatus sellableStatus, final String productImage
     ) {
         return new Product(
-                productCode,
                 productName,
                 categoryCode,
                 storeCode,
-                price,
                 productDescription,
-                registDate,
                 sellableStatus,
-                productImageUrl
+                productImage
         );
     }
+
 
     /* 상품 삭제 */
     public void modifyStatus(SellableStatus status) {
