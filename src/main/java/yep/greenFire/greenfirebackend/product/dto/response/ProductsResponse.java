@@ -50,16 +50,6 @@ public class ProductsResponse {
         this.sellableStatus = product.getSellableStatus();
     }
 
-//    public SellerProductsResponse toSellerProductsResponse() {
-//        return new SellerProductsResponse(
-//            this.productCode,
-//            this.productName,
-//            this.categoryCode,
-//            this.storeCode,
-//            this.price,
-//            this.registDate,
-//            this.sellableStatus
-//        );
-//    }
+
 
 }

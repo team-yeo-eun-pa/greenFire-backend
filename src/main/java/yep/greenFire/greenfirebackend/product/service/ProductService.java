@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.web.bind.annotation.PutMapping;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 import yep.greenFire.greenfirebackend.product.domain.entity.Category;
@@ -21,6 +22,8 @@ import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearAct
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 import yep.greenFire.greenfirebackend.product.dto.ProductDTO;
 import yep.greenFire.greenfirebackend.product.dto.ProductOptionDTO;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductDeleteRequest;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionDeleteRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.*;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
@@ -28,6 +31,8 @@ import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static yep.greenFire.greenfirebackend.product.domain.type.SellableStatus.D;
 
 
 @Service
@@ -84,7 +89,7 @@ public class ProductService {
     public Page<SellerProductsResponse> getSellerProducts(final Integer page, final Long memberCode) {
 
         /* 스토어 코드와 일치하는 상품 목록 찾기 */
-        Page<SellerProductsResponse> sellerProducts = productRepository.findByMemberCode(getPageable(page), memberCode);
+        Page<SellerProductsResponse> sellerProducts = productRepository.findByMemberCodeAndSellableStatusNot(getPageable(page), memberCode, D);
 
         return sellerProducts;
 
@@ -92,9 +97,19 @@ public class ProductService {
 
 
     /* 상품 삭제 */
-    public void remove(Long productCode) {
 
-        productRepository.deleteById(productCode);
+    public void modifyStatus(Long productCode, ProductDeleteRequest productDeleteRequest) {
+
+        Product product = productRepository.findByProductCodeAndSellableStatusNot(productCode, D)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+
+        List<ProductOption> productOptions = productOptionRepository.findByProductCode(productCode);
+
+        productOptions.forEach(productOption -> productOption.modifyStatus(ProductOptionAppearActivate.D));
+
+        product.modifyStatus(
+                productDeleteRequest.getSellablestatus()
+        );
     }
 
 

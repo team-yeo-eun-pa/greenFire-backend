@@ -17,4 +17,6 @@ public interface ProductOptionRepository extends JpaRepository<ProductOption, Lo
     /* 상품 상세 페이지 옵션 조회 */
     List<ProductOption> findByProductCodeAndOptionAppearActivate(Long productCode, ProductOptionAppearActivate productOptionAppearActivate);
 
+    /* 옵션 삭제 */
+    List<ProductOption> findByProductCode(Long productCode);
 }

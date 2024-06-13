@@ -33,6 +33,11 @@ public class ProductOption {
         this.optionAppearActivate = optionAppearActivate;
     }
 
+    /* 옵션 삭제 */
+    public void modifyStatus(ProductOptionAppearActivate optionAppearActivate) {
+        this.optionAppearActivate = optionAppearActivate;
+    }
+
     /* 상품 옵션 조회 가능 여부 */
     @Enumerated(value = EnumType.STRING)
     private ProductOptionAppearActivate optionAppearActivate = ProductOptionAppearActivate.Y;
