@@ -11,6 +11,7 @@ import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
+import yep.greenFire.greenfirebackend.review.dto.request.ReviewCreateRequest;
 import yep.greenFire.greenfirebackend.review.dto.response.ReviewResponse;
 import yep.greenFire.greenfirebackend.review.service.ReviewService;
 
@@ -35,13 +36,17 @@ public class ReviewController {
         return ResponseEntity.ok(pagingResponse);
     }
 
-//    @PostMapping("/products/{productCode}/review-create")
-//    public ResponseEntity<Void> save(
-//            @RequestBody @Valid final ReviewRequest reviewRequest,
-//            @AuthenticationPrincipal final CustomUser customUser
-//            ){
-//
-//        reviewService.save(reviewRequest, customUser.getMemberCode());
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
+    @PostMapping("/reviews/{productCode}")
+    public ResponseEntity<Void> save(
+            @RequestPart @Valid final ReviewCreateRequest reviewCreateRequest,
+            @AuthenticationPrincipal final CustomUser customUser
+
+    ) {
+        System.out.println("fef@###########@@@@@@####@#@#@#@#@#@#@#@#@#@#ef" + customUser);
+
+        reviewService.save(reviewCreateRequest, customUser.getMemberCode());
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
 }

@@ -5,5 +5,6 @@ import yep.greenFire.greenfirebackend.order.domain.entity.Order;
 
 public interface OrderRepository extends JpaRepository<Order, Long>, OrderRepositoryCustom {
 
+    boolean existsByOrderCodeAndMemberCode(Long orderDetailCode, Long memberCode);
 }
 
