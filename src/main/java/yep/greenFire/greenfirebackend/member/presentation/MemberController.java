@@ -25,13 +25,24 @@ public class MemberController {
     // 회원 가입
     @PostMapping("/signup")
     public ResponseEntity<Void> signup(@RequestBody @Valid MemberSignupRequest memberRequest) {
-
         Long memberCode = memberService.signup(memberRequest);
-
-        // 이메일 인증 코드 발송
         emailVerificationService.generateAndSendVerificationCode(memberCode, memberRequest.getMemberEmail());
-
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/verify-email")
+    public ResponseEntity<String> verifyEmail(@RequestParam Long memberCode, @RequestParam String verificationCode) {
+        String result = emailVerificationService.verifyEmail(memberCode, verificationCode);
+        switch (result) {
+            case "verified":
+                return ResponseEntity.ok("회원가입이 완료되었습니다.");
+            case "expired":
+                return ResponseEntity.badRequest().body("인증코드가 만료되었습니다.");
+            case "already_verified":
+                return ResponseEntity.badRequest().body("이미 인증이 완료된 코드입니다.");
+            default:
+                return ResponseEntity.badRequest().body("인증코드가 다르거나 만료되었습니다.");
+        }
     }
 
     // 인증 테스트를 위한 메서드
