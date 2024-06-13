@@ -6,8 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -25,36 +28,45 @@ public class Product {
     private Long categoryCode;
     private Long storeCode;
     private Long price;
+    private String productDescription;
     @CreatedDate
-    private Date registDate;
+    private LocalDateTime registDate;
     @Enumerated(value = EnumType.STRING)
     private SellableStatus sellableStatus = SellableStatus.Y;
-    private String productImg;
+    private String productImage;
 
-    public Product(Long productCode, String productName, Long categoryCode, Long storeCode,
-                   Long price, Date registDate, SellableStatus sellableStatus) {
-        this.productCode = productCode;
+    public Product(String productName, Long categoryCode, Long storeCode,
+                   Long price, String productDescription,
+                   SellableStatus sellableStatus, String productImage) {
         this.productName = productName;
         this.categoryCode = categoryCode;
         this.storeCode = storeCode;
         this.price = price;
-        this.registDate = registDate;
+        this.productDescription = productDescription;
         this.sellableStatus = sellableStatus;
+        this.productImage = productImage;
     }
 
     public static Product of(
-            final Long productCode, final String productName, final Long categoryCode, final Long storeCode,
-            final Long price, final Date registDate, final SellableStatus sellableStatus
+            final String productName, final Long categoryCode, final Long storeCode,
+            final Long price, final String productDescription,
+            final SellableStatus sellableStatus, final String productImage
     ) {
         return new Product(
-                productCode,
                 productName,
                 categoryCode,
                 storeCode,
                 price,
-                registDate,
-                sellableStatus
+                productDescription,
+                sellableStatus,
+                productImage
         );
+    }
+
+
+    /* 상품 삭제 */
+    public void modifyStatus(SellableStatus status) {
+        this.sellableStatus = status;
     }
 
 }
