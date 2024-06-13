@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import yep.greenFire.greenfirebackend.member.domain.entity.Member;
-import yep.greenFire.greenfirebackend.notice.domain.type.NoticeStatusType;
-import yep.greenFire.greenfirebackend.product.domain.entity.Product;
+import yep.greenFire.greenfirebackend.order.domain.type.OrderStatus;
 import yep.greenFire.greenfirebackend.review.domain.type.ReviewReplyStatus;
 import yep.greenFire.greenfirebackend.review.domain.type.ReviewStatus;
 
@@ -35,11 +33,21 @@ public class Review {
     private LocalDateTime modifyDate;
     @CreatedDate
     private LocalDateTime deleteDate;
-    private String idReply;
     @Enumerated(value = EnumType.STRING)
     private ReviewReplyStatus reviewReplyStatus = ReviewReplyStatus.Y;
     private Long productCode;
     private Long memberCode;
+    @Enumerated(value = EnumType.STRING)
+    private OrderStatus orderStatus = OrderStatus.COMPLETED;
 
+    public Review(String reviewTitle, String reviewContent, Long memberCode) {
+        this.reviewTitle=reviewTitle;
+        this.reviewContent=reviewContent;
+        this.memberCode=memberCode;
+    }
 
+    public static Review of(Long memberCode, String reviewTitle, String reviewContent) {
+        return new Review(reviewTitle, reviewContent, memberCode);
+
+    }
 }

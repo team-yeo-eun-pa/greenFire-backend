@@ -47,6 +47,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Page<OrderResponse> findByStoreCode(@Param("storeCode") Long storeCode, Pageable pageable);
 
 
+
     /* 특정 회원 코드 주문 목록 상세 조회 */
 //    @Query("select distinct new yep.greenFire.greenfirebackend.order.dto.response.OrderResponse(o, po, p) " +
 //            "from Order o " +

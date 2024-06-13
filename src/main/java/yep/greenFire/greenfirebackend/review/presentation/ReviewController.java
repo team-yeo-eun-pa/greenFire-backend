@@ -1,9 +1,13 @@
 package yep.greenFire.greenfirebackend.review.presentation;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
@@ -30,4 +34,14 @@ public class ReviewController {
 
         return ResponseEntity.ok(pagingResponse);
     }
+
+//    @PostMapping("/products/{productCode}/review-create")
+//    public ResponseEntity<Void> save(
+//            @RequestBody @Valid final ReviewRequest reviewRequest,
+//            @AuthenticationPrincipal final CustomUser customUser
+//            ){
+//
+//        reviewService.save(reviewRequest, customUser.getMemberCode());
+//        return ResponseEntity.status(HttpStatus.CREATED).build();
+//    }
 }

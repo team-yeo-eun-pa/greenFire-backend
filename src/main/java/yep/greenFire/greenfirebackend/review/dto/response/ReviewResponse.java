@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 public class ReviewResponse {
 
+    private final Long reviewCode;
     private final Long productCode;
     private final String productName;
     private final String reviewTitle;
@@ -20,7 +21,8 @@ public class ReviewResponse {
     private final Long memberCode;
     private final String memberNickname;
 
-    public ReviewResponse(Long productCode, String productName, String reviewTitle, String reviewContent, LocalDateTime reviewDate, LocalDateTime modifyDate, Long memberCode, String memberNickname) {
+    public ReviewResponse(Long reviewCode, Long productCode, String productName, String reviewTitle, String reviewContent, LocalDateTime reviewDate, LocalDateTime modifyDate, Long memberCode, String memberNickname) {
+        this.reviewCode = reviewCode;
         this.productCode = productCode;
         this.productName = productName;
         this.reviewTitle = reviewTitle;
