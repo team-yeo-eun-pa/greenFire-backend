@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 
 @Entity
 @Table(name = "tbl_order_detail")
@@ -29,6 +30,10 @@ public class OrderDetail {
     /* 주문 취소 여부 - 기본값 false */
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isOrderCancel = false;
+
+    @ManyToOne
+    @JoinColumn(name = "productCode", referencedColumnName = "productCode")
+    private Product product;
 
     private OrderDetail(Long optionCode, Long optionPrice, Long orderQuantity) {
         this.optionCode = optionCode;
