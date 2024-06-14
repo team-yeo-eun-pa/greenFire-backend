@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.auth.type.CustomUser;
+import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
+import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
@@ -22,6 +24,8 @@ import yep.greenFire.greenfirebackend.inquiry.site.dto.response.InquiryResponse;
 
 import java.net.URI;
 import java.util.Date;
+
+import static yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode.NOT_FOUND_INQUIRY_CODE;
 
 @Service
 @Transactional
@@ -65,8 +69,9 @@ public class SiteInquiryService {
     }
 
     @Transactional(readOnly = true)
-    public InquiryResponse findByInquiryDetail(Integer inquiryCode) {
-        InquiryContent inquiryDetail = siteInquiryRepository.findById(inquiryCode).orElseThrow();
+    public InquiryResponse findById(Integer inquiryCode) {
+        InquiryContent inquiryDetail = siteInquiryRepository.findById(inquiryCode)
+                .orElseThrow((new NotFoundException(ExceptionCode.NOT_FOUND_INQUIRY_CODE));
 
         return InquiryResponse.from(inquiryDetail);
     }

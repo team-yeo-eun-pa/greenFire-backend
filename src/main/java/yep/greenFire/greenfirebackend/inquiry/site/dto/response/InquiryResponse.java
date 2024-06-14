@@ -12,13 +12,14 @@ import java.util.Date;
 public class InquiryResponse {
 
     //문의 목록 조회
-
+    private final Integer inquiryCode;
     private final Date inquiryWriteDate;
     private final String inquiryTitle;
     private final String inquiryDetail;
   //  private String inquiryReplyStatus;
 
-    public InquiryResponse(Date inquiryWriteDate, String inquiryTitle, String inquiryDetail) {
+    public InquiryResponse(Integer inquiryCode, Date inquiryWriteDate, String inquiryTitle, String inquiryDetail) {
+        this.inquiryCode = inquiryCode;
         this.inquiryWriteDate = inquiryWriteDate;
         this.inquiryTitle = inquiryTitle;
         this.inquiryDetail = inquiryDetail;
@@ -27,6 +28,7 @@ public class InquiryResponse {
 
     public static InquiryResponse from(InquiryContent inquiryContent) {
         return new InquiryResponse(
+                inquiryContent.getInquiryCode(),
                 inquiryContent.getInquiryWriteDate(),
                 inquiryContent.getInquiryTitle(),
                 inquiryContent.getInquiryDetail()
