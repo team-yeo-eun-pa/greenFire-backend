@@ -44,24 +44,30 @@ public class Member {
     private LocalDateTime suspendedEndDate;
 
 
-    private Member(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone) {
+    private Member(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone, MemberStatus memberStatus) {
         this.memberId = memberId;
         this.memberPassword = memberPassword;
         this.memberName = memberName;
         this.memberNickname = memberNickname == null || memberNickname.trim().isEmpty() ? memberId : memberNickname;
         this.memberEmail = memberEmail;
         this.memberPhone = memberPhone;
+        this.memberStatus = memberStatus;
     }
 
-    public static Member of(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone) {
+    public static Member of(String memberId, String memberPassword, String memberName, String memberNickname, String memberEmail, String memberPhone, MemberStatus memberStatus) {
         return new Member(
                 memberId,
                 memberPassword,
                 memberName,
                 memberNickname,
                 memberEmail,
-                memberPhone
+                memberPhone,
+                memberStatus
         );
+    }
+
+    public void activate() {
+        this.memberStatus = MemberStatus.ACTIVE;
     }
 
     public void updateRefreshToken(String refreshToken) {

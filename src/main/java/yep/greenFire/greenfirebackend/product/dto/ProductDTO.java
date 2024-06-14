@@ -20,9 +20,7 @@ public class ProductDTO {
     private final String categoryTitle;
     private final Long storeCode;
     private final String storeName;
-    private final String productDescription;
     private final SellableStatus sellableStatus;
-    private final String productImage;
 
     public ProductDTO(Product product, Category category, Store store){
         this.productCode = product.getProductCode();
@@ -31,9 +29,7 @@ public class ProductDTO {
         this.categoryTitle = category.getCategoryTitle();
         this.storeCode = product.getStoreCode();
         this.storeName = store.getStoreName();
-        this.productDescription = product.getProductDescription();
         this.sellableStatus = product.getSellableStatus();
-        this.productImage = product.getProductImage();
     }
 
 

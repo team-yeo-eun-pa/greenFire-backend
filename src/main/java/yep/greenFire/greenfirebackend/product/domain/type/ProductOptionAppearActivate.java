@@ -3,8 +3,7 @@ package yep.greenFire.greenfirebackend.product.domain.type;
 public enum ProductOptionAppearActivate {
 
     Y("y"),
-    N("n"),
-    D("D");
+    N("n");
 
     private final String optionAppearActivate;
 
