@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.auth.type.CustomUser;
+//import yep.greenFire.greenfirebackend.email.service.EmailVerificationService;
 import yep.greenFire.greenfirebackend.email.service.EmailVerificationService;
 import yep.greenFire.greenfirebackend.member.dto.request.MemberSignupRequest;
 import yep.greenFire.greenfirebackend.member.dto.request.ProfileUpdateRequest;
