@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -17,8 +19,9 @@ public class SellerProductsResponse {
     private final Long categoryCode;
     private final Long storeCode;
     private final Long price;
-    private final Date registDate;
+    private final LocalDateTime registDate;
     private final SellableStatus sellableStatus;
+    private final String productImage;
 
 
     public static SellerProductsResponse from(final Product product) {
@@ -29,7 +32,8 @@ public class SellerProductsResponse {
                 product.getStoreCode(),
                 product.getPrice(),
                 product.getRegistDate(),
-                product.getSellableStatus()
+                product.getSellableStatus(),
+                product.getProductImage()
         );
 
     }
@@ -42,5 +46,6 @@ public class SellerProductsResponse {
         this.price = product.getPrice();
         this.registDate = product.getRegistDate();
         this.sellableStatus = product.getSellableStatus();
+        this.productImage = product.getProductImage();
     }
 }
