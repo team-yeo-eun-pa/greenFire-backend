@@ -71,7 +71,7 @@ public class SiteInquiryService {
     @Transactional(readOnly = true)
     public InquiryResponse findById(Integer inquiryCode) {
         InquiryContent inquiryDetail = siteInquiryRepository.findById(inquiryCode)
-                .orElseThrow((new NotFoundException(ExceptionCode.NOT_FOUND_INQUIRY_CODE));
+                .orElseThrow(()-> new NotFoundException(ExceptionCode.NOT_FOUND_INQUIRY_CODE));
 
         return InquiryResponse.from(inquiryDetail);
     }
