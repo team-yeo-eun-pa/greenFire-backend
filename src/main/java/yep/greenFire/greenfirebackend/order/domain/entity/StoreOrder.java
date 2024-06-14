@@ -21,6 +21,7 @@ public class StoreOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long storeOrderCode;
 
+    private Long orderCode;
     private Long storeCode;
 
     /* 주문 상태 */
@@ -38,7 +39,7 @@ public class StoreOrder {
     private String rejectionReason;
 
     @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "store_order_code")
+    @JoinColumn(name = "storeOrderCode")
     private List<OrderDetail> orderDetails;
 
     /* 주문금액 */
