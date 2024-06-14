@@ -24,10 +24,10 @@ public class OrderDetail {
     private Long optionPrice;
     private Long orderQuantity;
 
-    /* 쿠폰 사용 여부 - 기본값 false */
+    // 쿠폰 사용 여부 - 기본값 false
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isCouponUsed = false;
-    /* 주문 취소 여부 - 기본값 false */
+    // 주문 취소 여부 - 기본값 false
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isOrderCancel = false;
 
@@ -43,6 +43,11 @@ public class OrderDetail {
 
     public static OrderDetail of(Long optionCode, Long optionPrice, Long orderQuantity) {
         return new OrderDetail(optionCode, optionPrice, orderQuantity);
+    }
+
+    // 주문 취소 여부 업데이트
+    public void setOrderCancel(Boolean isOrderCancel) {
+        this.isOrderCancel = isOrderCancel;
     }
 
 }

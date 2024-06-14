@@ -1,5 +1,6 @@
 package yep.greenFire.greenfirebackend.order.domain.type;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum OrderStatus {
@@ -28,7 +29,7 @@ public enum OrderStatus {
     public String toString() {
         return this.orderStatus;
     }
-
+    @JsonCreator
     public static OrderStatus fromValue(String value) {
         for (OrderStatus orderStatus : OrderStatus.values()) {
             if (orderStatus.getOrderStatus().equals(value)) {

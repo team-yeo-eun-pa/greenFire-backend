@@ -1,7 +1,7 @@
 package yep.greenFire.greenfirebackend.delivery.domain.type;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import yep.greenFire.greenfirebackend.payment.domain.type.PaymentWay;
 
 public enum DeliveryType {
     SEND("일반 배송"),
@@ -19,6 +19,7 @@ public enum DeliveryType {
         return deliveryType;
     }
 
+    @JsonCreator
     public static DeliveryType fromValue(String value) {
         for (DeliveryType deliveryType : DeliveryType.values()) {
             if (deliveryType.getDeliveryType().equals(value)) {
