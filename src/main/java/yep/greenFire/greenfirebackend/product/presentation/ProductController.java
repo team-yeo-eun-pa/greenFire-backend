@@ -19,6 +19,7 @@ import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
 import yep.greenFire.greenfirebackend.product.dto.request.*;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
+import yep.greenFire.greenfirebackend.product.dto.response.SellerProductResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.SellerProductsResponse;
 import yep.greenFire.greenfirebackend.product.service.ProductOptionService;
 import yep.greenFire.greenfirebackend.product.service.ProductService;
@@ -75,6 +76,16 @@ public class ProductController {
         return ResponseEntity.ok(pagingResponse);
     }
 
+    @GetMapping("/seller/mystore/product/{productCode}")
+    @ResponseBody
+    public ResponseEntity<SellerProductResponse> getProduct(@PathVariable final Long productCode) {
+
+        final SellerProductResponse sellerProductResponse = productService.getSellerProduct(productCode);
+
+        return ResponseEntity.ok(sellerProductResponse);
+    }
+
+
     /* 판매자 상품 등록 */
     @PostMapping("seller/mystore/regist")
     public ResponseEntity<Void> save(
@@ -108,6 +119,9 @@ public class ProductController {
     }
 
     /* 상품 옵션 수정 */
+
+
+
 
     /* 판매자 상품 삭제 -> 상태 변경 */
     /* 상품 상태 변경 이전에 옵션 먼저 변경 필요 */

@@ -110,6 +110,22 @@ public class ProductService {
 
     }
 
+    @Transactional(readOnly = true)
+    public ProductResponse getSellerProduct(final Long productCode) {
+
+//        ProductDTO product = productRepository.findByProductCodeAndSellableStatus(productCode, SellableStatus.Y)
+//                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+//
+//        List<ProductOption> productOptions = productOptionRepository.findByProductCodeAndOptionAppearActivate(productCode, ProductOptionAppearActivate.Y);
+//
+//
+//        return ProductResponse.of(product, productOptions.stream().map(productOption -> ProductOptionDTO.from(productOption)).collect(Collectors.toList()));
+//
+        return null;
+
+    }
+
+
 
     /* 판매자 상품 등록 */
     private String getRandomName() { return UUID.randomUUID().toString().replace("-", ""); }
@@ -146,7 +162,8 @@ public class ProductService {
                 minOptionPrice,
                 productCreateRequest.getProductDescription(),
                 productCreateRequest.getSellableStatus(),
-                IMG_URL + replaceFileName
+//                IMG_URL + replaceFileName
+                replaceFileName
 
         );
 
@@ -178,8 +195,10 @@ public class ProductService {
         String replaceFileName = null;
         if (productImage != null) {
             replaceFileName = FileUploadUtils.saveFile(IMG_DIR, getRandomName(), productImage);
+//            FileUploadUtils.deleteFile(IMG_DIR, product.getProductImage().replace(IMG_URL, ""));
+//            product.modifyProductImage(IMG_URL + replaceFileName);
             FileUploadUtils.deleteFile(IMG_DIR, product.getProductImage().replace(IMG_URL, ""));
-            product.modifyProductImage(IMG_URL + replaceFileName);
+            product.modifyProductImage(replaceFileName);
         }
 
         Long storeCode = storeRepository.findStoreByMemberCode(memberCode);
@@ -193,7 +212,8 @@ public class ProductService {
                 minOptionPrice,
                 productUpdateRequest.getProductDescription(),
                 productUpdateRequest.getSellableStatus(),
-                IMG_URL + replaceFileName
+//                IMG_URL + replaceFileName
+                replaceFileName
 
         );
 
