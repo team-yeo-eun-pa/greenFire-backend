@@ -34,6 +34,8 @@ public class OrderDetailRepositoryCustomImpl implements OrderDetailRepositoryCus
                                         orderDetail.optionCode,
                                         orderDetail.optionPrice,
                                         orderDetail.orderQuantity,
+                                        orderDetail.isCouponUsed,
+                                        orderDetail.isOrderCancel,
                                         productOption.optionName,
                                         product.productName,
                                         product.productImage
