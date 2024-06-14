@@ -31,7 +31,6 @@ import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 import yep.greenFire.greenfirebackend.product.dto.ProductDTO;
 import yep.greenFire.greenfirebackend.product.dto.ProductOptionDTO;
 
-import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -100,11 +99,8 @@ public class ProductService {
     @Transactional(readOnly = true)
     public Page<SellerProductsResponse> getSellerProducts(final Integer page, final Long memberCode) {
 
-        /* 현재 로그인한 memberCode와 일치하는 storeCode 찾기 */
-//        Long storeCode = storeRepository.findStoreByMemberCode(memberCode);
-
         /* 스토어 코드와 일치하는 상품 목록 찾기 */
-        Page<SellerProductsResponse> sellerProducts = productRepository.findByMemberCodeAndSellableStatusNot(getPageable(page), memberCode, D);
+        Page<SellerProductsResponse> sellerProducts = productRepository.findByMemberCode(getPageable(page), memberCode);
 
         return sellerProducts;
 
