@@ -38,7 +38,7 @@ public class OrderDetailRepositoryCustomImpl implements OrderDetailRepositoryCus
                                         orderDetail.isOrderCancel,
                                         productOption.optionName,
                                         product.productName,
-                                        product.productImg
+                                        product.productImage
                                 )
                         )
                 );
