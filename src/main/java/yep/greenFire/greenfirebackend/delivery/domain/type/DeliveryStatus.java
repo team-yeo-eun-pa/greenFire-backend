@@ -1,5 +1,6 @@
 package yep.greenFire.greenfirebackend.delivery.domain.type;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum DeliveryStatus {
@@ -18,6 +19,7 @@ public enum DeliveryStatus {
         return deliveryStatus;
     }
 
+    @JsonCreator
     public static DeliveryStatus fromValue(String value) {
         for (DeliveryStatus deliveryStatus : DeliveryStatus.values()) {
             if (deliveryStatus.getDeliveryStatus().equals(value)) {

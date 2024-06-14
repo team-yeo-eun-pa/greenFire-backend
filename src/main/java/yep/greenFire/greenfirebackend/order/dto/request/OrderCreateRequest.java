@@ -11,15 +11,19 @@ import java.util.List;
 @Getter
 public class OrderCreateRequest {
 
-    /* 배송지 - 수령자 연락처 주소 요청사항 */
+    // 주문 정보
     @NotNull
     private Long deliveryAddressCode;
 
+    // 스토어별 주문 정보
     private List<StoreOrderRequest> storeOrders;
 
     @Getter
     public static class StoreOrderRequest {
 
+        private Long storeCode;
+
+        // 주문 상세 정보
         private List<OrderDetailRequest> orderDetails;
 
     }
@@ -27,13 +31,10 @@ public class OrderCreateRequest {
     @Getter
     public static class OrderDetailRequest {
 
-        // 상품 옵션 테이블에서 - 상품 옵션 코드, 판매가,
-        // 수량은 장바구니, 상품 상세 페이지에서
-
         @Min(value = 1)
         private Long optionCode;
-
         private Long optionPrice;
+
         private Long orderQuantity;
 
     }

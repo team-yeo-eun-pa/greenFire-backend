@@ -14,6 +14,9 @@ public class OrderDetailDTO {
     private  Long optionPrice;
     private  Long orderQuantity;
 
+    private Boolean isCouponUsed;
+    private Boolean isOrderCancel;
+
     private String optionName;
     private String productName;
     private String productImg;

@@ -25,7 +25,7 @@ public class Order {
 
     private String orderName;
 
-    /* 배송지 - 수령자 연락처 주소 요청사항 //카카오 우편번호 서비스 적용해보기 */
+    //카카오 우편번호 서비스 적용해보기
     private String receiverName;
     private String contactNumber;
 
@@ -36,7 +36,6 @@ public class Order {
     private String addressDetail;
     private String deliveryRequest;
 
-    /* 주문금액, 총할인, 배송비, 실결제금액 */
     private Long totalOrderAmount;
     private Long totalDiscountAmount;
     private Long totalDeliveryAmount;
@@ -77,7 +76,6 @@ public class Order {
         this.storeOrders = storeOrders;
     }
 
-
     public static Order of(Long memberCode, String orderName, String receiverName, String contactNumber, String addressZonecode, AddressType addressType, String address,String addressDetail, String deliveryRequest, Long totalOrderAmount, Long totalDiscountAmount, Long totalDeliveryAmount, Long totalRealPayment,  List<StoreOrder> storeOrders) {
         return new Order(memberCode, orderName,
                 receiverName, contactNumber,
@@ -86,17 +84,17 @@ public class Order {
                 storeOrders);
     }
 
-    /* 총 주문금액 */
+    // 주문 - 총 주문금액
     public void totalOrderAmount(Long orderPrice) {
         this.totalOrderAmount += orderPrice;
     }
 
-    /* 총 배송비 */
+    // 주문 - 총 배송비
     public void totalDeliveryAmount(Long deliveryAmount) {
         this.totalDeliveryAmount += deliveryAmount;
     }
 
-    /* 주문 취소일 */
+    // 주문 취소일
     public void setCancel(boolean isOrderCancel, boolean isPartialCancel) {
         this.isOrderCancel = isOrderCancel;
         this.isPartialCancel = isPartialCancel;
