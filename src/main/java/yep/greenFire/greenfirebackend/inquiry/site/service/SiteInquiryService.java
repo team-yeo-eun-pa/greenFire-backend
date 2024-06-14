@@ -68,6 +68,8 @@ public class SiteInquiryService {
     }
 
 
+    //문의 답변 등록
+
 //    public int Replysave(
 //            @RequestBody @Valid ReplyInquiryCreateRequest replyInquiryCreateRequest,
 //            @AuthenticationPrincipal CustomUser customUser) {
@@ -86,6 +88,7 @@ public class SiteInquiryService {
 //        return newContent.getInquiryCode();
 //    }
 //
+    //문의 삭제
 //    public void remove(int inquiryCode) {
 //
 //        siteInquiryRepository.deleteById(inquiryCode);
