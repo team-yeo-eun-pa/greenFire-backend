@@ -6,17 +6,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.auth.type.CustomUser;
+import yep.greenFire.greenfirebackend.common.paging.Pagination;
+import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
+import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
 import yep.greenFire.greenfirebackend.inquiry.entity.InquiryContent;
 import yep.greenFire.greenfirebackend.inquiry.site.domain.repository.SiteInquiryRepository;
 import yep.greenFire.greenfirebackend.inquiry.site.dto.request.InquiryCreateRequest;
 import yep.greenFire.greenfirebackend.inquiry.site.dto.response.InquiryResponse;
 
+import java.net.URI;
 import java.util.Date;
 
 @Service
@@ -61,14 +65,12 @@ public class SiteInquiryService {
     }
 
     @Transactional(readOnly = true)
-    public InquiryResponse findByInquiryCode(Long inquiryCode) {
-        InquiryResponse inquiryDetail = siteInquiryRepository.findByInquiryCode(inquiryCode);
+    public InquiryResponse findByInquiryDetail(Integer inquiryCode) {
+        InquiryContent inquiryDetail = siteInquiryRepository.findById(inquiryCode).orElseThrow();
 
-        return inquiryDetail;
+        return InquiryResponse.from(inquiryDetail);
     }
 
-
-    //문의 답변 등록
 
 //    public int Replysave(
 //            @RequestBody @Valid ReplyInquiryCreateRequest replyInquiryCreateRequest,
@@ -88,7 +90,6 @@ public class SiteInquiryService {
 //        return newContent.getInquiryCode();
 //    }
 //
-    //문의 삭제
 //    public void remove(int inquiryCode) {
 //
 //        siteInquiryRepository.deleteById(inquiryCode);

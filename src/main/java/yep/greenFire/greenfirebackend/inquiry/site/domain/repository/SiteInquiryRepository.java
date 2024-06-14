@@ -9,8 +9,9 @@ import yep.greenFire.greenfirebackend.inquiry.entity.InquiryContent;
 import yep.greenFire.greenfirebackend.inquiry.site.dto.response.InquiryResponse;
 
 @Repository
+
 public interface SiteInquiryRepository extends JpaRepository<InquiryContent, Integer> {
     Page<InquiryContent> findByMemberCode(Long memberCode, Pageable pageable);
 
-    InquiryResponse findByInquiryCode (Long inquiryCode);
+
 }

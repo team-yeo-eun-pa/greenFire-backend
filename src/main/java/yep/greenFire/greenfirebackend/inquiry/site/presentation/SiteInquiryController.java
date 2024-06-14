@@ -66,34 +66,34 @@ public class SiteInquiryController {
 
 
     @GetMapping("members/detail")
-    public ResponseEntity<InquiryResponse> findInquiryDetail(
-            @PathVariable final Long inquiryCode
+    public ResponseEntity<InquiryResponse> findByInquiryDetail(
+            @PathVariable final Integer inquiryCode
     ) {
 
-        InquiryResponse inquiryResponse = siteInquiryService.findByInquiryCode(inquiryCode);
+        InquiryResponse inquiryResponse = siteInquiryService.findByInquiryDetail(inquiryCode);
 
 
 
         return ResponseEntity.ok(inquiryResponse);
     }
-
-    //사이트 문의 답변 등록
-//    @GetMapping("/admin/regist")
-//    public ResponseEntity<AdminInquiryResponse> save (
-//            @RequestBody @Valid final ReplyInquiryCreateRequest replyInquiryCreateRequest,
-//            @AuthenticationPrincipal CustomUser customUser
-//    ) {
-//        final int inquiryCode = siteInquiryService.Replysave(replyInquiryCreateRequest, customUser);
-//        return ResponseEntity.created(URI.create("/admin/list" + inquiryCode)).build();
-//    }
 //
-//
-//    //문의 삭제
-//
-//    @GetMapping("admin/remove")
-//    public ResponseEntity<Void> remove (@RequestParam final int inquiryCode) {
-//        siteInquiryService.remove(inquiryCode);
-//
-//        return ResponseEntity.noContent().build();
-//    }
+//    //사이트 문의 답변 등록
+////    @GetMapping("/admin/regist")
+////    public ResponseEntity<AdminInquiryResponse> save (
+////            @RequestBody @Valid final ReplyInquiryCreateRequest replyInquiryCreateRequest,
+////            @AuthenticationPrincipal CustomUser customUser
+////    ) {
+////        final int inquiryCode = siteInquiryService.Replysave(replyInquiryCreateRequest, customUser);
+////        return ResponseEntity.created(URI.create("/admin/list" + inquiryCode)).build();
+////    }
+////
+////
+////    //문의 삭제
+////
+////    @GetMapping("admin/remove")
+////    public ResponseEntity<Void> remove (@RequestParam final int inquiryCode) {
+////        siteInquiryService.remove(inquiryCode);
+////
+////        return ResponseEntity.noContent().build();
+////    }
 }
