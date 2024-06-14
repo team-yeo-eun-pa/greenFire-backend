@@ -78,9 +78,13 @@ public class ProductController {
 
     @GetMapping("/seller/mystore/product/{productCode}")
     @ResponseBody
-    public ResponseEntity<SellerProductResponse> getProduct(@PathVariable final Long productCode) {
+    public ResponseEntity<SellerProductResponse> getProduct(
+            @PathVariable final Long productCode,
+            @AuthenticationPrincipal final CustomUser customUser
+    ) {
 
-        final SellerProductResponse sellerProductResponse = productService.getSellerProduct(productCode);
+        final Long memberCode = customUser.getMemberCode();
+        final SellerProductResponse sellerProductResponse = productService.getSellerProduct(productCode, memberCode);
 
         return ResponseEntity.ok(sellerProductResponse);
     }

@@ -111,17 +111,16 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public ProductResponse getSellerProduct(final Long productCode) {
+    public SellerProductResponse getSellerProduct(final Long productCode, final Long memberCode) {
 
-//        ProductDTO product = productRepository.findByProductCodeAndSellableStatus(productCode, SellableStatus.Y)
-//                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
-//
-//        List<ProductOption> productOptions = productOptionRepository.findByProductCodeAndOptionAppearActivate(productCode, ProductOptionAppearActivate.Y);
-//
-//
-//        return ProductResponse.of(product, productOptions.stream().map(productOption -> ProductOptionDTO.from(productOption)).collect(Collectors.toList()));
-//
-        return null;
+        ProductDTO product = productRepository.findByMemberCode(memberCode)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+
+        List<ProductOption> productOptions = productOptionRepository.findByProductCodeAndOptionAppearActivate(productCode, ProductOptionAppearActivate.Y);
+
+
+        return SellerProductResponse.of(product, productOptions.stream().map(productOption -> ProductOptionDTO.from(productOption)).collect(Collectors.toList()));
+
 
     }
 

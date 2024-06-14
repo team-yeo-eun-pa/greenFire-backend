@@ -3,42 +3,39 @@ package yep.greenFire.greenfirebackend.product.dto.response;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import yep.greenFire.greenfirebackend.product.domain.entity.Category;
 import yep.greenFire.greenfirebackend.product.domain.entity.Product;
 import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
+import yep.greenFire.greenfirebackend.product.dto.ProductDTO;
+import yep.greenFire.greenfirebackend.product.dto.ProductOptionDTO;
 import yep.greenFire.greenfirebackend.store.domain.entity.Store;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Getter
+@Setter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SellerProductResponse {
 
-    private final Long productCode;
-    private final String productName;
-    private final Long categoryCode;
-    private final String categoryTitle;
-    private final Long storeCode;
-    private final String storeName;
-    private final Long price;
-    private final LocalDateTime registDate;
-    private final String productDescription;
-    private final SellableStatus sellableStatus;
-    private final String productImage;
+    private ProductDTO productInfo;
+    private List<ProductOptionDTO> productOptions;
 
-    public SellerProductResponse(Product product, Category category, Store store) {
-        this.productCode = product.getProductCode();
-        this.productName = product.getProductName();
-        this.categoryCode = product.getCategoryCode();
-        this.categoryTitle = category.getCategoryTitle();
-        this.storeCode = product.getStoreCode();
-        this.storeName = store.getStoreName();
-        this.price = product.getPrice();
-        this.registDate = product.getRegistDate();
-        this.productDescription = product.getProductDescription();
-        this.sellableStatus = product.getSellableStatus();
-        this.productImage = product.getProductImage();
+
+    public SellerProductResponse(ProductDTO productInfo, List<ProductOptionDTO> productOptions) {
+        this.productInfo = productInfo;
+        this.productOptions = productOptions;
+
     }
+
+    public static SellerProductResponse of(final ProductDTO productInfo, List<ProductOptionDTO> productOptions) {
+        return new SellerProductResponse(
+                productInfo,
+                productOptions
+        );
+    }
+
 
 }
