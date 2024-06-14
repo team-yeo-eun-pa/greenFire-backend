@@ -64,6 +64,7 @@ public class SiteInquiryController {
     }
 
 
+
 ;
     @GetMapping("/{inquiryCode}")
     public ResponseEntity<InquiryResponse> findByInquiryDetail(
@@ -71,6 +72,7 @@ public class SiteInquiryController {
     ) {
 
         InquiryResponse inquiryResponse = siteInquiryService.findById(inquiryCode);
+
 
 
 

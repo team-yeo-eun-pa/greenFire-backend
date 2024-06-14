@@ -7,14 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import yep.greenFire.greenfirebackend.inquiry.entity.InquiryContent;
 import yep.greenFire.greenfirebackend.inquiry.site.dto.response.InquiryResponse;
-
 import java.util.Optional;
 
 @Repository
 
 public interface SiteInquiryRepository extends JpaRepository<InquiryContent, Integer> {
     Page<InquiryContent> findByMemberCode(Long memberCode, Pageable pageable);
-
 
 
 }

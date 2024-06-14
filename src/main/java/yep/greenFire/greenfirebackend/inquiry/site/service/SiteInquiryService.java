@@ -25,7 +25,9 @@ import yep.greenFire.greenfirebackend.inquiry.site.dto.response.InquiryResponse;
 import java.net.URI;
 import java.util.Date;
 
+
 import static yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode.NOT_FOUND_INQUIRY_CODE;
+
 
 @Service
 @Transactional
@@ -72,6 +74,7 @@ public class SiteInquiryService {
     public InquiryResponse findById(Integer inquiryCode) {
         InquiryContent inquiryDetail = siteInquiryRepository.findById(inquiryCode)
                 .orElseThrow(()-> new NotFoundException(ExceptionCode.NOT_FOUND_INQUIRY_CODE));
+
 
         return InquiryResponse.from(inquiryDetail);
     }
