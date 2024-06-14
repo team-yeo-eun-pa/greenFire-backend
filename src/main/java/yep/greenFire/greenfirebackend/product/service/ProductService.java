@@ -162,8 +162,7 @@ public class ProductService {
                 minOptionPrice,
                 productCreateRequest.getProductDescription(),
                 productCreateRequest.getSellableStatus(),
-//                IMG_URL + replaceFileName
-                replaceFileName
+                IMG_URL + replaceFileName
 
         );
 
@@ -195,10 +194,8 @@ public class ProductService {
         String replaceFileName = null;
         if (productImage != null) {
             replaceFileName = FileUploadUtils.saveFile(IMG_DIR, getRandomName(), productImage);
-//            FileUploadUtils.deleteFile(IMG_DIR, product.getProductImage().replace(IMG_URL, ""));
-//            product.modifyProductImage(IMG_URL + replaceFileName);
             FileUploadUtils.deleteFile(IMG_DIR, product.getProductImage().replace(IMG_URL, ""));
-            product.modifyProductImage(replaceFileName);
+            product.modifyProductImage(IMG_URL + replaceFileName);
         }
 
         Long storeCode = storeRepository.findStoreByMemberCode(memberCode);
@@ -212,8 +209,7 @@ public class ProductService {
                 minOptionPrice,
                 productUpdateRequest.getProductDescription(),
                 productUpdateRequest.getSellableStatus(),
-//                IMG_URL + replaceFileName
-                replaceFileName
+                IMG_URL + replaceFileName
 
         );
 
