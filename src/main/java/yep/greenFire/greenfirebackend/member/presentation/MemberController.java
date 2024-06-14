@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.email.service.EmailVerificationService;
+import yep.greenFire.greenfirebackend.member.dto.request.FindMemberIdRequest;
 import yep.greenFire.greenfirebackend.member.dto.request.MemberSignupRequest;
 import yep.greenFire.greenfirebackend.member.dto.request.ProfileUpdateRequest;
 import yep.greenFire.greenfirebackend.member.service.MemberService;
@@ -59,11 +60,6 @@ public class MemberController {
         return ResponseEntity.noContent().build();
     }
 
-    // 프로필 사진 등록
-
-    // 프로필 사진 삭제
-
-
     // 로그아웃 시 DB 토큰 무효화
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@AuthenticationPrincipal UserDetails userDetails) {
@@ -71,6 +67,13 @@ public class MemberController {
         memberService.updateRefreshToken(userDetails.getUsername(), null);
 
         return ResponseEntity.ok().build();
+    }
+
+    // 아이디 찾기
+    @PostMapping("/find-id")
+    public ResponseEntity<String> findMemberId(@RequestBody @Valid FindMemberIdRequest findIdRequest) {
+        String memberId = memberService.findMemberIdByEmail(findIdRequest.getMemberEmail());
+        return ResponseEntity.ok(memberId);
     }
 
 }

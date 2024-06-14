@@ -14,8 +14,7 @@ import yep.greenFire.greenfirebackend.member.domain.type.MemberStatus;
 import yep.greenFire.greenfirebackend.member.dto.request.ProfileUpdateRequest;
 import yep.greenFire.greenfirebackend.member.dto.response.ProfileResponse;
 
-import static yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode.NOT_FOUND_MEMBER_CODE;
-import static yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode.NOT_FOUND_REFRESH_TOKEN;
+import static yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode.*;
 
 @Service
 @Transactional
@@ -109,5 +108,11 @@ public class MemberService {
         Member member = memberRepository.findByMemberCode(memberCode)
                 .orElseThrow(() -> new NotFoundException(NOT_FOUND_MEMBER_CODE));
         member.suspensionEnd();
+    }
+
+    public String findMemberIdByEmail(String memberEmail) {
+        Member member = memberRepository.findByMemberEmail(memberEmail)
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_MEMBER_ID));
+        return member.getMemberId();
     }
 }
