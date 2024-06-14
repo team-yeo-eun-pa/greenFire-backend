@@ -37,30 +37,5 @@ public class ProductResponse {
         );
     }
 
-    //    public static ProductResponse from(final Product product, Category category, Store store) {
-//        return new ProductResponse(
-//                product.getProductCode(),
-//                product.getProductName(),
-//                product.getCategoryCode(),
-//                category.getCategoryTitle(),
-//                product.getStoreCode(),
-//                store.getStoreName(),
-//                product.getSellableStatus()
-//        );
-//    }
-//
-//    public ProductResponse(final Product product, Category category, Store store, ProductOption productOption) {
-//        this.productCode = product.getProductCode();
-//        this.productName = product.getProductName();
-//        this.categoryCode = product.getCategoryCode();
-//        this.categoryTitle = category.getCategoryTitle();
-//        this.storeCode = product.getStoreCode();
-//        this.storeName = store.getStoreName();
-//        this.sellableStatus = product.getSellableStatus();
-//        this.optionCode =productOption.getOptionCode();
-//        this.optionName = productOption.getOptionName();
-//        this.productOptionAppearActivate = productOption.getOptionAppearActivate();
-//        this.optionPrice = productOption.getOptionPrice();
-//        this.optionStock = productOption.getOptionStock();
-//    }
+
 }

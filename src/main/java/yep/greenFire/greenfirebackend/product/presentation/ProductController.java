@@ -78,7 +78,7 @@ public class ProductController {
 
     @GetMapping("/seller/mystore/product/{productCode}")
     @ResponseBody
-    public ResponseEntity<SellerProductResponse> getProduct(
+    public ResponseEntity<SellerProductResponse> getSellerProduct(
             @PathVariable final Long productCode,
             @AuthenticationPrincipal final CustomUser customUser
     ) {

@@ -82,14 +82,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<SellerProductsResponse> findByMemberCodeAndSellableStatusNot(Pageable pageable, Long memberCode, SellableStatus sellableStatus);
 
     @Query(
-            "select new yep.greenFire.greenfirebackend.product.dto.response.SellerProductsResponse(p) " +
+            "select new yep.greenFire.greenfirebackend.product.dto.ProductDTO(p, c, st) " +
                     "from Product p " +
                     "join Store st on st.storeCode = p.storeCode " +
                     "join Seller sl on sl.sellerCode = st.sellerCode " +
+                    "join Category c on c.categoryCode = p.categoryCode " +
                     "where sl.memberCode = :memberCode " +
-                    "and p.sellableStatus != :sellableStatus"
+                    "and p.productCode = :productCode"
     )
-    Optional<ProductDTO> findByMemberCode(Long MemberCode);
+    Optional<ProductDTO> findByProductCodeAndMemberCode(Long productCode, Long memberCode);
 
     /* 판매자 상품 삭제 */
 

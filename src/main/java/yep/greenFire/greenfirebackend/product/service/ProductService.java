@@ -110,10 +110,11 @@ public class ProductService {
 
     }
 
+    /* 마이스토어 상품 상세 조회 */
     @Transactional(readOnly = true)
     public SellerProductResponse getSellerProduct(final Long productCode, final Long memberCode) {
 
-        ProductDTO product = productRepository.findByMemberCode(memberCode)
+        ProductDTO product = productRepository.findByProductCodeAndMemberCode(productCode, memberCode)
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
 
         List<ProductOption> productOptions = productOptionRepository.findByProductCodeAndOptionAppearActivate(productCode, ProductOptionAppearActivate.Y);
