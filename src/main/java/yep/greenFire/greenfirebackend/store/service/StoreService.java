@@ -126,5 +126,14 @@ public class StoreService {
 
         storeRepository.save(store);
     }
+
+    @Transactional
+    public void reopenStore(Long sellerCode, Long memberCode) {
+        Store store = storeRepository.findStoreForOpenUpdateBySellerCodeAndStoreStatus(sellerCode, StoreStatus.CLOSED)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_SELLERS_STORE_CODE));
+
+        store.setStoreStatus(StoreStatus.OPEN);
+        storeRepository.save(store);
+    }
 }
 

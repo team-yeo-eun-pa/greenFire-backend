@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.auth.type.CustomUser;
+import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
+import yep.greenFire.greenfirebackend.store.domain.type.StoreStatus;
 import yep.greenFire.greenfirebackend.store.dto.request.StoreCloseRequest;
 import yep.greenFire.greenfirebackend.store.dto.request.StoreProfileUpdateRequest;
 import yep.greenFire.greenfirebackend.store.dto.response.StoreListResponse;
@@ -75,4 +77,13 @@ public class StoreController {
         return ResponseEntity.noContent().build();
     }
 
+    // 스토어 정지 해제
+    @PutMapping("/seller/mystore/{sellerCode}/reopen")
+    public ResponseEntity<Void> reopenStore(
+            @PathVariable final Long sellerCode,
+            @AuthenticationPrincipal final CustomUser customUser
+    ) {
+        storeService.reopenStore(sellerCode, customUser.getMemberCode());
+        return ResponseEntity.noContent().build();
+    }
 }
