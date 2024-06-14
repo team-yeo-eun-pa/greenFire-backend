@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
+import yep.greenFire.greenfirebackend.order.domain.type.OrderStatus;
 import yep.greenFire.greenfirebackend.order.dto.response.OrderResponse;
 import yep.greenFire.greenfirebackend.order.dto.response.StoreOrderDTO;
 
@@ -15,6 +16,7 @@ import java.util.List;
 
 import static yep.greenFire.greenfirebackend.delivery.domain.entity.QDelivery.delivery;
 import static yep.greenFire.greenfirebackend.order.domain.entity.QOrder.order;
+import static yep.greenFire.greenfirebackend.order.domain.entity.QOrderDetail.orderDetail;
 import static yep.greenFire.greenfirebackend.order.domain.entity.QStoreOrder.storeOrder;
 import static yep.greenFire.greenfirebackend.payment.domain.entity.QPayment.payment;
 import static yep.greenFire.greenfirebackend.store.domain.entity.QStore.store;
@@ -77,4 +79,27 @@ public class StoreOrderRepositoryCustomImpl implements StoreOrderRepositoryCusto
         return PageableExecutionUtils.getPage(orders, pageable, countQuery::fetchOne);
 
     }
+
+    // 스토어 주문 상태 확인
+    // (주문 접수, 상품 준비, 배송 중, 배송 완료, 반품 요청 건이 있는지 확인)
+    public boolean hasActiveOrders(Long sellerCode) {
+        Long count = queryFactory
+                .select(storeOrder.count())
+                .from(storeOrder)
+                .leftJoin(store).on(storeOrder.storeCode.eq(store.storeCode))
+                .where(
+                        store.sellerCode.eq(sellerCode)
+                                .and(storeOrder.orderStatus.in(
+                                        OrderStatus.RECEIVED,
+                                        OrderStatus.PROCESSING,
+                                        OrderStatus.SHIPPED,
+                                        OrderStatus.DELIVERED,
+                                        OrderStatus.RETURN_REQUESTED
+                                ))
+                )
+                .fetchOne();
+
+        return count != null && count > 0;
+    }
+
 }

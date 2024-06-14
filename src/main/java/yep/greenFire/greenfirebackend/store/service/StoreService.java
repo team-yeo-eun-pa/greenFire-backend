@@ -1,6 +1,7 @@
 package yep.greenFire.greenfirebackend.store.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yep.greenFire.greenfirebackend.apply.dto.request.ApplyUpdateRequest;
@@ -8,6 +9,7 @@ import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 import yep.greenFire.greenfirebackend.order.domain.entity.OrderDetail;
 import yep.greenFire.greenfirebackend.order.domain.repository.OrderRepository;
+import yep.greenFire.greenfirebackend.order.domain.repository.StoreOrderRepositoryCustomImpl;
 import yep.greenFire.greenfirebackend.order.domain.type.OrderStatus;
 import yep.greenFire.greenfirebackend.seller.domain.entity.Seller;
 import yep.greenFire.greenfirebackend.seller.domain.repository.SellerRepository;
@@ -22,12 +24,14 @@ import yep.greenFire.greenfirebackend.store.dto.response.StoreProfileResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class StoreService {
 
     private final StoreRepository storeRepository;
     private final SellerRepository sellerRepository;
+    private final StoreOrderRepositoryCustomImpl storeOrderRepositoryCustom;
 
     @Transactional
     public void createNewStore(Long sellerCode, ApplyUpdateRequest applyRequest) {
@@ -106,12 +110,13 @@ public class StoreService {
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_SELLERS_STORE_CODE));
 
         // 정지할 수 없는 상태의 주문 건 확인
-//        List<OrderDetail> activeOrders = orderRepository.findActiveOrders(sellerCode,
-//                List.of(OrderStatus.RECEIVED, OrderStatus.PROCESSING, OrderStatus.SHIPPED));
-//
-//        if (!activeOrders.isEmpty()) {
-//            throw new IllegalStateException("정지할 수 없는 상태의 주문 건이 존재합니다.");
-//        }
+        boolean hasActiveOrders = storeOrderRepositoryCustom.hasActiveOrders(sellerCode);
+
+        log.info(String.valueOf(hasActiveOrders));
+
+        if (hasActiveOrders == true) {
+            throw new NotFoundException(ExceptionCode.HAS_ACTIVE_ORDERS);
+        }
 
         // 스토어 정지
         store.closeStore(
@@ -119,6 +124,7 @@ public class StoreService {
                 closeRequest.getSuspendedEndDate()
         );
 
+        storeRepository.save(store);
     }
 }
 
