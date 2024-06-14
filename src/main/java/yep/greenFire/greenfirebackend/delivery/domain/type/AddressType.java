@@ -1,12 +1,13 @@
 package yep.greenFire.greenfirebackend.delivery.domain.type;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
 
 public enum AddressType {
-    R("r"),           // 도로명 주소
-    J("j");           // 지번 주소
+    R("도로명 주소"),           // 도로명 주소
+    J("지번 주소");           // 지번 주소
 
     private final String addressType;
 
@@ -24,6 +25,7 @@ public enum AddressType {
         return addressType;
     }
 
+    @JsonCreator
     public static AddressType fromValue(String value) {
         for (AddressType addressType : AddressType.values()) {
             if (addressType.getAddressType().equals(value)) {

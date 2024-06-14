@@ -30,8 +30,8 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         // create access token, refresh token
         String accessToken = TokenUtils.createAccessToken(memberInfo);
         String refreshToken = TokenUtils.createRefreshToken();
-        log.info("accessToken : {}", accessToken);
-        log.info("refreshToken : {}", refreshToken);
+//        log.info("accessToken : {}", accessToken);
+//        log.info("refreshToken : {}", refreshToken);
 
         // refresh token -> DB
         authService.updateRefreshToken((String)memberInfo.get("memberId"), refreshToken);
