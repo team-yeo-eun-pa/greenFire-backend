@@ -37,7 +37,7 @@ public class ProductOption {
         this.optionStock = optionStock;
     }
 
-    /* 옵션 삭제 */
+    /* 옵션 삭제 (상태 변경) */
     public void modifyStatus(ProductOptionAppearActivate optionAppearActivate) {
         this.optionAppearActivate = optionAppearActivate;
     }

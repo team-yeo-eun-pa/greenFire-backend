@@ -63,10 +63,28 @@ public class Product {
         );
     }
 
+    public void modify(String productName, Long categoryCode, Long storeCode, Long price,
+                              String productDescription, SellableStatus sellableStatus, String productImage
+    ) {
+        this.productName = productName;
+        this.categoryCode = categoryCode;
+        this.storeCode = storeCode;
+        this.price = price;
+        this.productDescription = productDescription;
+        this.sellableStatus = sellableStatus;
+        this.productImage = productImage;
+    }
 
-    /* 상품 삭제 */
+
+    /* 상품 삭제 (상태 변경) */
     public void modifyStatus(SellableStatus status) {
         this.sellableStatus = status;
+    }
+
+
+    /* 이미지 수정 */
+    public void modifyProductImage(String productImage) {
+        this.productImage = productImage;
     }
 
 }

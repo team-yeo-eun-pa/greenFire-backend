@@ -26,6 +26,7 @@ import yep.greenFire.greenfirebackend.product.domain.type.SellableStatus;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductDeleteRequest;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionCreateRequest;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductUpdateRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.*;
 import yep.greenFire.greenfirebackend.store.domain.repository.StoreRepository;
 import yep.greenFire.greenfirebackend.product.dto.ProductDTO;
@@ -99,12 +100,16 @@ public class ProductService {
     @Transactional(readOnly = true)
     public Page<SellerProductsResponse> getSellerProducts(final Integer page, final Long memberCode) {
 
+        /* 현재 로그인한 memberCode와 일치하는 storeCode 찾기 */
+//        Long storeCode = storeRepository.findStoreByMemberCode(memberCode);
+
         /* 스토어 코드와 일치하는 상품 목록 찾기 */
-        Page<SellerProductsResponse> sellerProducts = productRepository.findByMemberCode(getPageable(page), memberCode);
+        Page<SellerProductsResponse> sellerProducts = productRepository.findByMemberCodeAndSellableStatusNot(getPageable(page), memberCode, D);
 
         return sellerProducts;
 
     }
+
 
     /* 판매자 상품 등록 */
     private String getRandomName() { return UUID.randomUUID().toString().replace("-", ""); }
@@ -157,6 +162,42 @@ public class ProductService {
 
 
         return product.getProductCode();
+    }
+
+
+    /* 상품 수정 */
+
+    public void modifyProduct(Long productCode, Long memberCode, ProductUpdateRequest productUpdateRequest, MultipartFile productImage) {
+
+        Product product = productRepository.findByProductCodeAndSellableStatusNot(productCode, D)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+
+        Category category = categoryRepository.findById(productUpdateRequest.getCategoryCode())
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_CATEGORY_CODE));
+
+        String replaceFileName = null;
+        if (productImage != null) {
+            replaceFileName = FileUploadUtils.saveFile(IMG_DIR, getRandomName(), productImage);
+            FileUploadUtils.deleteFile(IMG_DIR, product.getProductImage().replace(IMG_URL, ""));
+            product.modifyProductImage(IMG_URL + replaceFileName);
+        }
+
+        Long storeCode = storeRepository.findStoreByMemberCode(memberCode);
+
+        Long minOptionPrice = productOptionRepository.findMinOptionPriceByProductCode(productCode);
+
+        product.modify(
+                productUpdateRequest.getProductName(),
+                category.getCategoryCode(),
+                storeCode,
+                minOptionPrice,
+                productUpdateRequest.getProductDescription(),
+                productUpdateRequest.getSellableStatus(),
+                IMG_URL + replaceFileName
+
+        );
+
+
     }
 
 

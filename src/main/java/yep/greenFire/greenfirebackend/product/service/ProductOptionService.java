@@ -12,13 +12,16 @@ import yep.greenFire.greenfirebackend.product.domain.entity.ProductOption;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductOptionRepository;
 import yep.greenFire.greenfirebackend.product.domain.repository.ProductRepository;
 import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductDeleteRequest;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionCreateRequest;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionDeleteRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductOptionResponse;
 
 import java.util.List;
 import java.util.Optional;
 
 import static yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode.NOT_ENOUGH_STOCK;
+import static yep.greenFire.greenfirebackend.product.domain.type.SellableStatus.D;
 
 @Service
 @RequiredArgsConstructor
@@ -48,6 +51,17 @@ public class ProductOptionService {
                     request.getOptionPrice(), request.getOptionStock());
             productOptionRepository.save(productOption);
         }
+    }
+
+    /* 상품 옵션 수정 */
+
+    /* 상품 옵션 삭제 (상태 변경) */
+    public void modifyStatus(Long optionCode, ProductOptionDeleteRequest productOptionDeleteRequest) {
+
+        ProductOption productOption = productOptionRepository.findByOptionCodeAndOptionAppearActivateNot(optionCode, ProductOptionAppearActivate.D)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_OPTION_CODE));
+
+        productOption.modifyStatus(productOptionDeleteRequest.getOptionAppearActivate());
     }
 
     /* 상품 옵션 조회 */

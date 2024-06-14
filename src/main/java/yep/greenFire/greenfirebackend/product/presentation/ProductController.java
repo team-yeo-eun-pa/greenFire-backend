@@ -16,11 +16,8 @@ import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
-import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionDeleteRequest;
-import yep.greenFire.greenfirebackend.product.dto.request.ProductDeleteRequest;
+import yep.greenFire.greenfirebackend.product.dto.request.*;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductResponse;
-import yep.greenFire.greenfirebackend.product.dto.request.ProductCreateRequest;
-import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductsResponse;
 import yep.greenFire.greenfirebackend.product.dto.response.SellerProductsResponse;
 import yep.greenFire.greenfirebackend.product.service.ProductOptionService;
@@ -96,7 +93,21 @@ public class ProductController {
 
     }
 
+    /* 상품 수정 */
+    @PutMapping("/seller/mystore/edit/{productCode}")
+    public ResponseEntity<Void> modifyProduct(
+            @PathVariable final Long productCode,
+            @RequestPart @Valid final ProductUpdateRequest productUpdateRequest,
+            @AuthenticationPrincipal CustomUser customUser,
+            @RequestPart(required = false) final MultipartFile productImage
+    ) {
+        final Long memberCode = customUser.getMemberCode();
+        productService.modifyProduct(productCode, memberCode, productUpdateRequest, productImage);
 
+        return ResponseEntity.created(URI.create("/seller/mystore/edit/" + productCode)).build();
+    }
+
+    /* 상품 옵션 수정 */
 
     /* 판매자 상품 삭제 -> 상태 변경 */
     /* 상품 상태 변경 이전에 옵션 먼저 변경 필요 */

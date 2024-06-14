@@ -39,6 +39,7 @@ public enum ExceptionCode {
     NOT_FOUND_VALID_ORDER(404, "유효한 주문 건이 아닙니다."),
     NOT_FOUND_VALID_DELIVERY(404, "유효한 배송지가 아닙니다."),
     NOT_FOUND_PRODUCT_CODE(404, "상품 코드에 해당하는 상품이 존재하지 않습니다." ),
+    NOT_FOUND_OPTION_CODE(404, "옵션 코드에 해당하는 옵션이 존재하지 않습니다." ),
     NOT_FOUND_CHECKING_STATUS(404, "대기 중인 신청이 아니므로 수정할 수 없습니다."),
     NOT_FOUND_APPLY_CODE(404, "대기 중인 신청만 취소할 수 있습니다."),
     INVALID_STATUS_CHANGE(404, "대기 중이 아닌 신청입니다."),
