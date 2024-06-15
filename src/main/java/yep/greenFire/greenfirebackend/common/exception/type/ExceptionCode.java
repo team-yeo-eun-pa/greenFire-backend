@@ -44,12 +44,14 @@ public enum ExceptionCode {
     NOT_FOUND_APPLY_CODE(404, "대기 중인 신청만 취소할 수 있습니다."),
     INVALID_STATUS_CHANGE(404, "대기 중이 아닌 신청입니다."),
     NOT_FOUND_SELLER_CODE(404, "신청 코드를 찾을 수 없습니다."),
+    NOT_FOUND_INQUIRY_CODE(404, "문의 코드를 찾을 수 없습니다.."),
 
     // 409 Error
     NOT_ENOUGH_STOCK(409, "재고 부족으로 주문 불가합니다."),
     ALREADY_EXIST_REVIEW(409, "해당 주문 건에 이미 작성 된 리뷰가 있습니다."),
     ORDER_ALREADY_REJECTED(409, "이미 거절된 주문입니다."),
     HAS_ACTIVE_ORDERS(409, "정지할 수 없는 상태의 주문 건이 존재합니다.");
+
 
     private final int code;
     private final String message;

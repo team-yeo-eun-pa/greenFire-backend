@@ -65,12 +65,14 @@ public class SiteInquiryController {
 
 
 
-    @GetMapping("members/detail")
+;
+    @GetMapping("/{inquiryCode}")
     public ResponseEntity<InquiryResponse> findByInquiryDetail(
-            @PathVariable final Integer inquiryCode
+            @PathVariable("inquiryCode") final Integer inquiryCode
     ) {
 
-        InquiryResponse inquiryResponse = siteInquiryService.findByInquiryDetail(inquiryCode);
+        InquiryResponse inquiryResponse = siteInquiryService.findById(inquiryCode);
+
 
 
 
