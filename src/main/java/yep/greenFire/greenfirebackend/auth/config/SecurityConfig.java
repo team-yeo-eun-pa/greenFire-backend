@@ -60,7 +60,6 @@ public class SecurityConfig {
                     auth.requestMatchers("/members/mypage/**").hasAnyRole(MemberRole.MEMBER.toString(), MemberRole.SELLER.toString());
                     auth.requestMatchers("/seller/mystore/**").hasRole(MemberRole.SELLER.toString());
                     auth.requestMatchers(HttpMethod.GET, "/admin/notices/**").permitAll();
-                    auth.requestMatchers(HttpMethod.GET,"/product/**").permitAll();
                     auth.requestMatchers("/cart/**").hasRole(MemberRole.MEMBER.toString());
                     auth.requestMatchers(HttpMethod.GET,"/Member/notices/**").permitAll();
                     auth.anyRequest().authenticated();
