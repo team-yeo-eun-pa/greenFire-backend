@@ -37,10 +37,7 @@ public class ProductOption {
         this.optionStock = optionStock;
     }
 
-    /* 옵션 삭제 (상태 변경) */
-    public void modifyStatus(ProductOptionAppearActivate optionAppearActivate) {
-        this.optionAppearActivate = optionAppearActivate;
-    }
+
 
     public static ProductOption of(
             final Long productCode, final String optionName, final Long optionPrice,
@@ -52,6 +49,19 @@ public class ProductOption {
                 optionPrice,
                 optionStock
         );
+    }
+
+    /* 옵션 수정 */
+    public void modify(String optionName, Long optionPrice, Long optionStock
+    ) {
+        this.optionName = optionName;
+        this.optionPrice = optionPrice;
+        this.optionStock = optionStock;
+    }
+
+    /* 옵션 삭제 (상태 변경) */
+    public void modifyStatus(ProductOptionAppearActivate optionAppearActivate) {
+        this.optionAppearActivate = optionAppearActivate;
     }
 
 

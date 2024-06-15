@@ -15,6 +15,7 @@ import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearAct
 import yep.greenFire.greenfirebackend.product.dto.request.ProductDeleteRequest;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionCreateRequest;
 import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionDeleteRequest;
+import yep.greenFire.greenfirebackend.product.dto.request.ProductOptionUpdateRequest;
 import yep.greenFire.greenfirebackend.product.dto.response.ProductOptionResponse;
 
 import java.util.List;
@@ -54,6 +55,20 @@ public class ProductOptionService {
     }
 
     /* 상품 옵션 수정 */
+    public void modifyProductOption(Long productCode, Long optionCode, ProductOptionUpdateRequest productOptionUpdateRequest) {
+
+        ProductOption productOption = productOptionRepository.findByOptionCodeAndOptionAppearActivateNot(optionCode, ProductOptionAppearActivate.D)
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
+
+
+        productOption.modify(
+                productOptionUpdateRequest.getOptionName(),
+                productOptionUpdateRequest.getOptionPrice(),
+                productOptionUpdateRequest.getOptionStock()
+        );
+
+
+    }
 
     /* 상품 옵션 삭제 (상태 변경) */
     public void modifyStatus(Long optionCode, ProductOptionDeleteRequest productOptionDeleteRequest) {
@@ -63,6 +78,7 @@ public class ProductOptionService {
 
         productOption.modifyStatus(productOptionDeleteRequest.getOptionAppearActivate());
     }
+
 
     /* 상품 옵션 조회 */
 
