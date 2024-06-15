@@ -22,7 +22,7 @@ public class ProductDTO {
     private final String storeName;
     private final String productDescription;
     private final SellableStatus sellableStatus;
-    private final String productImage;
+    private final String productImg;
 
     public ProductDTO(Product product, Category category, Store store){
         this.productCode = product.getProductCode();
@@ -33,7 +33,7 @@ public class ProductDTO {
         this.storeName = store.getStoreName();
         this.productDescription = product.getProductDescription();
         this.sellableStatus = product.getSellableStatus();
-        this.productImage = product.getProductImage();
+        this.productImg = product.getProductImg();
     }
 
 
