@@ -7,12 +7,19 @@ import org.springframework.transaction.annotation.Transactional;
 import yep.greenFire.greenfirebackend.auth.dto.LoginDTO;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
+import yep.greenFire.greenfirebackend.email.domain.entity.EmailVerification;
+import yep.greenFire.greenfirebackend.email.domain.repository.EmailVerificationRepository;
 import yep.greenFire.greenfirebackend.member.domain.entity.Member;
 import yep.greenFire.greenfirebackend.member.domain.repository.MemberRepository;
+import yep.greenFire.greenfirebackend.member.dto.request.FindMemberPwdRequest;
 import yep.greenFire.greenfirebackend.member.dto.request.MemberSignupRequest;
 import yep.greenFire.greenfirebackend.member.domain.type.MemberStatus;
 import yep.greenFire.greenfirebackend.member.dto.request.ProfileUpdateRequest;
+import yep.greenFire.greenfirebackend.member.dto.request.ResetPasswordRequest;
 import yep.greenFire.greenfirebackend.member.dto.response.ProfileResponse;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode.*;
 
@@ -22,6 +29,7 @@ import static yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final EmailVerificationRepository emailVerificationRepository;
     private final PasswordEncoder passwordEncoder;
 
     public Long signup(MemberSignupRequest memberRequest) {
@@ -48,6 +56,15 @@ public class MemberService {
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_MEMBER_ID));
 
         return LoginDTO.from(member);
+    }
+
+
+    public Long findMemberCodeByEmail(String memberEmail) {
+
+        Member member = memberRepository.findByMemberEmail(memberEmail)
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_MEMBER_ID));
+
+        return member.getMemberCode();
     }
 
     public void updateRefreshToken(String memberId, String refreshToken) {
@@ -78,6 +95,7 @@ public class MemberService {
         return ProfileResponse.from(member);
     }
 
+    @Transactional
     public void modifyProfile(String memberId, ProfileUpdateRequest profileRequest, Long memberCode) {
 
         Member member = memberRepository.findByMemberId(memberId)
@@ -110,9 +128,30 @@ public class MemberService {
         member.suspensionEnd();
     }
 
+    @Transactional
     public String findMemberIdByEmail(String memberEmail) {
         Member member = memberRepository.findByMemberEmail(memberEmail)
                 .orElseThrow(() -> new NotFoundException(NOT_FOUND_MEMBER_ID));
         return member.getMemberId();
     }
+
+    public boolean modifyMemberPassword(ResetPasswordRequest resetPasswordRequest) {
+        Optional<EmailVerification> emailVerificationOpt = emailVerificationRepository.findByMemberCodeAndVerificationCode(
+                resetPasswordRequest.getMemberCode(), resetPasswordRequest.getVerificationCode());
+
+        if (emailVerificationOpt.isPresent()) {
+            EmailVerification emailVerification = emailVerificationOpt.get();
+            if (emailVerification.isVerified() && emailVerification.getExpirationTime().isAfter(LocalDateTime.now())) {
+                Optional<Member> memberOpt = memberRepository.findById(resetPasswordRequest.getMemberCode());
+                if (memberOpt.isPresent()) {
+                    Member member = memberOpt.get();
+                    member.changePassword(passwordEncoder.encode(resetPasswordRequest.getNewPassword()));
+                    memberRepository.save(member);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

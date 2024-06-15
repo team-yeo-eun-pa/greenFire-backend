@@ -9,10 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.email.service.EmailVerificationService;
-import yep.greenFire.greenfirebackend.member.dto.request.FindMemberIdRequest;
-import yep.greenFire.greenfirebackend.member.dto.request.FindMemberPwdRequest;
-import yep.greenFire.greenfirebackend.member.dto.request.MemberSignupRequest;
-import yep.greenFire.greenfirebackend.member.dto.request.ProfileUpdateRequest;
+import yep.greenFire.greenfirebackend.member.dto.request.*;
 import yep.greenFire.greenfirebackend.member.service.MemberService;
 import yep.greenFire.greenfirebackend.member.dto.response.ProfileResponse;
 
@@ -73,8 +70,32 @@ public class MemberController {
     // 아이디 찾기
     @PostMapping("/find-id")
     public ResponseEntity<String> findMemberId(@RequestBody @Valid FindMemberIdRequest findIdRequest) {
+
         String memberId = memberService.findMemberIdByEmail(findIdRequest.getMemberEmail());
+
         return ResponseEntity.ok(memberId);
     }
 
+    // 비밀번호 찾기
+    @PostMapping("/find-pwd")
+    public ResponseEntity<Void> findMemberPwd(@RequestBody @Valid FindMemberPwdRequest findPwdRequest) {
+
+        Long memberCode = memberService.findMemberCodeByEmail(findPwdRequest.getMemberEmail());
+
+        emailVerificationService.generateEmailAndSendPasswordResetCode(memberCode, findPwdRequest.getMemberEmail());
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    // 비밀번호 재설정
+    @PutMapping("/reset-password")
+    public ResponseEntity<Void> resetPassword(@RequestBody @Valid ResetPasswordRequest resetPasswordRequest) {
+
+        boolean success = memberService.modifyMemberPassword(resetPasswordRequest);
+        if (success) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
 }
