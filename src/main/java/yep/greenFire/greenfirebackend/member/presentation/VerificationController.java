@@ -37,7 +37,7 @@ public class VerificationController {
 
         switch (result) {
             case "verified":
-                return "redirect:http://localhost:3000/reset-password-reset";
+                return "redirect:http://localhost:3000/reset-password?memberCode=" + memberCode + "&verificationCode=" + verificationCode;
             case "expired":
                 return "redirect:http://localhost:3000/verify-password-reset/expired";
             case "already_verified":

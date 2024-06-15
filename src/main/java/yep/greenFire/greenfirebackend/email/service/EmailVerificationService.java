@@ -82,11 +82,10 @@ public class EmailVerificationService {
 
         // 인증 링크 생성
         String verificationLink = "http://localhost:8001/members/verify-password-reset?memberCode=" + memberCode + "&verificationCode=" + verificationCode;
-
         // 이메일 내용 생성
         String emailContent = "<html>" +
                 "<body>" +
-                "<h3>비밀번호 재설정을 위한 인증 링크입니다.</h3>" + verificationCode +
+                "<h3>비밀번호 재설정을 위한 인증 링크입니다.</h3>" +
                 "<p><a href=\"" + verificationLink + "\" style=\"display: inline-block; padding: 10px 20px; font-size: 16px; color: white; background-color: #28a745; text-align: center; text-decoration: none; border-radius: 5px;\">비밀번호 재설정</a></p>" +
                 "<style>" +
                 "a { text-decoration: none; }" +
