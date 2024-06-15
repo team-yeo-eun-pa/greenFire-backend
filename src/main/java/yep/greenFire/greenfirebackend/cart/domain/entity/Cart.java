@@ -1,7 +1,6 @@
 package yep.greenFire.greenfirebackend.cart.domain.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +21,23 @@ public class Cart {
     private Long cartQuantity;
 
 
-    public Cart(Long cartCode, Long memberCode, Long optionCode, Long cartQuantity) {
-        this.cartCode = cartCode;
+    public Cart(Long memberCode, Long optionCode, Long cartQuantity) {
         this.memberCode = memberCode;
         this.optionCode = optionCode;
+        this.cartQuantity = cartQuantity;
+    }
+
+    public static Cart of(
+            final Long memberCode, final Long optionCode, final Long cartQuantity
+    ) {
+        return new Cart(
+                memberCode,
+                optionCode,
+                cartQuantity
+        );
+    }
+
+    public void modify(Long cartQuantity) {
         this.cartQuantity = cartQuantity;
     }
 }
