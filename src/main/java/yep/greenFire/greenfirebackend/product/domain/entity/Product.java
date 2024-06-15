@@ -33,24 +33,24 @@ public class Product {
     private LocalDateTime registDate;
     @Enumerated(value = EnumType.STRING)
     private SellableStatus sellableStatus = SellableStatus.Y;
-    private String productImage;
+    private String productImg;
 
     public Product(String productName, Long categoryCode, Long storeCode,
                    Long price, String productDescription,
-                   SellableStatus sellableStatus, String productImage) {
+                   SellableStatus sellableStatus, String productImg) {
         this.productName = productName;
         this.categoryCode = categoryCode;
         this.storeCode = storeCode;
         this.price = price;
         this.productDescription = productDescription;
         this.sellableStatus = sellableStatus;
-        this.productImage = productImage;
+        this.productImg = productImg;
     }
 
     public static Product of(
             final String productName, final Long categoryCode, final Long storeCode,
             final Long price, final String productDescription,
-            final SellableStatus sellableStatus, final String productImage
+            final SellableStatus sellableStatus, final String productImg
     ) {
         return new Product(
                 productName,
@@ -59,12 +59,12 @@ public class Product {
                 price,
                 productDescription,
                 sellableStatus,
-                productImage
+                productImg
         );
     }
 
     public void modify(String productName, Long categoryCode, Long storeCode, Long price,
-                              String productDescription, SellableStatus sellableStatus, String productImage
+                              String productDescription, SellableStatus sellableStatus, String productImg
     ) {
         this.productName = productName;
         this.categoryCode = categoryCode;
@@ -72,7 +72,7 @@ public class Product {
         this.price = price;
         this.productDescription = productDescription;
         this.sellableStatus = sellableStatus;
-        this.productImage = productImage;
+        this.productImg = productImg;
     }
 
 
@@ -83,8 +83,8 @@ public class Product {
 
 
     /* 이미지 수정 */
-    public void modifyProductImage(String productImage) {
-        this.productImage = productImage;
+    public void modifyProductImg(String productImg) {
+        this.productImg = productImg;
     }
 
 }

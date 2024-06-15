@@ -183,7 +183,7 @@ public class ProductService {
 
     /* 상품 수정 */
 
-    public void modifyProduct(Long productCode, Long memberCode, ProductUpdateRequest productUpdateRequest, MultipartFile productImage) {
+    public void modifyProduct(Long productCode, Long memberCode, ProductUpdateRequest productUpdateRequest, MultipartFile productImg) {
 
         Product product = productRepository.findByProductCodeAndSellableStatusNot(productCode, D)
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
@@ -192,10 +192,10 @@ public class ProductService {
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_CATEGORY_CODE));
 
         String replaceFileName = null;
-        if (productImage != null) {
-            replaceFileName = FileUploadUtils.saveFile(IMG_DIR, getRandomName(), productImage);
-            FileUploadUtils.deleteFile(IMG_DIR, product.getProductImage().replace(IMG_URL, ""));
-            product.modifyProductImage(IMG_URL + replaceFileName);
+        if (productImg != null) {
+            replaceFileName = FileUploadUtils.saveFile(IMG_DIR, getRandomName(), productImg);
+            FileUploadUtils.deleteFile(IMG_DIR, product.getProductImg().replace(IMG_URL, ""));
+            product.modifyProductImg(IMG_URL + replaceFileName);
         }
 
         Long storeCode = storeRepository.findStoreByMemberCode(memberCode);

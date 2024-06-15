@@ -24,7 +24,7 @@ public class ProductsResponse {
     private final Long price;
     private final LocalDateTime registDate;
     private final SellableStatus sellableStatus;
-    private final String productImage;
+    private final String productImg;
 
 //    public static ProductsResponse from(final Product product, Category category, Store store) {
 //        return new ProductsResponse(
@@ -50,7 +50,7 @@ public class ProductsResponse {
         this.price = product.getPrice();
         this.registDate = product.getRegistDate();
         this.sellableStatus = product.getSellableStatus();
-        this.productImage = product.getProductImage();
+        this.productImg = product.getProductImg();
     }
 
 

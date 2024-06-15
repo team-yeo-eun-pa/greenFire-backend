@@ -114,10 +114,10 @@ public class ProductController {
             @PathVariable final Long productCode,
             @RequestPart @Valid final ProductUpdateRequest productUpdateRequest,
             @AuthenticationPrincipal CustomUser customUser,
-            @RequestPart(required = false) final MultipartFile productImage
+            @RequestPart(required = false) final MultipartFile productImg
     ) {
         final Long memberCode = customUser.getMemberCode();
-        productService.modifyProduct(productCode, memberCode, productUpdateRequest, productImage);
+        productService.modifyProduct(productCode, memberCode, productUpdateRequest, productImg);
 
         return ResponseEntity.created(URI.create("/seller/mystore/edit/" + productCode)).build();
     }
