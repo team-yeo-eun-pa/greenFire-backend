@@ -12,6 +12,7 @@ import yep.greenFire.greenfirebackend.common.paging.Pagination;
 import yep.greenFire.greenfirebackend.common.paging.PagingButtonInfo;
 import yep.greenFire.greenfirebackend.common.paging.PagingResponse;
 import yep.greenFire.greenfirebackend.delivery.dto.request.DeliveryRequest;
+import yep.greenFire.greenfirebackend.order.domain.entity.Order;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderApprovalRequest;
 import yep.greenFire.greenfirebackend.order.dto.request.OrderCreateRequest;
 import yep.greenFire.greenfirebackend.order.dto.response.OrderResponse;
@@ -27,16 +28,27 @@ public class OrderController {
 
     private final OrderService orderService;
 
+//    // 주문 등록
+//    @PostMapping("/orders")
+//    public ResponseEntity<Void> save(
+//            @RequestBody @Valid final OrderCreateRequest orderRequest,
+//            @AuthenticationPrincipal final CustomUser customUser
+//    ){
+//
+//        orderService.save(orderRequest, customUser.getMemberCode());
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).build();
+//    }
+
     // 주문 등록
     @PostMapping("/orders")
-    public ResponseEntity<Void> save(
+    public ResponseEntity<Order> save(
             @RequestBody @Valid final OrderCreateRequest orderRequest,
             @AuthenticationPrincipal final CustomUser customUser
     ){
+        Order order = orderService.save(orderRequest, customUser.getMemberCode()); // Order 객체 반환
 
-        orderService.save(orderRequest, customUser.getMemberCode());
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(order); // Order 객체를 응답으로 반환
     }
 
     //-------------------------------------------------------------------------------------------------------
