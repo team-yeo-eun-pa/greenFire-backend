@@ -16,7 +16,6 @@ import java.util.List;
 
 import static yep.greenFire.greenfirebackend.delivery.domain.entity.QDelivery.delivery;
 import static yep.greenFire.greenfirebackend.order.domain.entity.QOrder.order;
-import static yep.greenFire.greenfirebackend.order.domain.entity.QOrderDetail.orderDetail;
 import static yep.greenFire.greenfirebackend.order.domain.entity.QStoreOrder.storeOrder;
 import static yep.greenFire.greenfirebackend.payment.domain.entity.QPayment.payment;
 import static yep.greenFire.greenfirebackend.store.domain.entity.QStore.store;
@@ -54,6 +53,7 @@ public class StoreOrderRepositoryCustomImpl implements StoreOrderRepositoryCusto
                                         order.totalDiscountAmount,
                                         order.totalDeliveryAmount,
                                         order.totalRealPayment,
+                                        order.isOrderCancel,
                                         order.orderDate,
                                         payment.paymentWay,
                                         GroupBy.list(Projections.constructor(StoreOrderDTO.class,
@@ -115,6 +115,7 @@ public class StoreOrderRepositoryCustomImpl implements StoreOrderRepositoryCusto
                                         order.totalDiscountAmount,
                                         order.totalDeliveryAmount,
                                         order.totalRealPayment,
+                                        order.isOrderCancel,
                                         order.orderDate,
                                         payment.paymentWay,
                                         GroupBy.list(Projections.constructor(StoreOrderDTO.class,
