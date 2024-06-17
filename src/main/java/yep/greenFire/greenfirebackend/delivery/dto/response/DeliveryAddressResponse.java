@@ -8,6 +8,8 @@ import yep.greenFire.greenfirebackend.delivery.domain.entity.DeliveryAddress;
 @RequiredArgsConstructor
 public class DeliveryAddressResponse {
 
+    private Long deliveryAddressCode;
+
     private String deliveryAddressName;
 
     // 기본 배송지 여부
@@ -23,6 +25,7 @@ public class DeliveryAddressResponse {
     private String deliveryRequest;
 
     public DeliveryAddressResponse(DeliveryAddress deliveryAddress) {
+        this.deliveryAddressCode = deliveryAddress.getDeliveryAddressCode();
         this.deliveryAddressName = deliveryAddress.getDeliveryAddressName();
         this.isOrdinaryAddress = deliveryAddress.getIsOrdinaryAddress();
         this.receiverName = deliveryAddress.getReceiverName();

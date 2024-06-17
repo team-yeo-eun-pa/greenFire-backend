@@ -11,6 +11,7 @@ Access-Token: Bearer eyJkYXRlIjoxNzE4MjQ1NjQ3MDk3LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
       "orderDetails": [
         {
           "optionCode": 1,
+          "optionPrice" : 1000,
           "orderQuantity": 2
         },
         {
@@ -34,7 +35,7 @@ Access-Token: Bearer eyJkYXRlIjoxNzE4MjQ1NjQ3MDk3LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
 ### 회원 배송지 등록
 POST http://localhost:8001/delivery-addresses
 Content-Type: application/json
-Access-Token: Bearer eyJkYXRlIjoxNzE4MTAyOTExMDUxLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6IjEyIiwiZXhwIjoxNzE4MTA2NTExfQ.JIjlqv2Bh9G1RxDd-QiwW2DQVrcu-vvHZs40nNun-oOE8d7UVP9AlbH7peodysVCOsdRSz3MrMrIaNxF2H9XJg
+Access-Token: Bearer eyJkYXRlIjoxNzE4MzYxNjUyNjg2LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9TRUxMRVIiLCJtZW1iZXJJZCI6IjEyMyIsImV4cCI6MTcxODM2NTI1Mn0.E2UpauPfSMpbcCMxJukjgobhZH6KJG73m29-TLpMHuzWBn6tb6kk7-UZvThMdZO-m3568e8fvEK2yQw8Sxk5iQ
 
 {
   "deliveryAddressName": "한솔이네",
@@ -42,7 +43,7 @@ Access-Token: Bearer eyJkYXRlIjoxNzE4MTAyOTExMDUxLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
   "receiverName": "21솔",
   "contactNumber": "01012345678",
   "addressZonecode": 12345,
-  "addressType" : "r",
+  "addressType" : "도로명 주소",
   "address": "서울특별시 도봉구",
   "addressDetail": "코딩아파트",
   "deliveryRequest": "천천히 빠르게 배송 부탁드립니다."
@@ -64,7 +65,7 @@ Access-Token: Bearer eyJkYXRlIjoxNzE4MDExMDIxNTExLCJ0eXBlIjoiand0IiwiYWxnIjoiSFM
 
 ### 회원 주문 조회
 GET http://localhost:8001/members/orders?page=1
-Access-Token: Bearer eyJkYXRlIjoxNzE4MTgyNTA5NjQ1LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJSb2xlIjoiUk9MRV9NRU1CRVIiLCJtZW1iZXJJZCI6IjEyIiwiZXhwIjoxNzE4MTg2MTA5fQ.93E1G4N_DdUl9sHPcs-q0syq30Nc8OL_tKgQ5VElaDWRCCz0cUFXf2v0qY2E_QTnh7XHbt47MzZEBy_SGxqF9Q
+Access-Token: Bearer eyJkYXRlIjoxNzE4NDgzNjgxNDM0LCJ0eXBlIjoiand0IiwiYWxnIjoiSFM1MTIifQ.eyJtZW1iZXJJZCI6IjEyMyIsIm1lbWJlclJvbGUiOiJST0xFX1NFTExFUiIsImV4cCI6MTcxODQ4NzI4MX0.q8wzcOiaDCqLBkOlGZYg9LEKSjdS0CaywtSG7y7zl2TFQcqss4PnUE7zI2J1C7Dh8zZtSeHEvROUR3_6jPlBSg
 
 ### 회원 배송지 조회
 GET http://localhost:8001/members/123/delivery-addresses

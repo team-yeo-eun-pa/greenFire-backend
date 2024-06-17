@@ -62,7 +62,7 @@ public class OrderService {
 
     // 주문 등록
     @Transactional
-    public void save(OrderCreateRequest orderCreateRequest, Long memberCode) {
+    public Order save(OrderCreateRequest orderCreateRequest, Long memberCode) {
 
         Long totalOrderAmount = 0L;
         Long totalDeliveryAmount = 0L;
@@ -87,6 +87,8 @@ public class OrderService {
         // 주문 객체 생성 후 데이터 저장
         final Order newOrder = createOrder(memberCode, orderName, totalOrderAmount, totalDeliveryAmount, storeOrders, address);
         orderRepository.save(newOrder);
+
+        return newOrder; // 새로운 주문 객체 반환
     }
 
     // 스토어별 주문
@@ -105,6 +107,7 @@ public class OrderService {
             ProductOption productOption = productOptionService.findProductOption(orderDetailRequest.getOptionCode());
             Long optionPrice = productOption.getOptionPrice();
             Long totalOptionPrice = optionPrice * orderDetailRequest.getOrderQuantity();
+
             // 총 옵션 가격 계산
             orderAmount += totalOptionPrice;
 

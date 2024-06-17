@@ -8,6 +8,6 @@ import lombok.RequiredArgsConstructor;
 public class ProductOptionRequest {
 
     ProductOptionUpdateRequest productOptionUpdateRequest;
-
     ProductOptionDeleteRequest productOptionDeleteRequest;
+
 }
