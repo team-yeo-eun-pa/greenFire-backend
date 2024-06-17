@@ -29,6 +29,13 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    // 아이디 중복 체크
+    @PostMapping("/check-id")
+    public ResponseEntity<Boolean> checkMemberId(@RequestBody @Valid CheckMemberIdRequest checkMemberIdRequest) {
+        boolean isAvailable = memberService.checkMemberId(checkMemberIdRequest.getMemberId());
+        return ResponseEntity.ok(isAvailable);
+    }
+
     // 인증 테스트를 위한 메서드
     @GetMapping("/test")
     public ResponseEntity<String> test() {

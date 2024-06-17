@@ -11,7 +11,6 @@ import yep.greenFire.greenfirebackend.email.domain.entity.EmailVerification;
 import yep.greenFire.greenfirebackend.email.domain.repository.EmailVerificationRepository;
 import yep.greenFire.greenfirebackend.member.domain.entity.Member;
 import yep.greenFire.greenfirebackend.member.domain.repository.MemberRepository;
-import yep.greenFire.greenfirebackend.member.dto.request.FindMemberPwdRequest;
 import yep.greenFire.greenfirebackend.member.dto.request.MemberSignupRequest;
 import yep.greenFire.greenfirebackend.member.domain.type.MemberStatus;
 import yep.greenFire.greenfirebackend.member.dto.request.ProfileUpdateRequest;
@@ -154,4 +153,7 @@ public class MemberService {
         return false;
     }
 
+    public boolean checkMemberId(String memberId) {
+        return !memberRepository.existsByMemberId(memberId);
+    }
 }
