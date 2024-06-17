@@ -19,6 +19,7 @@ public class CartItemResponse {
     private final Long productCode;
     private final String productName;
     private final Long cartQuantity;
+    private final String productImg;
 
 
     public CartItemResponse(Cart cart, ProductOption option, Product product) {
@@ -30,6 +31,7 @@ public class CartItemResponse {
         this.productCode = product.getProductCode();
         this.productName = product.getProductName();
         this.cartQuantity = cart.getCartQuantity();
+        this.productImg = product.getProductImg();
     }
 
     public static CartItemResponse from(final Cart cart, ProductOption option, Product product) {
@@ -41,7 +43,8 @@ public class CartItemResponse {
                 option.getOptionPrice(),
                 product.getProductCode(),
                 product.getProductName(),
-                cart.getCartQuantity()
+                cart.getCartQuantity(),
+                product.getProductImg()
         );
 
     }

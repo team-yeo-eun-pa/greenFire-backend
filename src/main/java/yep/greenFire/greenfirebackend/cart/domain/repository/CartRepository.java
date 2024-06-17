@@ -9,6 +9,7 @@ import yep.greenFire.greenfirebackend.cart.domain.entity.Cart;
 import yep.greenFire.greenfirebackend.cart.dto.response.CartItemResponse;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long> {
@@ -20,6 +21,9 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
                     "where c.memberCode = :memberCode"
     )
     List<CartItemResponse> findByMemberCode(Long memberCode);
+
+
+    Optional<Cart> findByCartCode(Long cartCode);
 
 
 }
