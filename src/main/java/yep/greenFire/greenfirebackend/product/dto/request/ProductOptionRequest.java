@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductOptionRequest {
 
-    private ProductOptionUpdateRequest productOptionUpdateRequest;
-    private ProductOptionDeleteRequest productOptionDeleteRequest;
+    ProductOptionUpdateRequest productOptionUpdateRequest;
+    ProductOptionDeleteRequest productOptionDeleteRequest;
+
 }
