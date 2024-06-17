@@ -3,6 +3,10 @@ package yep.greenFire.greenfirebackend.payment.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
+import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
+import yep.greenFire.greenfirebackend.order.domain.entity.Order;
+import yep.greenFire.greenfirebackend.order.domain.repository.OrderRepository;
 import yep.greenFire.greenfirebackend.payment.domain.entity.Payment;
 import yep.greenFire.greenfirebackend.payment.domain.repository.PaymentRepository;
 import yep.greenFire.greenfirebackend.payment.domain.type.PaymentStatus;
@@ -21,6 +25,8 @@ import java.util.Optional;
 public class PaymentService {
 
     private final PaymentRepository paymentRepository;
+    private final OrderRepository orderRepository;
+
     public void save(PaymentCreateRequest paymentCreateRequest) {
 
         final Payment newPayment = Payment.of(
@@ -35,7 +41,8 @@ public class PaymentService {
         String orderId = paymentRequest.getOrderId();
 
         Optional<Payment> paymentOptional = paymentRepository.findByOrderId(orderId);
-        Payment payment = paymentOptional.orElseThrow(() -> new IllegalArgumentException("Invalid payment"));
+        Payment payment = paymentOptional
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_VALID_PAYMENT));
 
         // 토스에서 method 응답 결과가 String = "간편결제" -> PaymentWay 타입으로 받아야함.
         PaymentWay paymentWay = PaymentWay.fromValue(paymentRequest.getMethod());
@@ -59,5 +66,15 @@ public class PaymentService {
                 paymentRequest.getLastTransactionKey(),
                 paymentStatus
         );
+
+        // 주문 취소 여부를 false로 설정
+        System.out.println("payment.getOrderCode()"+payment.getOrderCode());
+        System.out.println("payment"+payment);
+
+        Optional<Order> orderOptional = orderRepository.findByOrderCode(payment.getOrderCode());
+        Order order = orderOptional
+                .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_VALID_ORDER));
+
+        order.setOrderCancel(false); // 주문 취소 여부를 false로 설정
     }
 }

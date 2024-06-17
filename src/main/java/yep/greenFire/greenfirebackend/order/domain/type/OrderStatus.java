@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum OrderStatus {
 
+//    PAYMENT_FAILED("결제 실패"),
     RECEIVED("주문 접수"),           // 주문 접수
     REJECTED("주문 거절"),           // 주문 거절
     PROCESSING("상품 준비"),       // 상품 준비

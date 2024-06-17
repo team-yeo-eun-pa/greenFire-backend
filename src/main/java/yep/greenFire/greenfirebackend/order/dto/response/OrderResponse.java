@@ -26,6 +26,31 @@ public class OrderResponse {
     private final Long totalRealPayment;
     private final LocalDateTime orderDate;
     private final PaymentWay paymentWay;
+    private final Boolean isOrderCancel;
 
     private final List<StoreOrderDTO> storeOrders;
+
+    // 명시적인 생성자 추가
+    public OrderResponse(Long orderCode, Long memberCode, String orderName, String receiverName, String contactNumber,
+                         String addressZonecode, String address, String addressDetail, String deliveryRequest,
+                         Long totalOrderAmount, Long totalDiscountAmount, Long totalDeliveryAmount, Long totalRealPayment,
+                         Boolean isOrderCancel, LocalDateTime orderDate, PaymentWay paymentWay, List<StoreOrderDTO> storeOrders) {
+        this.orderCode = orderCode;
+        this.memberCode = memberCode;
+        this.orderName = orderName;
+        this.receiverName = receiverName;
+        this.contactNumber = contactNumber;
+        this.addressZonecode = addressZonecode;
+        this.address = address;
+        this.addressDetail = addressDetail;
+        this.deliveryRequest = deliveryRequest;
+        this.totalOrderAmount = totalOrderAmount;
+        this.totalDiscountAmount = totalDiscountAmount;
+        this.totalDeliveryAmount = totalDeliveryAmount;
+        this.totalRealPayment = totalRealPayment;
+        this.isOrderCancel = isOrderCancel; // 추가된 필드
+        this.orderDate = orderDate;
+        this.paymentWay = paymentWay;
+        this.storeOrders = storeOrders;
+    }
 }

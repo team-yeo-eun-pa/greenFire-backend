@@ -37,6 +37,7 @@ public enum ExceptionCode {
     NOT_FOUND_NOTICE_CODE(404, "공지사항 코드에 해당하는 공지사항이 존재하지 않습니다."),
     NOT_FOUND_DELIVERY_CODE(404, "배송지 코드에 해당하는 배송지가 존재하지 않습니다."),
     NOT_FOUND_VALID_ORDER(404, "유효한 주문 건이 아닙니다."),
+    NOT_FOUND_VALID_PAYMENT(404, "유효한 결제 건이 아닙니다."),
     NOT_FOUND_VALID_DELIVERY(404, "유효한 배송지가 아닙니다."),
     NOT_FOUND_PRODUCT_CODE(404, "상품 코드에 해당하는 상품이 존재하지 않습니다." ),
     NOT_FOUND_OPTION_CODE(404, "옵션 코드에 해당하는 옵션이 존재하지 않습니다." ),
