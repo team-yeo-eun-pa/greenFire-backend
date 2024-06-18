@@ -161,23 +161,28 @@ public class ProductController {
 
 
     /* 상품 옵션 수정 */
-    /* 상품 옵션 개별 삭제 */
     @PutMapping("/seller/mystore/editOption/{optionCode}")
     public ResponseEntity<Void> modifyProductOption(
             @PathVariable final Long optionCode,
-            @RequestPart @Valid final ProductOptionRequest productOptionRequest
+            @RequestPart @Valid final ProductOptionUpdateRequest productOptionUpdateRequest
     ) {
-        if (productOptionRequest.getProductOptionUpdateRequest() != null) {
-            productOptionService.modifyProductOption(optionCode, productOptionRequest.getProductOptionUpdateRequest());
-        }
-
-        if (productOptionRequest.getProductOptionDeleteRequest() != null) {
-            productOptionService.modifyOptionStatus(optionCode, productOptionRequest.getProductOptionDeleteRequest());
-        }
+        productOptionService.modifyProductOption(optionCode, productOptionUpdateRequest);
 
         return ResponseEntity.created(URI.create("/seller/mystore/editOption/" + optionCode)).build();
+
     }
 
+
+    /* 상품 옵션 개별 삭제 */
+    @PutMapping("/seller/mystore/editOption/{optionCode}/delete")
+    public ResponseEntity<Void> modifyOptionStatus(
+            @PathVariable final Long optionCode,
+            @RequestBody @Valid final ProductOptionDeleteRequest productOptionDeleteRequest
+    ) {
+        productOptionService.modifyOptionStatus(optionCode, productOptionDeleteRequest);
+
+        return ResponseEntity.created(URI.create("seller/mystore/product/" + optionCode + "/delete")).build();
+    }
 
 
 

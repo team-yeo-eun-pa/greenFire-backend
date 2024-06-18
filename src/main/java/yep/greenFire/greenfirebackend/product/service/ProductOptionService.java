@@ -65,6 +65,7 @@ public class ProductOptionService {
     }
 
     /* 상품 옵션 수정 */
+    @Transactional
     public void modifyProductOption(Long optionCode, ProductOptionUpdateRequest productOptionUpdateRequest) {
 
         ProductOption productOption = productOptionRepository.findByOptionCodeAndOptionAppearActivateNot(optionCode, ProductOptionAppearActivate.D)
@@ -81,12 +82,14 @@ public class ProductOptionService {
     }
 
     /* 상품 옵션 삭제 (상태 변경) */
+    @Transactional
     public void modifyOptionStatus(Long optionCode, ProductOptionDeleteRequest productOptionDeleteRequest) {
 
         ProductOption productOption = productOptionRepository.findByOptionCodeAndOptionAppearActivateNot(optionCode, ProductOptionAppearActivate.D)
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_OPTION_CODE));
 
-        productOption.modifyStatus(productOptionDeleteRequest.getOptionAppearActivate());
+        productOption.modifyStatus(ProductOptionAppearActivate.D);
+
     }
 
 
