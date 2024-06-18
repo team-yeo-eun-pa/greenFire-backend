@@ -112,7 +112,7 @@ public class ProductController {
 
     }
 
-    /* 상품 수정 */
+    /* 상품 정보 수정 */
     @PutMapping("/seller/mystore/edit/{productCode}")
     public ResponseEntity<Void> modifyProduct(
             @PathVariable final Long productCode,
