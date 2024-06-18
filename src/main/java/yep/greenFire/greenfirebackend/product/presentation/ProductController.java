@@ -153,6 +153,7 @@ public class ProductController {
             productOptionService.save(productCode, productOptionCreateRequest);
             return ResponseEntity.created(URI.create("/seller/mystore/editOption/" + productCode)).build();
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 

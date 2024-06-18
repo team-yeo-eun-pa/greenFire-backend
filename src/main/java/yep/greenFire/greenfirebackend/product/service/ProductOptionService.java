@@ -36,7 +36,7 @@ public class ProductOptionService {
     /* 상품 옵션 등록 */
 
     private void verifyProductCreated(Long productCode) {
-        if (productRepository.existsByProductCode(productCode)) {
+        if (!productRepository.existsByProductCode(productCode)) {
             throw new ConflictException(ExceptionCode.NOT_FOUND_PRODUCT_CODE);
         }
     }
