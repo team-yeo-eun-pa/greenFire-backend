@@ -197,13 +197,13 @@ public class ProductService {
 
         Long storeCode = storeRepository.findStoreByMemberCode(memberCode);
 
-        Long minOptionPrice = productOptionRepository.findMinOptionPriceByProductCode(productCode);
+        Optional<ProductOption> minOptionPrice = productOptionRepository.findMinOptionPriceByProductCode(productCode);
 
         product.modify(
                 productUpdateRequest.getProductName(),
                 category.getCategoryCode(),
                 storeCode,
-                minOptionPrice,
+                minOptionPrice.get().getOptionPrice(),
                 productUpdateRequest.getProductDescription(),
                 productUpdateRequest.getSellableStatus(),
                 IMG_URL + replaceFileName

@@ -17,8 +17,6 @@ public class ProductCreateRequest {
     private final String productName;
     @Min(value = 1)
     private final Long categoryCode;
-    @Min(value = 1)
-    private final Long storeCode;
     private final String productDescription;
     @NotNull
     private final SellableStatus sellableStatus;

@@ -3,6 +3,7 @@ package yep.greenFire.greenfirebackend.product.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yep.greenFire.greenfirebackend.cart.domain.entity.Cart;
 import yep.greenFire.greenfirebackend.common.exception.ConflictException;
 import yep.greenFire.greenfirebackend.common.exception.NotFoundException;
 import yep.greenFire.greenfirebackend.common.exception.type.ExceptionCode;
@@ -35,27 +36,37 @@ public class ProductOptionService {
     /* 상품 옵션 등록 */
 
     private void verifyProductCreated(Long productCode) {
-        if (productRepository.existsByProductCode(productCode)) {
+        if (!productRepository.existsByProductCode(productCode)) {
             throw new ConflictException(ExceptionCode.NOT_FOUND_PRODUCT_CODE);
         }
     }
 
     @Transactional
-    public void save(final List<ProductOptionCreateRequest> productOptionCreateRequest,
-                     Long productCode) {
+    public void save(final Long productCode,
+                     ProductOptionCreateRequest productOptionCreateRequest
+                     ) {
 
         //상품 존재하는지 확인 후 저장
         verifyProductCreated(productCode);
 
-        for (ProductOptionCreateRequest request : productOptionCreateRequest) {
-            ProductOption productOption = ProductOption.of(productCode, request.getOptionName(),
-                    request.getOptionPrice(), request.getOptionStock());
-            productOptionRepository.save(productOption);
-        }
+
+        final ProductOption newOption = ProductOption.of(
+                productCode,
+                productOptionCreateRequest.getOptionName(),
+                productOptionCreateRequest.getOptionPrice(),
+                productOptionCreateRequest.getOptionStock()
+        );
+
+
+
+        productOptionRepository.save(newOption);
+
+
     }
 
     /* 상품 옵션 수정 */
-    public void modifyProductOption(Long productCode, Long optionCode, ProductOptionUpdateRequest productOptionUpdateRequest) {
+    @Transactional
+    public void modifyProductOption(Long optionCode, ProductOptionUpdateRequest productOptionUpdateRequest) {
 
         ProductOption productOption = productOptionRepository.findByOptionCodeAndOptionAppearActivateNot(optionCode, ProductOptionAppearActivate.D)
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_PRODUCT_CODE));
@@ -71,12 +82,14 @@ public class ProductOptionService {
     }
 
     /* 상품 옵션 삭제 (상태 변경) */
-    public void modifyStatus(Long optionCode, ProductOptionDeleteRequest productOptionDeleteRequest) {
+    @Transactional
+    public void modifyOptionStatus(Long optionCode, ProductOptionDeleteRequest productOptionDeleteRequest) {
 
         ProductOption productOption = productOptionRepository.findByOptionCodeAndOptionAppearActivateNot(optionCode, ProductOptionAppearActivate.D)
                 .orElseThrow(() -> new NotFoundException(ExceptionCode.NOT_FOUND_OPTION_CODE));
 
-        productOption.modifyStatus(productOptionDeleteRequest.getOptionAppearActivate());
+        productOption.modifyStatus(ProductOptionAppearActivate.D);
+
     }
 
 
