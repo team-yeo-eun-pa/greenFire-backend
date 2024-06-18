@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import yep.greenFire.greenfirebackend.product.domain.type.ProductOptionAppearActivate;
 
+
 @Getter
 public class ProductOptionDeleteRequest {
 
