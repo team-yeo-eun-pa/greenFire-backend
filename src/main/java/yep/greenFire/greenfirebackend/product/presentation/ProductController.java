@@ -80,6 +80,7 @@ public class ProductController {
         return ResponseEntity.ok(pagingResponse);
     }
 
+    /* 판매자 상품 개별 조회 */
     @GetMapping("/seller/mystore/product/{productCode}")
     @ResponseBody
     public ResponseEntity<SellerProductResponse> getSellerProduct(
@@ -126,24 +127,7 @@ public class ProductController {
         return ResponseEntity.created(URI.create("/seller/mystore/edit/" + productCode)).build();
     }
 
-    /* 상품 옵션 수정 */
-    /* 상품 옵션 개별 삭제 */
-    @PutMapping("/seller/mystore/edit/{productCode}/{optionCode}")
-    public ResponseEntity<Void> modifyOption(
-            @PathVariable final Long productCode,
-            @PathVariable final Long optionCode,
-            @RequestPart @Valid final ProductOptionRequest productOptionRequest
-            ) {
-        if (productOptionRequest.getProductOptionUpdateRequest() != null) {
-            productOptionService.modifyProductOption(productCode, optionCode, productOptionRequest.getProductOptionUpdateRequest());
-        }
 
-        if (productOptionRequest.getProductOptionDeleteRequest() != null) {
-            productOptionService.modifyStatus(optionCode, productOptionRequest.getProductOptionDeleteRequest());
-        }
-
-        return ResponseEntity.created(URI.create("/seller/mystore/edit/" + productCode + "/" + optionCode)).build();
-    }
 
     /* 판매자 상품 삭제 -> 상태 변경 */
     /* 상품 상태 변경 이전에 옵션 먼저 변경 필요 */
@@ -155,6 +139,42 @@ public class ProductController {
         productService.modifyStatus(productCode, productDeleteRequest);
 
         return ResponseEntity.created(URI.create("seller/mystore/product/" + productCode)).build();
+    }
+
+
+
+    /* 상품 옵션 등록 */
+    @PostMapping("/seller/mystore/editOption/{productCode}")
+    public ResponseEntity<Void> save(
+            @RequestPart @Valid final ProductOptionCreateRequest productOptionCreateRequest,
+            @PathVariable final Long productCode
+    ) {
+        try {
+            productOptionService.save(productCode, productOptionCreateRequest);
+            return ResponseEntity.created(URI.create("/seller/mystore/editOption/" + productCode)).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+    }
+
+
+    /* 상품 옵션 수정 */
+    /* 상품 옵션 개별 삭제 */
+    @PutMapping("/seller/mystore/editOption/{optionCode}")
+    public ResponseEntity<Void> modifyProductOption(
+            @PathVariable final Long optionCode,
+            @RequestPart @Valid final ProductOptionRequest productOptionRequest
+    ) {
+        if (productOptionRequest.getProductOptionUpdateRequest() != null) {
+            productOptionService.modifyProductOption(optionCode, productOptionRequest.getProductOptionUpdateRequest());
+        }
+
+        if (productOptionRequest.getProductOptionDeleteRequest() != null) {
+            productOptionService.modifyOptionStatus(optionCode, productOptionRequest.getProductOptionDeleteRequest());
+        }
+
+        return ResponseEntity.created(URI.create("/seller/mystore/editOption/" + optionCode)).build();
     }
 
 
