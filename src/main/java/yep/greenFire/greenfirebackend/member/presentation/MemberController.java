@@ -9,8 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import yep.greenFire.greenfirebackend.auth.type.CustomUser;
 import yep.greenFire.greenfirebackend.email.service.EmailVerificationService;
-import yep.greenFire.greenfirebackend.member.dto.request.MemberSignupRequest;
-import yep.greenFire.greenfirebackend.member.dto.request.ProfileUpdateRequest;
+import yep.greenFire.greenfirebackend.member.dto.request.*;
 import yep.greenFire.greenfirebackend.member.service.MemberService;
 import yep.greenFire.greenfirebackend.member.dto.response.ProfileResponse;
 
@@ -28,6 +27,13 @@ public class MemberController {
         Long memberCode = memberService.signup(memberRequest);
         emailVerificationService.generateAndSendVerificationCode(memberCode, memberRequest.getMemberEmail());
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    // 아이디 중복 체크
+    @PostMapping("/check-id")
+    public ResponseEntity<Boolean> checkMemberId(@RequestBody @Valid CheckMemberIdRequest checkMemberIdRequest) {
+        boolean isAvailable = memberService.checkMemberId(checkMemberIdRequest.getMemberId());
+        return ResponseEntity.ok(isAvailable);
     }
 
     // 인증 테스트를 위한 메서드
@@ -59,11 +65,6 @@ public class MemberController {
         return ResponseEntity.noContent().build();
     }
 
-    // 프로필 사진 등록
-
-    // 프로필 사진 삭제
-
-
     // 로그아웃 시 DB 토큰 무효화
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@AuthenticationPrincipal UserDetails userDetails) {
@@ -73,4 +74,35 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
 
+    // 아이디 찾기
+    @PostMapping("/find-id")
+    public ResponseEntity<String> findMemberId(@RequestBody @Valid FindMemberIdRequest findIdRequest) {
+
+        String memberId = memberService.findMemberIdByEmail(findIdRequest.getMemberEmail());
+
+        return ResponseEntity.ok(memberId);
+    }
+
+    // 비밀번호 찾기
+    @PostMapping("/find-pwd")
+    public ResponseEntity<Void> findMemberPwd(@RequestBody @Valid FindMemberPwdRequest findPwdRequest) {
+
+        Long memberCode = memberService.findMemberCodeByEmail(findPwdRequest.getMemberEmail());
+
+        emailVerificationService.generateEmailAndSendPasswordResetCode(memberCode, findPwdRequest.getMemberEmail());
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    // 비밀번호 재설정
+    @PutMapping("/reset-password")
+    public ResponseEntity<Void> resetPassword(@RequestBody @Valid ResetPasswordRequest resetPasswordRequest) {
+
+        boolean success = memberService.modifyMemberPassword(resetPasswordRequest);
+        if (success) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
 }

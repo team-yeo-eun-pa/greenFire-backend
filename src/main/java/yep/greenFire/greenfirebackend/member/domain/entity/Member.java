@@ -70,10 +70,13 @@ public class Member {
         this.memberStatus = MemberStatus.ACTIVE;
     }
 
+    public void changePassword(String newPassword) {
+        this.memberPassword = newPassword;
+    }
+
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
-
 
     public void increaseReportCount(Long reportCount) {
         this.reportCount= reportCount;
@@ -91,5 +94,10 @@ public class Member {
         this.memberNickname = memberNickname;
         this.memberEmail = memberEmail;
         this.memberPhone = memberPhone;
+    }
+
+    public void resetPassword(Long memberCode, String memberPassword) {
+        this.memberCode = memberCode;
+        this.memberPassword = memberPassword;
     }
 }

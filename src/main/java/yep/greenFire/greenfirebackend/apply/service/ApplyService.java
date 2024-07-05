@@ -34,9 +34,9 @@ public class ApplyService {
 
     private final ApplyRepository applyRepository;
 
-    @Value("http://localhost:8001/storeimgs")
+    @Value("${image.image-url}")
     private String IMAGE_URL;
-    @Value("src/main/resources/static/storeimgs")
+    @Value("${image.image-dir}")
     private String IMAGE_DIR;
 
     private Pageable getPageable(Integer page) {
