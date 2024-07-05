@@ -55,6 +55,7 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.POST, "/members/signup", "/members/login", "/members/find-id", "/members/find-pwd", "/members/check-id").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/members/verify-password-reset").permitAll();
                     auth.requestMatchers(HttpMethod.PUT, "/members/reset-password").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/productimg/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/members/verify-email/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET,"/product/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/storeimgs/**").permitAll();
@@ -62,6 +63,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/members/mypage/**").hasAnyRole(MemberRole.MEMBER.toString(), MemberRole.SELLER.toString());
                     auth.requestMatchers("/seller/mystore/**").hasRole(MemberRole.SELLER.toString());
                     auth.requestMatchers(HttpMethod.GET, "/admin/notices/**").permitAll();
+                    auth.requestMatchers("/cart/**").hasRole(MemberRole.MEMBER.toString());
                     auth.requestMatchers(HttpMethod.GET,"/Member/notices/**").permitAll();
                     auth.anyRequest().authenticated();
 

@@ -37,18 +37,23 @@ public enum ExceptionCode {
     NOT_FOUND_NOTICE_CODE(404, "공지사항 코드에 해당하는 공지사항이 존재하지 않습니다."),
     NOT_FOUND_DELIVERY_CODE(404, "배송지 코드에 해당하는 배송지가 존재하지 않습니다."),
     NOT_FOUND_VALID_ORDER(404, "유효한 주문 건이 아닙니다."),
+    NOT_FOUND_VALID_PAYMENT(404, "유효한 결제 건이 아닙니다."),
     NOT_FOUND_VALID_DELIVERY(404, "유효한 배송지가 아닙니다."),
     NOT_FOUND_PRODUCT_CODE(404, "상품 코드에 해당하는 상품이 존재하지 않습니다." ),
+    NOT_FOUND_CART_CODE(404, "장바구니 코드에 해당하는 상품이 존재하지 않습니다." ),
+    NOT_FOUND_OPTION_CODE(404, "옵션 코드에 해당하는 옵션이 존재하지 않습니다." ),
     NOT_FOUND_CHECKING_STATUS(404, "대기 중인 신청이 아니므로 수정할 수 없습니다."),
     NOT_FOUND_APPLY_CODE(404, "대기 중인 신청만 취소할 수 있습니다."),
     INVALID_STATUS_CHANGE(404, "대기 중이 아닌 신청입니다."),
     NOT_FOUND_SELLER_CODE(404, "신청 코드를 찾을 수 없습니다."),
+    NOT_FOUND_INQUIRY_CODE(404, "문의 코드를 찾을 수 없습니다.."),
 
     // 409 Error
     NOT_ENOUGH_STOCK(409, "재고 부족으로 주문 불가합니다."),
     ALREADY_EXIST_REVIEW(409, "해당 주문 건에 이미 작성 된 리뷰가 있습니다."),
     ORDER_ALREADY_REJECTED(409, "이미 거절된 주문입니다."),
     HAS_ACTIVE_ORDERS(409, "정지할 수 없는 상태의 주문 건이 존재합니다.");
+
 
     private final int code;
     private final String message;

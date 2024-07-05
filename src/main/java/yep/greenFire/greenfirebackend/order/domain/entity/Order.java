@@ -42,8 +42,8 @@ public class Order {
     private Long totalRealPayment;
 
     /* 주문 취소 부분 취소 여부 - 기본값 false */
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
-    private Boolean isOrderCancel = false;
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
+    private Boolean isOrderCancel = true;
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isPartialCancel = false;
 
@@ -101,6 +101,11 @@ public class Order {
         if (isOrderCancel || isPartialCancel) {
             this.cancelDate = LocalDateTime.now();
         }
+    }
+
+    // 주문 취소 여부
+    public void setOrderCancel(Boolean isOrderCancel) {
+        this.isOrderCancel = isOrderCancel;
     }
 }
 
