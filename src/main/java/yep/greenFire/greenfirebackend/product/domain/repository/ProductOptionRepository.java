@@ -31,5 +31,5 @@ public interface ProductOptionRepository extends JpaRepository<ProductOption, Lo
     Optional<ProductOption> findByOptionCodeAndOptionAppearActivateNot(Long OptionCode, ProductOptionAppearActivate productOptionAppearActivate);
 
 
-    Long findMinOptionPriceByProductCode(Long productCode);
+    Optional<ProductOption> findMinOptionPriceByProductCode(Long productCode);
 }
