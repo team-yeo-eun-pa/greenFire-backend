@@ -1,14 +1,16 @@
 <div style="text-align: left;"> 
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;"> 🌱 GREEN FIRE </h2>  
-    <div style="font-weight: 700; font-size: 15px; text-align: left; color: #282d33;"> 에코 이커머스 플랫폼 초록불입니다. </div> 
+    <div style="font-weight: 700; font-size: 15px; text-align: left; color: #282d33;"> 비거노믹스(Vegan + Economics) 시대의 에코 이커머스 플랫폼 “초록불”입니다.</div> 
 </div> <br>
 <div style="text-align: left;"> 
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;"> 🌳 About </h2>  
     <div style="font-weight: 700; font-size: 15px; text-align: left; color: #282d33;"> 
-        최근 환경 문제와 채식에 대한 관심의 증가로 비건 인구가 늘어나는 추세입니다.. <br>
-        초록불은 비건 식품, 환경 친화적인 상품 관련 정보와 판매 서비스를 제공하여 보다 쉬운 환경 보호 실천을 도와주는 이커머스 플랫폼입니다.
+        최근 환경 문제와 채식에 대한 관심의 증가로 비건 인구가 늘어나는 추세입니다. </br>
+        초록불은 비건 식품, 환경 친화적인 상품 관련 정보와 판매 서비스를 제공하여 </br>
+        보다 쉬운 환경 보호 실천을 도와주는 풀스택 이커머스 플랫폼 프로젝트입니다. </br></br>
+        <img width="600" alt="초록불_메뉴구조도" src="https://github.com/user-attachments/assets/41993d5a-819e-4265-a0e8-6614814d716c"></br>
     </div> 
-</div> <br>
+</div> </br>
 <div style="text-align: left;">
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;"> :file_folder: repositories </h2> 
     <div style="font-weight: 700; font-size: 15px; text-align: left; color: #282d33;"> Client: https://github.com/team-yeo-eun-pa/greenFire-frontend </div> 
